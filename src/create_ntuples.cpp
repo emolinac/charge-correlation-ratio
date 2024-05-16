@@ -16,7 +16,7 @@
 int main()
 {
     // Declare the output TFile
-    TFile* fout = new TFile((output_folder+name_ntuple_dihadron).c_str(),"RECREATE");
+    TFile* fout = new TFile((output_folder+namef_ntuple_dihadron).c_str(),"RECREATE");
     gROOT->cd();
 
     // Declare the TNtuples

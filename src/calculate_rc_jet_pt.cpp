@@ -12,7 +12,7 @@ int main()
 {
     // Define number of types of files you will have
     const int N = 3; // data, mc, mcreco
-    std::string name_output[N] = {name_rc_jet_pt_data, name_rc_jet_pt_mc, name_rc_jet_pt_mcreco};
+    std::string name_output[N] = {namef_rc_jet_pt_data, namef_rc_jet_pt_mc, namef_rc_jet_pt_mcreco};
     std::string name_ntuple[N] = {name_ntuple_data   , name_ntuple_mc   , name_ntuple_mcreco   };
     TCut samesign_cuts[N]      = {samesign_cut_data  , samesign_cut_mc  , samesign_cut_mcreco  };
     TCut diffsign_cuts[N]      = {diffsign_cut_data  , diffsign_cut_mc  , diffsign_cut_mcreco  };
@@ -23,7 +23,7 @@ int main()
     gROOT->cd();
 
     // Open the file with the TNtuples
-    TFile* fin = new TFile((output_folder+name_ntuple_dihadron).c_str());
+    TFile* fin = new TFile((output_folder+namef_ntuple_dihadron).c_str());
     
     // Get the dihadron TNtuple
     TNtuple* ntuple[N];

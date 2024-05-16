@@ -7,6 +7,7 @@
 int dh_comp_exist_mc(TMCJets*      tree, int pid_ha, int pid_hb);
 int dh_comp_exist_mcreco(TZJets*  tree, int pid_ha, int pid_hb);
 int dh_comp_exist_data(TZJetsData* tree, int pid_ha, int pid_hb);
+int dh_comp_exist_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb);
 
 // These functions locate the leading hadron and store the location and the energy
 void loc_lh_mc(TMCJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
@@ -14,6 +15,9 @@ void loc_nlh_mc(TMCJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_ene
 
 void loc_lh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
 void loc_nlh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);
+
+void loc_lh_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
+void loc_nlh_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);
 
 void loc_lh_data(TZJetsData* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
 void loc_nlh_data(TZJetsData* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);

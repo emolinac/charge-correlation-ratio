@@ -11,7 +11,7 @@ int main()
     std::cout<<"This code displays the percentage of data removed by the respective set of cuts"<<std::endl;
 
     // Open dihadron TNtuple
-    TFile* f = new TFile((output_folder+name_ntuple_dihadron).c_str());
+    TFile* f = new TFile((output_folder+namef_ntuple_dihadron).c_str());
     TNtuple* ntuple_data   = (TNtuple*) f->Get(name_ntuple_data.c_str());
     TNtuple* ntuple_mc     = (TNtuple*) f->Get(name_ntuple_mc.c_str());
     TNtuple* ntuple_mcreco = (TNtuple*) f->Get(name_ntuple_mcreco.c_str());

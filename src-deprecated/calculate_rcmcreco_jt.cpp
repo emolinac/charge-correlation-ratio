@@ -11,11 +11,11 @@
 int main()
 {
     // Open the output file
-    TFile* fout = new TFile((output_folder+name_rc_jt_mcreco).c_str(),"RECREATE");
+    TFile* fout = new TFile((output_folder+namef_rc_jt_mcreco).c_str(),"RECREATE");
     gROOT->cd();
 
     // Open the file with the TNtuples
-    TFile* fin = new TFile((output_folder+name_ntuple_dihadron).c_str());
+    TFile* fin = new TFile((output_folder+namef_ntuple_dihadron).c_str());
     
     // Get the dihadron TNtuple
     TNtuple* ntuple = (TNtuple*) fin->Get(name_ntuple_mcreco.c_str());
