@@ -306,7 +306,7 @@ void set_uncertainties(TH1F* hcs_samesign, TH1F* hcs_diffsign, TH1F* hrc)
         double h1h2_err    = hcs_samesign->GetBinError(bin);
         double h1h2bar_err = hcs_diffsign->GetBinError(bin);
 
-        double err = 2./pow(h1h2+h1h2bar,2)*sqrt(pow(h1h2bar*h1h2_err-h1h2*h1h2bar_err,2));
+        double err = 2./pow(h1h2+h1h2bar,2)*sqrt(pow(h1h2*h1h2bar_err,2)+pow(h1h2bar*h1h2_err,2));
         hrc->SetBinError(bin, err);
     }
 
