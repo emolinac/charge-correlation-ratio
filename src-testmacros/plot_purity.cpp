@@ -10,21 +10,52 @@ void plot_purity()
     TFile* f = new TFile((output_folder+namef_ntuple_purity).c_str());
     TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_purity.c_str());
 
-    //TH1F* hrecgen = new TH1F("hrecgen","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    //TH1F* hrec    = new TH1F("hrec"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    //TH1F* hpurity = new TH1F("hpurity","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    // JET PT
+    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
 
-    TH1F* hrecgen = new TH1F("hrecgen","",8,2,4.5);
-    TH1F* hrec    = new TH1F("hrec"   ,"",8,2,4.5);
-    TH1F* hpurity = new TH1F("hpurity","",8,2,4.5);
-    //TH1F* hrecgen = new TH1F("hrecgen","",8,-3.14,3.14);
-    //TH1F* hrec    = new TH1F("hrec"   ,"",8,-3.14,3.14);
-    //TH1F* hpurity = new TH1F("hpurity","",8,-3.14,3.14);
-
-    ntuple->Project("hrec"   ,"jet_eta",topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
-    ntuple->Project("hrecgen","jet_eta","signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
-
-    hpurity->Divide(hrecgen,hrec,1,1,"B");
-    hpurity->Draw();
+    // ETA
+    //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",8,2,4.5);
+    //TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",8,2,4.5);
+    //TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",8,2,4.5);
+    //TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",8,2,4.5);
+    //TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",8,2,4.5);
+    //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",8,2,4.5);
     
+    // PHI
+    //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",8,-3.14,3.14);
+    //TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",8,-3.14,3.14);
+    //TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",8,-3.14,3.14);    
+    //TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",8,-3.14,3.14);
+    //TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",8,-3.14,3.14);
+    //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",8,-3.14,3.14);
+
+    ntuple->Project("hrec_diffsign"   ,"jet_pt","eq_charge==0"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrecgen_diffsign","jet_pt","eq_charge==0&&signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrec_samesign"   ,"jet_pt","eq_charge==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrecgen_samesign","jet_pt","eq_charge==1&&signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+
+    hpurity_diffsign->Divide(hrecgen_diffsign,hrec_diffsign,1,1,"B");
+    hpurity_samesign->Divide(hrecgen_samesign,hrec_samesign,1,1,"B");
+    hpurity_diffsign->SetLineColor(kBlue);
+    hpurity_diffsign->SetLineWidth(2);
+    hpurity_diffsign->SetMarkerColor(kBlue);
+    hpurity_samesign->SetLineColor(kGreen);
+    hpurity_samesign->SetLineWidth(2);
+    hpurity_samesign->SetMarkerColor(kGreen);
+    
+    THStack* h = new THStack("h","");
+    h->Add(hpurity_diffsign);
+    h->Add(hpurity_samesign);
+
+    h->Draw("NOSTACK");
+
+    TLegend* l = new TLegend();
+    l->AddEntry(hpurity_diffsign,"diffsign","lp");
+    l->AddEntry(hpurity_samesign,"samesign","lp");
+    l->Draw("SAME");
 }

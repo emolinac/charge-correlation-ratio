@@ -313,4 +313,20 @@ void set_uncertainties(TH1F* hcs_samesign, TH1F* hcs_diffsign, TH1F* hrc)
     return;
 }
 
+void set_uncertainties_purity(TH1F* hdata, TH1F* hpurity, TH1F* hdatapurity)
+{
+    for(int bin = 1 ; bin <= hdatapurity->GetNbinsX() ; bin++)
+    {
+        double data       = hdata->GetBinContent(bin);
+        double purity     = hpurity->GetBinContent(bin);
+        double data_err   = hdata->GetBinError(bin);
+        double purity_err = hpurity->GetBinError(bin);
+
+        double err = abs(data*purity)*sqrt(pow(data_err/data,2)+pow(purity_err/purity,2));
+        hdatapurity->SetBinError(bin, err);
+    }
+
+    return;
+}
+
 #endif

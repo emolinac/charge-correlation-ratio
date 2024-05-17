@@ -12,17 +12,22 @@ std::string input_folder  = mother_folder+"input-files/";
 std::string namef_rc_z_mc          = "rc_z_mc.root";
 std::string namef_rc_z_mcreco      = "rc_z_mcreco.root";
 std::string namef_rc_z_data        = "rc_z_data.root";
+std::string namef_rc_z_data_p      = "rc_z_data_purity.root";
 std::string namef_rc_jt_mc         = "rc_jt_mc.root";
 std::string namef_rc_jt_mcreco     = "rc_jt_mcreco.root";
 std::string namef_rc_jt_data       = "rc_jt_data.root";
+std::string namef_rc_jt_data_p     = "rc_jt_data_purity.root";
 std::string namef_rc_jet_pt_mc     = "rc_jet_pt_mc.root";
 std::string namef_rc_jet_pt_mcreco = "rc_jet_pt_mcreco.root";
 std::string namef_rc_jet_pt_data   = "rc_jet_pt_data.root";
+std::string namef_rc_jet_pt_data_p = "rc_jet_pt_data_purity.root";
 std::string namef_ntuple_dihadron  = "ntuple_dihadron.root";
+std::string namef_ntuple_purity    = "ntuple_purity.root";
+
+// Name of the ntuples
 std::string name_ntuple_data       = "ntuple_data";
 std::string name_ntuple_mc         = "ntuple_mc";
 std::string name_ntuple_mcreco     = "ntuple_mcreco";
-std::string namef_ntuple_purity    = "ntuple_purity.root";
 std::string name_ntuple_purity     = "ntuple_purity";
 
 // TNTuples variables
