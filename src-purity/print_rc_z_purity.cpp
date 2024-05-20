@@ -22,13 +22,13 @@ void print_rc_z_purity()
 
     // Create stack
     THStack* s = new THStack("s","");
-    s->SetMaximum(-0.001);
+    s->SetMaximum(0.6);
     s->SetMinimum(-0.600);
     s->Add(h_rc_z_data);
     s->Add(h_rc_z_data_purity);
-    s->Draw("NOSTACK");
+    s->Draw("NOSTACK E1");
 
-    s->SetTitle(";jet p_{T}(GeV);r_{c}");
+    s->SetTitle(";z;r_{c}");
     s->GetYaxis()->SetRangeUser(-1,1);
 
     //Set TLegend

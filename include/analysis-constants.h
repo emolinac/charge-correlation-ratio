@@ -21,7 +21,7 @@ const float ptjet_max = 1E6;
 
 // Define binning
 const int Nbin_z      = 8;
-const int Nbin_jt     = 8;
+const int Nbin_jt     = 10;
 const int Nbin_jet_pt = 8;
 
 const double z_min  = 0;

@@ -26,7 +26,7 @@ void print_rc_jet_pt_purity()
     s->SetMinimum(-0.600);
     s->Add(h_rc_jet_pt_data);
     s->Add(h_rc_jet_pt_data_purity);
-    s->Draw("NOSTACK");
+    s->Draw("NOSTACK E1");
 
     s->SetTitle(";jet p_{T}(GeV);r_{c}");
     s->GetYaxis()->SetRangeUser(-1,1);
