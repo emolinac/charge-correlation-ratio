@@ -11,12 +11,12 @@ void plot_purity()
     TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_purity.c_str());
 
     // JET PT
-    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_jet_pt,jet_pt_limits);
 
     // ETA
     //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",8,2,4.5);
@@ -25,6 +25,14 @@ void plot_purity()
     //TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",8,2,4.5);
     //TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",8,2,4.5);
     //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",8,2,4.5);
+    
+    // Z
+    //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_z,z_min,z_max);
+    //TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_z,z_min,z_max);
+    //TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_z,z_min,z_max);
+    //TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_z,z_min,z_max);
+    //TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_z,z_min,z_max);
+    //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_z,z_min,z_max);
     
     // PHI
     //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",8,-3.14,3.14);
@@ -54,8 +62,10 @@ void plot_purity()
 
     h->Draw("NOSTACK");
 
+    h->SetTitle(";jet pt(Gev);Purity");
+
     TLegend* l = new TLegend();
-    l->AddEntry(hpurity_diffsign,"diffsign","lp");
-    l->AddEntry(hpurity_samesign,"samesign","lp");
+    l->AddEntry(hpurity_diffsign,"Different sign hadrons","lp");
+    l->AddEntry(hpurity_samesign,"Same sign hadrons","lp");
     l->Draw("SAME");
 }

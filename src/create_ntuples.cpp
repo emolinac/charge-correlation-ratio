@@ -261,25 +261,32 @@ int main()
         // Define array carrying the variables
         float vars[Nvars_data];
         vars[0]  = eq_charge;
-        vars[1]  = datatree->Jet_Dtr_ID[h1_location];
-        vars[2]  = datatree->Jet_Dtr_ID[h2_location];
-        vars[3]  = datatree->Jet_Dtr_TrackChi2[h1_location];
-        vars[4]  = datatree->Jet_Dtr_TrackChi2[h2_location];
-        vars[5]  = datatree->Jet_Dtr_TrackNDF[h1_location];
-        vars[6]  = datatree->Jet_Dtr_TrackNDF[h2_location];
-        vars[7]  = datatree->Jet_Dtr_ProbNNghost[h1_location];
-        vars[8]  = datatree->Jet_Dtr_ProbNNghost[h2_location];
-        vars[9]  = datatree->Jet_Dtr_P[h1_location]/1000.;
-        vars[10] = datatree->Jet_Dtr_P[h2_location]/1000.;
-        vars[11] = datatree->Jet_Dtr_PT[h1_location]/1000.;
-        vars[12] = datatree->Jet_Dtr_PT[h2_location]/1000.;
-        vars[13] = datatree->Jet_Dtr_Z[h1_location];
-        vars[14] = datatree->Jet_Dtr_Z[h2_location];
-        vars[15] = datatree->Jet_Dtr_JT[h1_location]/1000.;
-        vars[16] = datatree->Jet_Dtr_JT[h2_location]/1000.;
-        vars[17] = datatree->Jet_Dtr_PZ[h1_location]/1000.;
-        vars[18] = datatree->Jet_Dtr_PZ[h2_location]/1000.;
-        vars[19] = datatree->Jet_PT/1000.;
+        // Define dihadron invariant mass
+        double h1h2_px = datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[h2_location];
+        double h1h2_py = datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[h2_location];
+        double h1h2_pz = datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[h2_location];
+        double h1h2_pe = datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[h2_location];
+        TLorentzVector dihadron_4vector(h1h2_px/1000., h1h2_py/1000., h1h2_pz/1000., h1h2_pe/1000.);
+        vars[1]  = dihadron_4vector.M();
+        vars[2]  = datatree->Jet_Dtr_ID[h1_location];
+        vars[3]  = datatree->Jet_Dtr_ID[h2_location];
+        vars[4]  = datatree->Jet_Dtr_TrackChi2[h1_location];
+        vars[5]  = datatree->Jet_Dtr_TrackChi2[h2_location];
+        vars[6]  = datatree->Jet_Dtr_TrackNDF[h1_location];
+        vars[7]  = datatree->Jet_Dtr_TrackNDF[h2_location];
+        vars[8]  = datatree->Jet_Dtr_ProbNNghost[h1_location];
+        vars[9]  = datatree->Jet_Dtr_ProbNNghost[h2_location];
+        vars[10] = datatree->Jet_Dtr_P[h1_location]/1000.;
+        vars[11] = datatree->Jet_Dtr_P[h2_location]/1000.;
+        vars[12] = datatree->Jet_Dtr_PT[h1_location]/1000.;
+        vars[13] = datatree->Jet_Dtr_PT[h2_location]/1000.;
+        vars[14] = datatree->Jet_Dtr_Z[h1_location];
+        vars[15] = datatree->Jet_Dtr_Z[h2_location];
+        vars[16] = datatree->Jet_Dtr_JT[h1_location]/1000.;
+        vars[17] = datatree->Jet_Dtr_JT[h2_location]/1000.;
+        vars[18] = datatree->Jet_Dtr_PZ[h1_location]/1000.;
+        vars[19] = datatree->Jet_Dtr_PZ[h2_location]/1000.;
+        vars[20] = datatree->Jet_PT/1000.;
 
         // Create Jet 4vector to get jet eta and jet phi
         double Jet_px = datatree->Jet_PX;
@@ -287,8 +294,8 @@ int main()
         double Jet_pz = datatree->Jet_PZ;
         double Jet_pe = datatree->Jet_PE;
         TLorentzVector Jet_4vector(Jet_px, Jet_py, Jet_pz, Jet_pe);
-        vars[20] = Jet_4vector.Eta();
-        vars[21] = Jet_4vector.Phi();
+        vars[21] = Jet_4vector.Eta();
+        vars[22] = Jet_4vector.Phi();
 
         // add mum_phi:mum_pt:mum_eta:mum_probchi2:mup_phi:mup_pt:mup_eta:mup_probchi2
         double Z0_px = datatree->Z0_PX/1000.;
@@ -296,37 +303,37 @@ int main()
         double Z0_pz = datatree->Z0_PZ/1000.;
         double Z0_e  = datatree->Z0_PE/1000.;
         TLorentzVector Z0data_4vector(Z0_px, Z0_py, Z0_pz, Z0_e);
-        vars[22] = Z0data_4vector.Phi();
+        vars[23] = Z0data_4vector.Phi();
 
         double mum_px = datatree->mum_PX/1000.;
         double mum_py = datatree->mum_PY/1000.;
         double mum_pz = datatree->mum_PZ/1000.;
         double mum_e  = datatree->mum_PE/1000.;
         TLorentzVector mumdata_4vector(mum_px, mum_py, mum_pz, mum_e);
-        vars[23] = mumdata_4vector.Phi();
-        vars[24] = mumdata_4vector.Pt();
-        vars[25] = mumdata_4vector.Eta();
-        vars[26] = mum_px;
-        vars[27] = mum_py;
-        vars[28] = mum_pz;
-        vars[29] = mum_e;
-        vars[30] = mumdata_4vector.M();//datatree->mum_M;
-        vars[31] = datatree->mum_TRACK_PCHI2;
+        vars[24] = mumdata_4vector.Phi();
+        vars[25] = mumdata_4vector.Pt();
+        vars[26] = mumdata_4vector.Eta();
+        vars[27] = mum_px;
+        vars[28] = mum_py;
+        vars[29] = mum_pz;
+        vars[30] = mum_e;
+        vars[31] = mumdata_4vector.M();//datatree->mum_M;
+        vars[32] = datatree->mum_TRACK_PCHI2;
 
         double mup_px = datatree->mup_PX/1000.;
         double mup_py = datatree->mup_PY/1000.;
         double mup_pz = datatree->mup_PZ/1000.;
         double mup_e  = datatree->mup_PE/1000.;
         TLorentzVector mupdata_4vector(mup_px, mup_py, mup_pz, mup_e);
-        vars[32] = mupdata_4vector.Phi();
-        vars[33] = mupdata_4vector.Pt();
-        vars[34] = mupdata_4vector.Eta();
-        vars[35] = mup_px;
-        vars[36] = mup_py;
-        vars[37] = mup_pz;
-        vars[38] = mup_e;
-        vars[39] = mupdata_4vector.M();//datatree->mup_M;
-        vars[40] = datatree->mup_TRACK_PCHI2;
+        vars[33] = mupdata_4vector.Phi();
+        vars[34] = mupdata_4vector.Pt();
+        vars[35] = mupdata_4vector.Eta();
+        vars[36] = mup_px;
+        vars[37] = mup_py;
+        vars[38] = mup_pz;
+        vars[39] = mup_e;
+        vars[40] = mupdata_4vector.M();//datatree->mup_M;
+        vars[41] = datatree->mup_TRACK_PCHI2;
 
         // Fill the TNtuple
         ntuple_data->Fill(vars);

@@ -64,9 +64,15 @@ int main()
         std::cout<<"lh_energy_reco   = "<<mcrecotree->Jet_Dtr_E[h1_location]<<std::endl;
         std::cout<<"lh_energy_match  = "<<mcrecotree->Jet_Dtr_TRUE_E[matched_h1_location]<<std::endl;
         std::cout<<"nlh_energy_reco  = "<<mcrecotree->Jet_Dtr_E[h2_location]<<std::endl;
-        std::cout<<"nlh_energy_match = "<<mcrecotree->Jet_Dtr_TRUE_E[matched_h2_location]<<std::endl; 
-        int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&(mcrecotree->Jet_Dtr_ID[h1_location]==\
-        mcrecotree->Jet_Dtr_TRUE_ID[matched_h1_location]&&mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])) ? 1 : 0 ;
+        std::cout<<"nlh_energy_match = "<<mcrecotree->Jet_Dtr_TRUE_E[matched_h2_location]<<std::endl;
+        std::cout<<"lh_position        ="<<h1_location<<std::endl;
+        std::cout<<"lhmatched_position ="<<matched_h1_location<<std::endl;
+        std::cout<<"nlh_position        ="<<h2_location<<std::endl;
+        std::cout<<"nlhmatched_position ="<<matched_h2_location<<std::endl;
+        int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\
+                    (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h1_location]&&\
+                     mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])&&\
+                     (h1_location==matched_h1_location&&h2_location==matched_h2_location)) ? 1 : 0 ;
         std::cout<<"SIGNAL = "<<signal<<std::endl;
 
         std::cout<<"------------------------------------------------------------------"<<std::endl;

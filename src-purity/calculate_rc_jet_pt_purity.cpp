@@ -23,11 +23,11 @@ int main()
     TNtuple* ntuple_purity = (TNtuple*) fpurity->Get((name_ntuple_purity).c_str());
     
     // Create the data histograms
-    TH1F* hcs_samesign = new TH1F("hcs_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hcs_diffsign = new TH1F("hcs_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hcs_sum      = new TH1F("hcs_sum"     ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hcs_sub      = new TH1F("hcs_sub"     ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* rc           = new TH1F("rc"          ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hcs_samesign = new TH1F("hcs_samesign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hcs_diffsign = new TH1F("hcs_diffsign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hcs_sum      = new TH1F("hcs_sum"     ,"",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hcs_sub      = new TH1F("hcs_sub"     ,"",Nbin_jet_pt,jet_pt_limits);
+    TH1F* rc           = new TH1F("rc"          ,"",Nbin_jet_pt,jet_pt_limits);
 
     hcs_samesign->Sumw2();
     hcs_diffsign->Sumw2();
@@ -50,12 +50,12 @@ int main()
     gROOT->cd();
 
     // Create purity plots
-    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_jet_pt,jet_pt_limits);
 
     // Get the purities
     ntuple_purity->Project("hrec_diffsign"   ,"jet_pt",diffsign_cut_data);
@@ -66,8 +66,8 @@ int main()
     hpurity_samesign->Divide(hrecgen_samesign,hrec_samesign,1,1,"B");
     
     // Apply purities
-    TH1F* hcs_samesign_p = new TH1F("hcs_samesign_p","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
-    TH1F* hcs_diffsign_p = new TH1F("hcs_diffsign_p","",Nbin_jet_pt,jet_pt_min,jet_pt_max);
+    TH1F* hcs_samesign_p = new TH1F("hcs_samesign_p","",Nbin_jet_pt,jet_pt_limits);
+    TH1F* hcs_diffsign_p = new TH1F("hcs_diffsign_p","",Nbin_jet_pt,jet_pt_limits);
     hcs_samesign_p->Sumw2();
     hcs_diffsign_p->Sumw2();
     ntuple_data->Project("hcs_diffsign_p","jet_pt",diffsign_cut_data);
