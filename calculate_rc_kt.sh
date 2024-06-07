@@ -3,8 +3,8 @@
 mother_dir=$(pwd)
 
 cd ./bin
-./calculate_rc_jt
+./calculate_rc_kt
 
 cd ${mother_dir}/src
-root print_rc_jt.cpp
+root print_rc_kt.cpp
 

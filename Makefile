@@ -13,8 +13,8 @@ ROOTINCDIR  := $(shell root-config --incdir)
 ROOTLIBS    := $(shell root-config --libs) -lEG
 
 all: ${BIN}/create_ntuples \
-	 ${BIN}/calculate_cuts_impact ${BIN}/calculate_rc_z ${BIN}/calculate_rc_jt ${BIN}/calculate_rc_jet_pt \
-	 ${BIN}/create_purity_ntuple ${BIN}/calculate_rc_jet_pt_purity ${BIN}/calculate_rc_z_purity ${BIN}/calculate_rc_jt_purity \
+	 ${BIN}/calculate_cuts_impact ${BIN}/calculate_rc_z ${BIN}/calculate_rc_kt ${BIN}/calculate_rc_jet_pt \
+	 ${BIN}/create_purity_ntuple ${BIN}/calculate_rc_jet_pt_purity ${BIN}/calculate_rc_z_purity ${BIN}/calculate_rc_kt_purity \
 	 ${BIN}/create_decays_ntuple
 
 ${BIN}/calculate_cuts_impact: ${SRC}/calculate_cuts_impact.cpp
@@ -32,8 +32,8 @@ ${BIN}/create_decays_ntuple: ${SRC_D}/create_decays_ntuple.cpp
 ${BIN}/calculate_rc_z: ${SRC}/calculate_rc_z.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC}/calculate_rc_z.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_z
 
-${BIN}/calculate_rc_jt: ${SRC}/calculate_rc_jt.cpp
-	${CXX} ${ROOTCFLAGS} ${SRC}/calculate_rc_jt.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_jt
+${BIN}/calculate_rc_kt: ${SRC}/calculate_rc_kt.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC}/calculate_rc_kt.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_kt
 
 ${BIN}/calculate_rc_jet_pt: ${SRC}/calculate_rc_jet_pt.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC}/calculate_rc_jet_pt.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_jet_pt
@@ -44,8 +44,8 @@ ${BIN}/calculate_rc_jet_pt_purity: ${SRC_P}/calculate_rc_jet_pt_purity.cpp
 ${BIN}/calculate_rc_z_purity: ${SRC_P}/calculate_rc_z_purity.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC_P}/calculate_rc_z_purity.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_z_purity
 
-${BIN}/calculate_rc_jt_purity: ${SRC_P}/calculate_rc_jt_purity.cpp
-	${CXX} ${ROOTCFLAGS} ${SRC_P}/calculate_rc_jt_purity.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_jt_purity
+${BIN}/calculate_rc_kt_purity: ${SRC_P}/calculate_rc_kt_purity.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC_P}/calculate_rc_kt_purity.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_kt_purity
 
 clean:
 	rm ${BIN}/*

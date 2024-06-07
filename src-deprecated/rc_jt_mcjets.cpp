@@ -9,24 +9,24 @@
 int main()
 {
     // Declare file where histograms will be saved
-    TFile* fout = new TFile((output_folder+rc_jt_mcjets).c_str(),"RECREATE");
+    TFile* fout = new TFile((output_folder+rc_kt_mcjets).c_str(),"RECREATE");
     gROOT->cd();
 
     // Declare a TTree based on the custom class
     TMCJets* mctree = new TMCJets();
 
     // Declare histograms
-    TH1F* samesign_sigma_jt = new TH1F("samesign_sigma_jt","",Nbin_jt,jt_min,jt_max);
-    TH1F* diffsign_sigma_jt = new TH1F("diffsign_sigma_jt","",Nbin_jt,jt_min,jt_max);
-    TH1F* sum_sigma_jt      = new TH1F("sum_sigma_jt"     ,"",Nbin_jt,jt_min,jt_max);
-    TH1F* sub_sigma_jt      = new TH1F("sub_sigma_jt"     ,"",Nbin_jt,jt_min,jt_max);
-    TH1F* rc_jt            = new TH1F("rc_jt"           ,"",Nbin_jt,jt_min,jt_max);
+    TH1F* samesign_sigma_kt = new TH1F("samesign_sigma_kt","",Nbin_kt,kt_min,kt_max);
+    TH1F* diffsign_sigma_kt = new TH1F("diffsign_sigma_kt","",Nbin_kt,kt_min,kt_max);
+    TH1F* sum_sigma_kt      = new TH1F("sum_sigma_kt"     ,"",Nbin_kt,kt_min,kt_max);
+    TH1F* sub_sigma_kt      = new TH1F("sub_sigma_kt"     ,"",Nbin_kt,kt_min,kt_max);
+    TH1F* rc_kt            = new TH1F("rc_kt"           ,"",Nbin_kt,kt_min,kt_max);
 
-    samesign_sigma_jt->Sumw2();
-    diffsign_sigma_jt->Sumw2();
-    sum_sigma_jt->Sumw2();     
-    sub_sigma_jt->Sumw2();     
-    rc_jt->Sumw2();             
+    samesign_sigma_kt->Sumw2();
+    diffsign_sigma_kt->Sumw2();
+    sum_sigma_kt->Sumw2();     
+    sub_sigma_kt->Sumw2();     
+    rc_kt->Sumw2();             
 
     // Jets loop
     for(int evt = 0 ; evt < mctree->fChain->GetEntries() ; evt++)
@@ -56,21 +56,21 @@ int main()
         // Fill histogram accordingly
         float h1_charge = mctree->MCJet_Dtr_ThreeCharge[h1_location];
         float h2_charge = mctree->MCJet_Dtr_ThreeCharge[h2_location];
-        if(h1_charge*h2_charge<0) diffsign_sigma_jt->Fill(mctree->MCJet_Dtr_JT[h2_location]);
-        else samesign_sigma_jt->Fill(mctree->MCJet_Dtr_JT[h2_location]);
+        if(h1_charge*h2_charge<0) diffsign_sigma_kt->Fill(mctree->MCJet_Dtr_kt[h2_location]);
+        else samesign_sigma_kt->Fill(mctree->MCJet_Dtr_kt[h2_location]);
 
         // Obtain the rc
-        sub_sigma_jt->Add(samesign_sigma_jt,diffsign_sigma_jt,1,-1);
-        sum_sigma_jt->Add(samesign_sigma_jt,diffsign_sigma_jt,1, 1);
-        rc_jt->Divide(sub_sigma_jt,sum_sigma_jt,1,1);
+        sub_sigma_kt->Add(samesign_sigma_kt,diffsign_sigma_kt,1,-1);
+        sum_sigma_kt->Add(samesign_sigma_kt,diffsign_sigma_kt,1, 1);
+        rc_kt->Divide(sub_sigma_kt,sum_sigma_kt,1,1);
     }
     
     fout->cd();
-    samesign_sigma_jt->Write();
-    diffsign_sigma_jt->Write();
-    sub_sigma_jt->Write();
-    sum_sigma_jt->Write();
-    rc_jt->Write();
+    samesign_sigma_kt->Write();
+    diffsign_sigma_kt->Write();
+    sub_sigma_kt->Write();
+    sum_sigma_kt->Write();
+    rc_kt->Write();
     
     fout->Close();
 

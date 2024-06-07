@@ -349,7 +349,7 @@ public :
    Float_t         Jet_Dtr_YVTX[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_ZVTX[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_R[1024];   //[Jet_NDtr]
-   Float_t         Jet_Dtr_JT[1024];   //[Jet_NDtr]
+   Float_t         Jet_Dtr_kt[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_Z[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_TrackType[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_TrackKey[1024];   //[Jet_NDtr]
@@ -746,7 +746,7 @@ public :
    TBranch        *b_Jet_Dtr_YVTX;   //!
    TBranch        *b_Jet_Dtr_ZVTX;   //!
    TBranch        *b_Jet_Dtr_R;   //!
-   TBranch        *b_Jet_Dtr_JT;   //!
+   TBranch        *b_Jet_Dtr_kt;   //!
    TBranch        *b_Jet_Dtr_Z;   //!
    TBranch        *b_Jet_Dtr_TrackType;   //!
    TBranch        *b_Jet_Dtr_TrackKey;   //!
@@ -1226,7 +1226,7 @@ void TZJetsData::Init(TTree *tree)
    fChain->SetBranchAddress("Jet_Dtr_YVTX", Jet_Dtr_YVTX, &b_Jet_Dtr_YVTX);
    fChain->SetBranchAddress("Jet_Dtr_ZVTX", Jet_Dtr_ZVTX, &b_Jet_Dtr_ZVTX);
    fChain->SetBranchAddress("Jet_Dtr_R", Jet_Dtr_R, &b_Jet_Dtr_R);
-   fChain->SetBranchAddress("Jet_Dtr_JT", Jet_Dtr_JT, &b_Jet_Dtr_JT);
+   fChain->SetBranchAddress("Jet_Dtr_kt", Jet_Dtr_kt, &b_Jet_Dtr_kt);
    fChain->SetBranchAddress("Jet_Dtr_Z", Jet_Dtr_Z, &b_Jet_Dtr_Z);
    fChain->SetBranchAddress("Jet_Dtr_TrackType", Jet_Dtr_TrackType, &b_Jet_Dtr_TrackType);
    fChain->SetBranchAddress("Jet_Dtr_TrackKey", Jet_Dtr_TrackKey, &b_Jet_Dtr_TrackKey);
