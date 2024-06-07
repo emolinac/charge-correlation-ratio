@@ -37,11 +37,11 @@ int main()
 
     for(int i = 0 ; i < N ; i++)
     {
-        hcs_samesign[i] = new TH1F(Form("hcs_samesign_%i",i),"",Nbin_z,z_min,z_max);
-        hcs_diffsign[i] = new TH1F(Form("hcs_diffsign_%i",i),"",Nbin_z,z_min,z_max);
-        hcs_sum[i]      = new TH1F(Form("hcs_sum_%i",i)     ,"",Nbin_z,z_min,z_max);
-        hcs_sub[i]      = new TH1F(Form("hcs_sub_%i",i)     ,"",Nbin_z,z_min,z_max);
-        rc[i]           = new TH1F(Form("rc_%i",i)          ,"",Nbin_z,z_min,z_max);
+        hcs_samesign[i] = new TH1F(Form("hcs_samesign_%i",i),"",Nbin_z,z_limits);
+        hcs_diffsign[i] = new TH1F(Form("hcs_diffsign_%i",i),"",Nbin_z,z_limits);
+        hcs_sum[i]      = new TH1F(Form("hcs_sum_%i",i)     ,"",Nbin_z,z_limits);
+        hcs_sub[i]      = new TH1F(Form("hcs_sub_%i",i)     ,"",Nbin_z,z_limits);
+        rc[i]           = new TH1F(Form("rc_%i",i)          ,"",Nbin_z,z_limits);
 
         hcs_samesign[i]->Sumw2();
         hcs_diffsign[i]->Sumw2();

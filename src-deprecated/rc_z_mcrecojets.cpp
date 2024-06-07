@@ -17,11 +17,11 @@ int main()
     TMCJets* mctree = new TMCJets();
 
     // Declare histograms
-    TH1F* samesign_sigma_z = new TH1F("samesign_sigma_z","",Nbin_z,z_min,z_max);
-    TH1F* diffsign_sigma_z = new TH1F("diffsign_sigma_z","",Nbin_z,z_min,z_max);
-    TH1F* sum_sigma_z      = new TH1F("sum_sigma_z"     ,"",Nbin_z,z_min,z_max);
-    TH1F* sub_sigma_z      = new TH1F("sub_sigma_z"     ,"",Nbin_z,z_min,z_max);
-    TH1F* rc_z            = new TH1F("rc_z"           ,"",Nbin_z,z_min,z_max);
+    TH1F* samesign_sigma_z = new TH1F("samesign_sigma_z","",Nbin_z,z_limits);
+    TH1F* diffsign_sigma_z = new TH1F("diffsign_sigma_z","",Nbin_z,z_limits);
+    TH1F* sum_sigma_z      = new TH1F("sum_sigma_z"     ,"",Nbin_z,z_limits);
+    TH1F* sub_sigma_z      = new TH1F("sub_sigma_z"     ,"",Nbin_z,z_limits);
+    TH1F* rc_z            = new TH1F("rc_z"           ,"",Nbin_z,z_limits);
 
     samesign_sigma_z->Sumw2();
     diffsign_sigma_z->Sumw2();

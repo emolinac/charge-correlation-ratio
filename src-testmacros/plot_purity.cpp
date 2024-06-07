@@ -27,12 +27,12 @@ void plot_purity()
     //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",8,2,4.5);
     
     // Z
-    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_z,z_min,z_max);
-    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_z,z_min,z_max);
-    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_z,z_min,z_max);
-    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_z,z_min,z_max);
-    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_z,z_min,z_max);
-    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_z,z_min,z_max);
+    TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_z,z_limits);
+    TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_z,z_limits);
+    TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_z,z_limits);
+    TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_z,z_limits);
+    TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_z,z_limits);
+    TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_z,z_limits);
     
     // PHI
     //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",8,-3.14,3.14);

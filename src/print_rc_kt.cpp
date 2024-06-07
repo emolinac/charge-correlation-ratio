@@ -36,7 +36,7 @@ void print_rc_kt()
     s->Add(h_rc_kt_data);
     s->Draw("NOSTACK");
 
-    s->SetTitle(";j_{T}(GeV);r_{c}");
+    s->SetTitle(";k_{#perp}(GeV);r_{c}");
     s->GetYaxis()->SetRangeUser(-1,1);
 
     //Set TLegend

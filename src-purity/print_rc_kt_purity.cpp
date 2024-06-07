@@ -28,7 +28,7 @@ void print_rc_kt_purity()
     s->Add(h_rc_kt_data_purity);
     s->Draw("NOSTACK E1");
 
-    s->SetTitle(";j_t(GeV);r_{c}");
+    s->SetTitle(";k_{#perp}(GeV);r_{c}");
     s->GetYaxis()->SetRangeUser(-1,1);
 
     //Set TLegend

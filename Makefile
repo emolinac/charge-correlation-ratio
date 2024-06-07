@@ -15,7 +15,7 @@ ROOTLIBS    := $(shell root-config --libs) -lEG
 all: ${BIN}/create_ntuples \
 	 ${BIN}/calculate_cuts_impact ${BIN}/calculate_rc_z ${BIN}/calculate_rc_kt ${BIN}/calculate_rc_jet_pt \
 	 ${BIN}/create_purity_ntuple ${BIN}/calculate_rc_jet_pt_purity ${BIN}/calculate_rc_z_purity ${BIN}/calculate_rc_kt_purity \
-	 ${BIN}/create_decays_ntuple
+	 ${BIN}/create_decays_ntuple ${BIN}/determine_binning
 
 ${BIN}/calculate_cuts_impact: ${SRC}/calculate_cuts_impact.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC}/calculate_cuts_impact.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_cuts_impact
@@ -46,6 +46,9 @@ ${BIN}/calculate_rc_z_purity: ${SRC_P}/calculate_rc_z_purity.cpp
 
 ${BIN}/calculate_rc_kt_purity: ${SRC_P}/calculate_rc_kt_purity.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC_P}/calculate_rc_kt_purity.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_kt_purity
+
+${BIN}/determine_binning: ${SRC}/determine_binning.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC}/determine_binning.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/determine_binning
 
 clean:
 	rm ${BIN}/*

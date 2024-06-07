@@ -16,11 +16,11 @@ int main()
     TMCJets* mctree = new TMCJets();
 
     // Declare histograms
-    TH1F* samesign_sigma_kt = new TH1F("samesign_sigma_kt","",Nbin_kt,kt_min,kt_max);
-    TH1F* diffsign_sigma_kt = new TH1F("diffsign_sigma_kt","",Nbin_kt,kt_min,kt_max);
-    TH1F* sum_sigma_kt      = new TH1F("sum_sigma_kt"     ,"",Nbin_kt,kt_min,kt_max);
-    TH1F* sub_sigma_kt      = new TH1F("sub_sigma_kt"     ,"",Nbin_kt,kt_min,kt_max);
-    TH1F* rc_kt            = new TH1F("rc_kt"           ,"",Nbin_kt,kt_min,kt_max);
+    TH1F* samesign_sigma_kt = new TH1F("samesign_sigma_kt","",Nbin_kt,kt_limits);
+    TH1F* diffsign_sigma_kt = new TH1F("diffsign_sigma_kt","",Nbin_kt,kt_limits);
+    TH1F* sum_sigma_kt      = new TH1F("sum_sigma_kt"     ,"",Nbin_kt,kt_limits);
+    TH1F* sub_sigma_kt      = new TH1F("sub_sigma_kt"     ,"",Nbin_kt,kt_limits);
+    TH1F* rc_kt            = new TH1F("rc_kt"           ,"",Nbin_kt,kt_limits);
 
     samesign_sigma_kt->Sumw2();
     diffsign_sigma_kt->Sumw2();

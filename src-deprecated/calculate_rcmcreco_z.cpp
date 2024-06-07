@@ -21,11 +21,11 @@ int main()
     TNtuple* ntuple = (TNtuple*) fin->Get(name_ntuple_mcreco.c_str());
     
     // Create the histograms
-    TH1F* hcs_samesign = new TH1F("hcs_samesign","",Nbin_z,z_min,z_max);
-    TH1F* hcs_diffsign = new TH1F("hcs_diffsign","",Nbin_z,z_min,z_max);
-    TH1F* hcs_sum      = new TH1F("hcs_sum"     ,"",Nbin_z,z_min,z_max);
-    TH1F* hcs_sub      = new TH1F("hcs_sub"     ,"",Nbin_z,z_min,z_max);
-    TH1F* rc           = new TH1F("rc"          ,"",Nbin_z,z_min,z_max);
+    TH1F* hcs_samesign = new TH1F("hcs_samesign","",Nbin_z,z_limits);
+    TH1F* hcs_diffsign = new TH1F("hcs_diffsign","",Nbin_z,z_limits);
+    TH1F* hcs_sum      = new TH1F("hcs_sum"     ,"",Nbin_z,z_limits);
+    TH1F* hcs_sub      = new TH1F("hcs_sub"     ,"",Nbin_z,z_limits);
+    TH1F* rc           = new TH1F("rc"          ,"",Nbin_z,z_limits);
 
     hcs_samesign->Sumw2();
     hcs_diffsign->Sumw2();

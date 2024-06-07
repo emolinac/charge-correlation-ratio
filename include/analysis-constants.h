@@ -20,19 +20,20 @@ const float ptjet_min = 15.;
 const float ptjet_max = 1E6;
 
 // Define binning
-const int Nbin_z      = 8;
-const int Nbin_kt     = 10;
+const int Nbin_z      = 5;
+const int Nbin_kt     = 5;
 const int Nbin_jet_pt = 3; // usual binning in jet pt
 
 const double z_min  = 0;
 const double z_max  = 0.5;
 const double kt_min = 0.0002;  
-const double kt_max = 2; 
+const double kt_max = 60; 
 const double jet_pt_min = 20; 
 const double jet_pt_max = 100;
 
 const double jet_pt_limits[] = {jet_pt_min,30.,50.,jet_pt_max};
-
+const double z_limits[] = {z_min, 0.26625, 0.34875, 0.40875, 0.45875, z_max};
+const double kt_limits[] = {kt_min, 0.750198, 1.3502, 2.85019, 5.55018, kt_max};
 // Define analysis cuts
 // Jet cuts
 TCut jet_eta_cut = "jet_eta>2&&jet_eta<4.5";

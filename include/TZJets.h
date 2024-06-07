@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Fri Apr 26 23:53:44 2024 by ROOT version 6.26/10
+// Fri Jun  7 16:26:33 2024 by ROOT version 6.26/10
 // from TChain StdHltZJets/DecayTree/
 //////////////////////////////////////////////////////////
 
@@ -406,7 +406,7 @@ public :
    Float_t         Jet_Dtr_YVTX[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_ZVTX[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_R[1024];   //[Jet_NDtr]
-   Float_t         Jet_Dtr_kt[1024];   //[Jet_NDtr]
+   Float_t         Jet_Dtr_JT[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_Z[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_TrackType[1024];   //[Jet_NDtr]
    Float_t         Jet_Dtr_TrackKey[1024];   //[Jet_NDtr]
@@ -951,7 +951,7 @@ public :
    TBranch        *b_Jet_Dtr_YVTX;   //!
    TBranch        *b_Jet_Dtr_ZVTX;   //!
    TBranch        *b_Jet_Dtr_R;   //!
-   TBranch        *b_Jet_Dtr_kt;   //!
+   TBranch        *b_Jet_Dtr_JT;   //!
    TBranch        *b_Jet_Dtr_Z;   //!
    TBranch        *b_Jet_Dtr_TrackType;   //!
    TBranch        *b_Jet_Dtr_TrackKey;   //!
@@ -1151,12 +1151,12 @@ TZJets::TZJets(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("StdHltZJets/DecayTree","");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim10a_MU_2016_08162023.root/StdHltZJets/DecayTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim10a_MD_2016_08162023.root/StdHltZJets/DecayTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09j_MU_2016_08162023.root/StdHltZJets/DecayTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09j_MD_2016_08162023.root/StdHltZJets/DecayTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09l_MU_2016_08162023.root/StdHltZJets/DecayTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09l_MD_2016_08162023.root/StdHltZJets/DecayTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim10a_MU_2016_08162023.root/StdHltZJets/DecayTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim10a_MD_2016_08162023.root/StdHltZJets/DecayTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09j_MU_2016_08162023.root/StdHltZJets/DecayTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09j_MD_2016_08162023.root/StdHltZJets/DecayTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09l_MU_2016_08162023.root/StdHltZJets/DecayTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09l_MD_2016_08162023.root/StdHltZJets/DecayTree");
       tree = chain;
 #endif // SINGLE_TREE
 
@@ -1583,7 +1583,7 @@ void TZJets::Init(TTree *tree)
    fChain->SetBranchAddress("Jet_Dtr_YVTX", Jet_Dtr_YVTX, &b_Jet_Dtr_YVTX);
    fChain->SetBranchAddress("Jet_Dtr_ZVTX", Jet_Dtr_ZVTX, &b_Jet_Dtr_ZVTX);
    fChain->SetBranchAddress("Jet_Dtr_R", Jet_Dtr_R, &b_Jet_Dtr_R);
-   fChain->SetBranchAddress("Jet_Dtr_kt", Jet_Dtr_kt, &b_Jet_Dtr_kt);
+   fChain->SetBranchAddress("Jet_Dtr_JT", Jet_Dtr_JT, &b_Jet_Dtr_JT);
    fChain->SetBranchAddress("Jet_Dtr_Z", Jet_Dtr_Z, &b_Jet_Dtr_Z);
    fChain->SetBranchAddress("Jet_Dtr_TrackType", Jet_Dtr_TrackType, &b_Jet_Dtr_TrackType);
    fChain->SetBranchAddress("Jet_Dtr_TrackKey", Jet_Dtr_TrackKey, &b_Jet_Dtr_TrackKey);

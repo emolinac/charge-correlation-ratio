@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Fri Apr 26 23:53:43 2024 by ROOT version 6.26/10
+// Fri Jun  7 16:26:32 2024 by ROOT version 6.26/10
 // from TChain mcjettuple/MCJetTree/
 //////////////////////////////////////////////////////////
 
@@ -67,7 +67,7 @@ public :
    Float_t         MCJet_Dtr_E[1024];   //[CELLjet_MCNDtr]
    Float_t         MCJet_Dtr_P[1024];   //[CELLjet_MCNDtr]
    Float_t         MCJet_Dtr_R[1024];   //[CELLjet_MCNDtr]
-   Float_t         MCJet_Dtr_kt[1024];   //[CELLjet_MCNDtr]
+   Float_t         MCJet_Dtr_JT[1024];   //[CELLjet_MCNDtr]
    Float_t         MCJet_Dtr_Z[1024];   //[CELLjet_MCNDtr]
    Float_t         MCJet_Dtr_PT[1024];   //[CELLjet_MCNDtr]
    Float_t         MCJet_Dtr_M[1024];   //[CELLjet_MCNDtr]
@@ -159,7 +159,7 @@ public :
    Float_t         MCJet_recojet_Dtr_VY[1024];   //[CELLjet_NDtr]
    Float_t         MCJet_recojet_Dtr_VZ[1024];   //[CELLjet_NDtr]
    Float_t         MCJet_recojet_Dtr_Z[1024];   //[CELLjet_NDtr]
-   Float_t         MCJet_recojet_Dtr_kt[1024];   //[CELLjet_NDtr]
+   Float_t         MCJet_recojet_Dtr_JT[1024];   //[CELLjet_NDtr]
    Float_t         MCJet_recojet_Dtr_R[1024];   //[CELLjet_NDtr]
    Float_t         MCJet_recojet_Dtr_TrackType[1024];   //[CELLjet_NDtr]
    Float_t         MCJet_recojet_Dtr_TrackKey[1024];   //[CELLjet_NDtr]
@@ -282,7 +282,7 @@ public :
    TBranch        *b_MCJet_Dtr_E;   //!
    TBranch        *b_MCJet_Dtr_P;   //!
    TBranch        *b_MCJet_Dtr_R;   //!
-   TBranch        *b_MCJet_Dtr_kt;   //!
+   TBranch        *b_MCJet_Dtr_JT;   //!
    TBranch        *b_MCJet_Dtr_Z;   //!
    TBranch        *b_MCJet_Dtr_PT;   //!
    TBranch        *b_MCJet_Dtr_M;   //!
@@ -374,7 +374,7 @@ public :
    TBranch        *b_MCJet_recojet_Dtr_VY;   //!
    TBranch        *b_MCJet_recojet_Dtr_VZ;   //!
    TBranch        *b_MCJet_recojet_Dtr_Z;   //!
-   TBranch        *b_MCJet_recojet_Dtr_kt;   //!
+   TBranch        *b_MCJet_recojet_Dtr_JT;   //!
    TBranch        *b_MCJet_recojet_Dtr_R;   //!
    TBranch        *b_MCJet_recojet_Dtr_TrackType;   //!
    TBranch        *b_MCJet_recojet_Dtr_TrackKey;   //!
@@ -484,12 +484,12 @@ TMCJets::TMCJets(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("mcjettuple/MCJetTree","");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim10a_MU_2016_08162023.root/mcjettuple/MCJetTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim10a_MD_2016_08162023.root/mcjettuple/MCJetTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09j_MU_2016_08162023.root/mcjettuple/MCJetTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09j_MD_2016_08162023.root/mcjettuple/MCJetTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09l_MU_2016_08162023.root/mcjettuple/MCJetTree");
-      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio-Z/input-files/Zhadron_MCReco_Sim09l_MD_2016_08162023.root/mcjettuple/MCJetTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim10a_MU_2016_08162023.root/mcjettuple/MCJetTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim10a_MD_2016_08162023.root/mcjettuple/MCJetTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09j_MU_2016_08162023.root/mcjettuple/MCJetTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09j_MD_2016_08162023.root/mcjettuple/MCJetTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09l_MU_2016_08162023.root/mcjettuple/MCJetTree");
+      chain->Add("/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/input-files/Zhadron_MCReco_Sim09l_MD_2016_08162023.root/mcjettuple/MCJetTree");
       tree = chain;
 #endif // SINGLE_TREE
 
@@ -584,7 +584,7 @@ void TMCJets::Init(TTree *tree)
    fChain->SetBranchAddress("MCJet_Dtr_E", MCJet_Dtr_E, &b_MCJet_Dtr_E);
    fChain->SetBranchAddress("MCJet_Dtr_P", MCJet_Dtr_P, &b_MCJet_Dtr_P);
    fChain->SetBranchAddress("MCJet_Dtr_R", MCJet_Dtr_R, &b_MCJet_Dtr_R);
-   fChain->SetBranchAddress("MCJet_Dtr_kt", MCJet_Dtr_kt, &b_MCJet_Dtr_kt);
+   fChain->SetBranchAddress("MCJet_Dtr_JT", MCJet_Dtr_JT, &b_MCJet_Dtr_JT);
    fChain->SetBranchAddress("MCJet_Dtr_Z", MCJet_Dtr_Z, &b_MCJet_Dtr_Z);
    fChain->SetBranchAddress("MCJet_Dtr_PT", MCJet_Dtr_PT, &b_MCJet_Dtr_PT);
    fChain->SetBranchAddress("MCJet_Dtr_M", MCJet_Dtr_M, &b_MCJet_Dtr_M);
@@ -676,7 +676,7 @@ void TMCJets::Init(TTree *tree)
    fChain->SetBranchAddress("MCJet_recojet_Dtr_VY", MCJet_recojet_Dtr_VY, &b_MCJet_recojet_Dtr_VY);
    fChain->SetBranchAddress("MCJet_recojet_Dtr_VZ", MCJet_recojet_Dtr_VZ, &b_MCJet_recojet_Dtr_VZ);
    fChain->SetBranchAddress("MCJet_recojet_Dtr_Z", MCJet_recojet_Dtr_Z, &b_MCJet_recojet_Dtr_Z);
-   fChain->SetBranchAddress("MCJet_recojet_Dtr_kt", MCJet_recojet_Dtr_kt, &b_MCJet_recojet_Dtr_kt);
+   fChain->SetBranchAddress("MCJet_recojet_Dtr_JT", MCJet_recojet_Dtr_JT, &b_MCJet_recojet_Dtr_JT);
    fChain->SetBranchAddress("MCJet_recojet_Dtr_R", MCJet_recojet_Dtr_R, &b_MCJet_recojet_Dtr_R);
    fChain->SetBranchAddress("MCJet_recojet_Dtr_TrackType", MCJet_recojet_Dtr_TrackType, &b_MCJet_recojet_Dtr_TrackType);
    fChain->SetBranchAddress("MCJet_recojet_Dtr_TrackKey", MCJet_recojet_Dtr_TrackKey, &b_MCJet_recojet_Dtr_TrackKey);
