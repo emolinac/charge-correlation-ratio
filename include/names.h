@@ -4,8 +4,7 @@
 // Naming convention : all folders must end with the backslash
 
 // Names of the folders
-//std::string mother_folder = "/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/";
-std::string mother_folder = "write_mother_folder";
+std::string mother_folder = "/home/esteban/Documents/umich-work/lhcb/charge-correlation-ratio/";
 std::string output_folder = mother_folder+"output-files/";
 std::string input_folder  = mother_folder+"input-files/";
 
