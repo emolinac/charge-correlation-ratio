@@ -1,14 +1,8 @@
-#include <iostream>
-#include "analysis-constants.h"
-#include "names.h"
-#include "utils.h"
-#include "TFile.h"
-#include "TNtuple.h"
-#include "TROOT.h"
-#include "TH1F.h"
-#include "TCut.h"
+#include "../include/analysis-constants.h"
+#include "../include/names.h"
+#include "../include/utils.h"
 
-int main()
+void macro_determine_binning()
 {
     // Open data file 
     TFile* f = new TFile((output_folder+namef_ntuple_dihadron).c_str());
@@ -33,7 +27,7 @@ int main()
     // Determine binning in z
     double entries_bin_z = h_z->Integral()/Nbin_z;
     std::cout<<"The number of entries for z is "<<entries_bin_z<<std::endl;
-    std::cout<<"Binning in z : ["<<z_min;
+    std::cout<<"Binning in z : {z_min";
     int counter_z = 1;
     for(int bin = 1 ; bin <= h_z->GetNbinsX() ; bin++)
     {
@@ -42,7 +36,7 @@ int main()
         // Exit when determined last bin
         if(counter_z==Nbin_z) 
         {
-            std::cout<<", "<<z_max<<"]"<<std::endl;
+            std::cout<<", z_max }"<<std::endl;
             break;
         }
         // Condition to determine limit
@@ -58,7 +52,7 @@ int main()
     // Determine binning in kt
     double entries_bin_kt = h_kt->Integral()/Nbin_kt;
     std::cout<<"The number of entries for kt is "<<entries_bin_kt<<std::endl;
-    std::cout<<"Binning in kt : ["<<kt_min;
+    std::cout<<"Binning in kt : {kt_min";
     int counter_kt = 1;
     for(int bin = 1 ; bin <= h_kt->GetNbinsX() ; bin++)
     {
@@ -67,7 +61,7 @@ int main()
         // Exit when determined last bin
         if(counter_kt==Nbin_kt) 
         {
-            std::cout<<", "<<kt_max<<"]"<<std::endl;
+            std::cout<<", kt_max}"<<std::endl;
             break;
         }
         // Condition to determine limit

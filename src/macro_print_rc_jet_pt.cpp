@@ -2,7 +2,7 @@
 #include "../include/names.h"
 #include "../include/utils.h"
 
-void print_rc_jet_pt()
+void macro_print_rc_jet_pt()
 {
     TFile* fin1 = new TFile((output_folder+"rc_jet_pt_mc.root").c_str());
     TFile* fin2 = new TFile((output_folder+"rc_jet_pt_mcreco.root").c_str());

@@ -2,7 +2,7 @@
 #include "../include/analysis-constants.h"
 #include "../include/names.h"
 
-void makeclasses()
+void macro_makeclasses()
 {
     // Add the files located in the input folder
     TChain* chain1 = new TChain("mcjettuple/MCJetTree");  

@@ -2,7 +2,7 @@
 #include "../include/names.h"
 #include "../include/utils.h"
 
-void print_rc_z_purity()
+void macro_print_rc_z_purity()
 {
     TFile* fin = new TFile((output_folder+namef_rc_z_data_p).c_str());
 

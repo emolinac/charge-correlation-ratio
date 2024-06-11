@@ -2,7 +2,7 @@
 #include "../include/names.h"
 #include "../include/utils.h"
 
-void print_rc_kt()
+void macro_print_rc_kt()
 {
     TFile* fin1 = new TFile((output_folder+"rc_kt_mc.root").c_str());
     TFile* fin2 = new TFile((output_folder+"rc_kt_mcreco.root").c_str());

@@ -2,7 +2,7 @@
 #include "../include/names.h"
 #include "../include/utils.h"
 
-void print_rc_z()
+void macro_print_rc_z()
 {
     // Open the rc(z) files
     TFile* fin1 = new TFile((output_folder+"rc_z_mc.root").c_str());
