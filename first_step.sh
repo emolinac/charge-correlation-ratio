@@ -2,5 +2,7 @@
 
 # Go to src, execute code, and move the respective files
 cd ./src
-root -q makeclasses.cpp
+root -q macro_makeclasses.cpp
 mv *.C *.h ../include
+
+echo "NOTE : Remember to set the mother folder in the names.h file in the include folder!!"
