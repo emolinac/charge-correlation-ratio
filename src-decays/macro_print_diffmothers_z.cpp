@@ -23,9 +23,9 @@ void macro_print_diffmothers_z()
     h_lh_nlh->Sumw2();
     
     ntuple->Project("h_all"   ,"nlh_pz/(nlh_pz+lh_pz)","");    
-    ntuple->Project("h_lh"    ,"nlh_pz/(nlh_pz+lh_pz)","lh_motherid<10&&lh_motherid>-10&&nlh_motherid<10&&nlh_motherid>-10&&eq_charge==1");    
-    ntuple->Project("h_nlh"   ,"nlh_pz/(nlh_pz+lh_pz)","lh_motherid<10&&lh_motherid>-10&&nlh_motherid<10&&nlh_motherid>-10&&eq_charge==0");    
-    ntuple->Project("h_lh_nlh","nlh_pz/(nlh_pz+lh_pz)","lh_motherid<10&&lh_motherid>-10&&nlh_motherid<10&&nlh_motherid>-10");    
+    ntuple->Project("h_lh"    ,"nlh_pz/(nlh_pz+lh_pz)","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10&&eq_charge==1");    
+    ntuple->Project("h_nlh"   ,"nlh_pz/(nlh_pz+lh_pz)","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10&&eq_charge==0");    
+    ntuple->Project("h_lh_nlh","nlh_pz/(nlh_pz+lh_pz)","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");    
 
     // Add some color and draw the histograms
     set_histogram_style(h_all   , kViolet  , std_line_width, std_marker_style, std_marker_size);
