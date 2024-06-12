@@ -1,6 +1,7 @@
 #include "../include/analysis-constants.h"
 #include "../include/names.h"
 #include "../include/utils.h"
+#include "../include/utils-visual.h"
 
 void macro_print_rc_jet_pt()
 {
@@ -14,18 +15,9 @@ void macro_print_rc_jet_pt()
     TH1F* h_rc_jet_pt_data   = (TH1F*) fin3->Get("rc_jet_pt");
 
     // Customize plots
-    h_rc_jet_pt_mc->SetLineColor(kRed);
-    h_rc_jet_pt_mc->SetLineWidth(2);
-    h_rc_jet_pt_mc->SetMarkerStyle(20);
-    h_rc_jet_pt_mc->SetMarkerColor(kRed);
-    h_rc_jet_pt_mcreco->SetLineColor(kBlue);
-    h_rc_jet_pt_mcreco->SetLineWidth(2);
-    h_rc_jet_pt_mcreco->SetMarkerStyle(20);
-    h_rc_jet_pt_mcreco->SetMarkerColor(kBlue);
-    h_rc_jet_pt_data->SetLineColor(kGreen);
-    h_rc_jet_pt_data->SetLineWidth(2);
-    h_rc_jet_pt_data->SetMarkerStyle(20);
-    h_rc_jet_pt_data->SetMarkerColor(kGreen);
+    set_histogram_style(h_rc_jet_pt_mc    , kRed  , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_jet_pt_mcreco, kBlue , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_jet_pt_data  , kGreen, std_line_width, std_marker_style, std_marker_size);
 
     // Create stack
     THStack* s = new THStack("s","");

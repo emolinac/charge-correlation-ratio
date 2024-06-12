@@ -1,6 +1,7 @@
 #include "../include/analysis-constants.h"
 #include "../include/names.h"
 #include "../include/utils.h"
+#include "../include/utils-visual.h"
 
 void macro_print_rc_z()
 {
@@ -15,18 +16,9 @@ void macro_print_rc_z()
     TH1F* h_rc_z_data   = (TH1F*) fin3->Get("rc_z");
 
     // Customize plots
-    h_rc_z_mc->SetLineColor(kRed);
-    h_rc_z_mc->SetLineWidth(2);
-    h_rc_z_mc->SetMarkerStyle(20);
-    h_rc_z_mc->SetMarkerColor(kRed);
-    h_rc_z_mcreco->SetLineColor(kBlue);
-    h_rc_z_mcreco->SetLineWidth(2);
-    h_rc_z_mcreco->SetMarkerStyle(20);
-    h_rc_z_mcreco->SetMarkerColor(kBlue);
-    h_rc_z_data->SetLineColor(kGreen);
-    h_rc_z_data->SetLineWidth(2);
-    h_rc_z_data->SetMarkerStyle(20);
-    h_rc_z_data->SetMarkerColor(kGreen);
+    set_histogram_style(h_rc_z_mc    , kRed  , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_z_mcreco, kBlue , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_z_data  , kGreen, std_line_width, std_marker_style, std_marker_size);
 
     // Create stack
     THStack* s = new THStack("s","");

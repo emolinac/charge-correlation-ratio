@@ -1,6 +1,7 @@
 #include "../include/analysis-constants.h"
 #include "../include/names.h"
 #include "../include/utils.h"
+#include "../include/utils-visual.h"
 
 void macro_print_rc_kt()
 {
@@ -14,18 +15,9 @@ void macro_print_rc_kt()
     TH1F* h_rc_kt_data   = (TH1F*) fin3->Get("rc_kt");
 
     // Customize plots
-    h_rc_kt_mc->SetLineColor(kRed);
-    h_rc_kt_mc->SetLineWidth(2);
-    h_rc_kt_mc->SetMarkerStyle(20);
-    h_rc_kt_mc->SetMarkerColor(kRed);
-    h_rc_kt_mcreco->SetLineColor(kBlue);
-    h_rc_kt_mcreco->SetLineWidth(2);
-    h_rc_kt_mcreco->SetMarkerStyle(20);
-    h_rc_kt_mcreco->SetMarkerColor(kBlue);
-    h_rc_kt_data->SetLineColor(kGreen);
-    h_rc_kt_data->SetLineWidth(2);
-    h_rc_kt_data->SetMarkerStyle(20);
-    h_rc_kt_data->SetMarkerColor(kGreen);
+    set_histogram_style(h_rc_kt_mc    , kRed  , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_kt_mcreco, kBlue , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_kt_data  , kGreen, std_line_width, std_marker_style, std_marker_size);
 
     // Create stack
     THStack* s = new THStack("s","");

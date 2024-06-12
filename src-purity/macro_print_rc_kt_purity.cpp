@@ -1,6 +1,7 @@
 #include "../include/analysis-constants.h"
 #include "../include/names.h"
 #include "../include/utils.h"
+#include "../include/utils-visual.h"
 
 void macro_print_rc_kt_purity()
 {
@@ -11,14 +12,8 @@ void macro_print_rc_kt_purity()
     TH1F* h_rc_kt_data_purity = (TH1F*) fin->Get("rc_kt_purity");
 
     // Customize plots
-    h_rc_kt_data->SetLineColor(kCyan);
-    h_rc_kt_data->SetLineWidth(2);
-    h_rc_kt_data->SetMarkerStyle(20);
-    h_rc_kt_data->SetMarkerColor(kCyan);
-    h_rc_kt_data_purity->SetLineColor(kCyan+3);
-    h_rc_kt_data_purity->SetLineWidth(2);
-    h_rc_kt_data_purity->SetMarkerStyle(20);
-    h_rc_kt_data_purity->SetMarkerColor(kCyan+3);
+    set_histogram_style(h_rc_kt_data       , kCyan  , std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(h_rc_kt_data_purity, kCyan+3, std_line_width, std_marker_style, std_marker_size);
 
     // Create stack
     THStack* s = new THStack("s","");
