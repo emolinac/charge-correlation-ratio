@@ -21,7 +21,7 @@ void macro_print_rc_z_purity()
     s->SetMinimum(-0.600);
     s->Add(h_rc_z_data);
     s->Add(h_rc_z_data_purity);
-    s->Draw("NOSTACK E1");
+    s->Draw("NOSTACK");
 
     s->SetTitle(";z;r_{c}");
     s->GetYaxis()->SetRangeUser(-1,1);

@@ -21,7 +21,7 @@ void macro_print_rc_kt_stringbreakingfrac()
     s->SetMinimum(-0.600);
     s->Add(h_rc_kt_data);
     s->Add(h_rc_kt_data_decays);
-    s->Draw("NOSTACK E1");
+    s->Draw("NOSTACK");
 
     s->SetTitle(";k_{t}(GeV);r_{c}");
     s->GetYaxis()->SetRangeUser(-1,1);
