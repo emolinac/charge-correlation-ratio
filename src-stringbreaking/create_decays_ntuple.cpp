@@ -81,6 +81,9 @@ int main()
         // Fill the TNtuple
         ntuple_decays->Fill(vars);
     }
+
+    std::cout<<"Decays TNtuple done!"<<std::endl; //OK
+
     // Write the TNtuple in the output file
     fout->cd();
     ntuple_decays->Write();
