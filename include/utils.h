@@ -206,19 +206,28 @@ void loc_nlh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_
 
 void loc_lh_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
 {
+    // Check the daughters in the truth-level matched-jet
     // Get number of daughters in this jet
-    const int ndtr = tree->Jet_NDtr;
+    const int ndtr = tree->Jet_mcjet_nmcdtrs;
+
+    // Exit if there is no matched jet
+    if(ndtr==-999)
+    {
+        lh_loc    = -999;
+        lh_energy = -999;
+        return;    
+    }
 
     // Check location of leading hadron
     for(int part = 0 ; part < ndtr ; part++) 
     {
         // If particle is not a hadron skip it
-        if(tree->Jet_Dtr_TRUE_IsBaryon[part]==0&&tree->Jet_Dtr_TRUE_IsMeson[part]==0) continue;
-        if(tree->Jet_Dtr_TRUE_E[part]>lh_energy) {lh_loc = part; lh_energy = tree->Jet_Dtr_TRUE_E[part];}
+        if(tree->Jet_mcjet_dtrIsBaryon[part]==0&&tree->Jet_mcjet_dtrIsMeson[part]==0) continue;
+        if(tree->Jet_mcjet_dtrE[part]>lh_energy) {lh_loc = part; lh_energy = tree->Jet_mcjet_dtrE[part];}
     }
     
     // Check if leading hadron is a component of the desired dihadron
-    if(tree->Jet_Dtr_TRUE_ID[lh_loc]==pid_ha||tree->Jet_Dtr_TRUE_ID[lh_loc]==pid_hb) return;
+    if(tree->Jet_mcjet_dtrID[lh_loc]==pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==pid_hb) return;
     
     // If the leading hadron is not a component of the desired dihadron then we set everything to -999
     lh_loc    = -999;
@@ -232,26 +241,26 @@ void loc_nlh_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, doubl
     double delta = 100000000;
 
     // Get number of daughters in this jet
-    const int ndtr = tree->Jet_NDtr;
+    const int ndtr = tree->Jet_mcjet_nmcdtrs;
 
     // Locate the particle that has the biggest energy besides the leading hadron
     for(int part = 0 ; part < ndtr ; part++)
     {
         // Skip leading hadron or if particle is not a hadron
-        if(tree->Jet_Dtr_TRUE_IsBaryon[part]==0&&tree->Jet_Dtr_TRUE_IsMeson[part]==0) continue;
+        if(tree->Jet_mcjet_dtrIsBaryon[part]==0&&tree->Jet_mcjet_dtrIsMeson[part]==0) continue;
         if(part==lh_loc) continue;
 
         // Check the size of the energy diference
-        if((lh_energy - tree->Jet_Dtr_TRUE_E[part])<delta)
+        if((lh_energy - tree->Jet_mcjet_dtrE[part])<delta)
         {
-            delta      = lh_energy - tree->Jet_Dtr_TRUE_E[part];
+            delta      = lh_energy - tree->Jet_mcjet_dtrE[part];
             nlh_loc    = part;
-            nlh_energy = tree->Jet_Dtr_TRUE_E[part];
+            nlh_energy = tree->Jet_mcjet_dtrE[part];
         }
     }
 
     // Check veracity of next-to-leading hadron
-    if(tree->Jet_Dtr_TRUE_ID[nlh_loc]==pid_ha||tree->Jet_Dtr_TRUE_ID[nlh_loc]==pid_hb) return;
+    if(tree->Jet_mcjet_dtrID[nlh_loc]==pid_ha||tree->Jet_mcjet_dtrID[nlh_loc]==pid_hb) return;
 
     nlh_loc    = -999;
     nlh_energy = -999;

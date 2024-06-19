@@ -39,7 +39,7 @@ void macro_print_unfolding()
         // Checking opposite charge hadrons
         if(eq_charge!=0) continue;
 
-        // If there is matching event in MC 
+        // If there is no matching event in MC 
         if(signal!=1) {response.Fake(jet_pt_mcreco); continue;}
 
         // If there is a matching event in MC

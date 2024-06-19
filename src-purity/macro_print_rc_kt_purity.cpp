@@ -29,7 +29,7 @@ void macro_print_rc_kt_purity()
     //Set TLegend
     TLegend* legend = new TLegend(0.7,0.75,0.9,0.9);
     legend->AddEntry(h_rc_kt_data,"data");
-    legend->AddEntry(h_rc_kt_data_purity,"data+purity");
+    legend->AddEntry(h_rc_kt_data_purity,"data with purity");
 
     legend->Draw();
 }

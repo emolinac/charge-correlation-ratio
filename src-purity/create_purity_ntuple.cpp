@@ -58,9 +58,8 @@ int main()
 
         // Get the signal
         int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\
-                      (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h1_location]&&\
-                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])&&\
-                      (h1_location==matched_h1_location&&h2_location==matched_h2_location)) ? 1 : 0 ;
+                      (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_mcjet_dtrID[matched_h1_location]&&\
+                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_mcjet_dtrID[matched_h2_location])) ? 1 : 0 ;
 
         // Get the charges!
         float h1_charge = mcrecotree->Jet_Dtr_ThreeCharge[h1_location];
