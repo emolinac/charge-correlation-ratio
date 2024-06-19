@@ -35,6 +35,14 @@ void plot_purity()
     //TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_z,z_limits);
     //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_z,z_limits);
     
+    // KT
+    //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",Nbin_kt,kt_limits);
+    //TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",Nbin_kt,kt_limits);
+    //TH1F* hpurity_diffsign = new TH1F("hpurity_diffsign","",Nbin_kt,kt_limits);
+    //TH1F* hrecgen_samesign = new TH1F("hrecgen_samesign","",Nbin_kt,kt_limits);
+    //TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_kt,kt_limits);
+    //TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_kt,kt_limits);
+    
     // PHI
     //TH1F* hrecgen_diffsign = new TH1F("hrecgen_diffsign","",8,-3.14,3.14);
     //TH1F* hrec_diffsign    = new TH1F("hrec_diffsign"   ,"",8,-3.14,3.14);
@@ -51,8 +59,8 @@ void plot_purity()
     hpurity_diffsign->Divide(hrecgen_diffsign,hrec_diffsign,1,1,"B");
     hpurity_samesign->Divide(hrecgen_samesign,hrec_samesign,1,1,"B");
 
-    set_histogram_style(hpurity_diffsign, kCyan, std_line_width, std_marker_style, std_marker_size);
-    set_histogram_style(hpurity_samesign, kCyan+4, std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(hpurity_diffsign, kViolet-5, std_line_width, std_marker_style, std_marker_size);
+    set_histogram_style(hpurity_samesign, kViolet+2, std_line_width, std_marker_style, std_marker_size);
     
     THStack* h = new THStack("h","");
     h->Add(hpurity_diffsign);
@@ -61,6 +69,8 @@ void plot_purity()
     h->Draw("NOSTACK");
 
     h->SetTitle(";jet pt (GeV);Purity");
+    //h->SetTitle(";z;Purity");
+    //h->SetTitle(";k_{t}(GeV);Purity");
 
     TLegend* l = new TLegend();
     l->AddEntry(hpurity_diffsign,"Different sign hadrons","lp");

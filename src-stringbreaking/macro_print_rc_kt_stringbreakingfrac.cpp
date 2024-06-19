@@ -29,7 +29,7 @@ void macro_print_rc_kt_stringbreakingfrac()
     //Set TLegend
     TLegend* legend = new TLegend(0.7,0.75,0.9,0.9);
     legend->AddEntry(h_rc_kt_data,"data");
-    legend->AddEntry(h_rc_kt_data_decays,"data+stringbreakingfrac");
+    legend->AddEntry(h_rc_kt_data_decays,"data with stringbreakingfrac");
 
     legend->Draw();
 }

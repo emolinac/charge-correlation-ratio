@@ -44,4 +44,9 @@ void macro_print_stringbreakingfrac_factor_z()
     hs->Draw("NOSTACK");
 
     hs->SetTitle(";z;string breaking frac.");
+
+    TLegend* l = new TLegend();
+    l->AddEntry(h_neqcharge_ratio,"Different sign hadrons","lp");
+    l->AddEntry(h_eqcharge_ratio ,"Same sign hadrons","lp");
+    l->Draw("SAME");
 }

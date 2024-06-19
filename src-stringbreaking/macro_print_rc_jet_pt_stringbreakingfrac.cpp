@@ -29,7 +29,7 @@ void macro_print_rc_jet_pt_stringbreakingfrac()
     //Set TLegend
     TLegend* legend = new TLegend(0.7,0.75,0.9,0.9);
     legend->AddEntry(h_rc_jet_pt_data,"data");
-    legend->AddEntry(h_rc_jet_pt_data_decays,"data+stringbreakingfrac");
+    legend->AddEntry(h_rc_jet_pt_data_decays,"data with stringbreakingfrac");
 
     legend->Draw();
 }

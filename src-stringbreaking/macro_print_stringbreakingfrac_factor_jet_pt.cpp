@@ -44,4 +44,9 @@ void macro_print_stringbreakingfrac_factor_jet_pt()
     hs->Draw("NOSTACK");
 
     hs->SetTitle(";Jet p_{T}(GeV)(GeV);string breaking frac.");
+
+    TLegend* l = new TLegend();
+    l->AddEntry(h_neqcharge_ratio,"Different sign hadrons","lp");
+    l->AddEntry(h_eqcharge_ratio ,"Same sign hadrons","lp");
+    l->Draw("SAME");
 }
