@@ -82,12 +82,9 @@ int main()
         vars[11] = mcrecotree->Jet_Dtr_PT[h2_location]/1000.;
         vars[12] = mcrecotree->Jet_Dtr_Z[h1_location];
         vars[13] = mcrecotree->Jet_Dtr_Z[h2_location];
-        double h1minh2_px = mcrecotree->Jet_Dtr_PX[h1_location] - mcrecotree->Jet_Dtr_PX[h2_location];
-        double h1minh2_py = mcrecotree->Jet_Dtr_PY[h1_location] - mcrecotree->Jet_Dtr_PY[h2_location];
-        double h1minh2_pz = mcrecotree->Jet_Dtr_PZ[h1_location] - mcrecotree->Jet_Dtr_PZ[h2_location];
-        double h1minh2_pe = mcrecotree->Jet_Dtr_E[h1_location]  - mcrecotree->Jet_Dtr_E[h2_location];
-        TLorentzVector dihadronreco_relative_4vector(h1minh2_px/1000., h1minh2_py/1000., h1minh2_pz/1000., h1minh2_pe/1000.);
-        vars[14] = dihadronreco_relative_4vector.Pt();
+        TVector3 h1_momentum(mcrecotree->Jet_Dtr_PX[h1_location], mcrecotree->Jet_Dtr_PY[h1_location], mcrecotree->Jet_Dtr_PZ[h1_location]);
+        TVector3 h2_momentum(mcrecotree->Jet_Dtr_PX[h2_location], mcrecotree->Jet_Dtr_PY[h2_location], mcrecotree->Jet_Dtr_PZ[h2_location]);
+        vars[14] = h2_momentum.Mag()*sin(h1_momentum.Angle(h2_momentum))/1000.;
         vars[15] = mcrecotree->Jet_Dtr_PZ[h1_location]/1000.;
         vars[16] = mcrecotree->Jet_Dtr_PZ[h2_location]/1000.;
         vars[17] = mcrecotree->Jet_PT/1000.;

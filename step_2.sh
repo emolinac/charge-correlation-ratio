@@ -8,7 +8,8 @@ make
 cd ./bin 
 ./create_ntuples
 ./create_purity_ntuple
-./create_decays_ntuples
+./create_decays_ntuple
+./create_resolution_ntuple
 
 cd ../src
 
