@@ -12,7 +12,7 @@ void macro_print_kt_resolution()
     TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_resolution.c_str());
 
     // Declare histograms and fill it
-    TH1F* h = new TH1F("h","",100,-5,5);
+    TH1F* h = new TH1F("h","",50,-.03,.03);
     h->Sumw2();
     ntuple->Project("h","dh_kt_mcreco-dh_kt_mc",Form("jet_pt_mcreco>%f&&jet_pt_mc!=-999",jet_pt_min)+jet_eta_cut+track_cuts+topological_cuts+Zboson_cuts);
 

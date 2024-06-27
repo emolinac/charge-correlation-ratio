@@ -53,8 +53,8 @@ int main()
         if(h2_location == -999) continue;
 
         // Check if there is a truth level dihadron
-        loc_lh_mcrecotruth(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy);
-        loc_nlh_mcrecotruth(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy, matched_h2_location, matched_h2_energy);
+        loc_lh_mcmatchedjet(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy);
+        loc_nlh_mcmatchedjet(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy, matched_h2_location, matched_h2_energy);
 
         // Get the signal
         int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\

@@ -17,8 +17,11 @@ void loc_nlh_mc(TMCJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_ene
 void loc_lh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
 void loc_nlh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);
 
-void loc_lh_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
-void loc_nlh_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);
+void loc_lh_mcmatchedjet(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
+void loc_nlh_mcmatchedjet(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);
+
+void loc_lh_mcmatcheddtr(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
+void loc_nlh_mcmatcheddtr(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);
 
 void loc_lh_decays(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy);
 void loc_nlh_decays(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy);

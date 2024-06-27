@@ -52,14 +52,36 @@ int main()
         loc_nlh_mcreco(mcrecotree, pid_ha, pid_hb, h1_location, h1_energy, h2_location, h2_energy); //OK
         if(h2_location == -999) continue;
 
-        // Check if there is a truth level dihadron
-        loc_lh_mcrecotruth(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy);
-        loc_nlh_mcrecotruth(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy, matched_h2_location, matched_h2_energy);
+//        // Check if there is a truth level dihadron in a matched jet
+//        loc_lh_mcmatchedjet(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy);
+//        loc_nlh_mcmatchedjet(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy, matched_h2_location, matched_h2_energy);
+//
+//        // Get the signal
+//        int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\
+//                      (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_mcjet_dtrID[matched_h1_location]&&\
+//                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_mcjet_dtrID[matched_h2_location])) ? 1 : 0 ;
 
+        // Check if there is a truth level matched dihadron
+        loc_lh_mcmatcheddtr(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy);
+        loc_nlh_mcmatcheddtr(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy, matched_h2_location, matched_h2_energy);
+
+        // Now check if the matched particles are in the matched jet
+        int match_counter = 0;
+        for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_MatchedNDtr ; jet_entry++)
+        {
+            // Exit if there is no matched jet
+            if(mcrecotree->Jet_MatchedNDtr==50) break;
+
+            // Look at the energy of the particles
+            if(mcrecotree->Jet_mcjet_dtrE[jet_entry]==matched_h1_energy||mcrecotree->Jet_mcjet_dtrE[jet_entry]==matched_h2_energy) match_counter++;
+        }
+        if(match_counter==2)std::cout<<"There are two particle with energies "<<matched_h1_energy<<" and "<<matched_h2_energy<<std::endl; 
+        
         // Get the signal
         int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\
-                      (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_mcjet_dtrID[matched_h1_location]&&\
-                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_mcjet_dtrID[matched_h2_location])) ? 1 : 0 ;
+                      (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h1_location]&&\
+                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])&&\
+                       match_counter==2) ? 1 : 0 ;
 
         // Get the charges!
         float h1_charge = mcrecotree->Jet_Dtr_ThreeCharge[h1_location];
