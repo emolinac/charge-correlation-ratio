@@ -12,8 +12,8 @@ const int kp_id   = 321;
 const int km_id   = -kp_id;
 
 // Selected hadrons to perform analysis
-const int pid_ha = pip_id;
-const int pid_hb = pim_id;
+const int pid_ha = kp_id;
+const int pid_hb = km_id;
 
 // Define binning
 const int Nbin_z      = 5;
