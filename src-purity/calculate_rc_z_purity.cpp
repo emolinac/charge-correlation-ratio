@@ -33,8 +33,8 @@ int main()
     hcs_diffsign->Sumw2();
 
     // Calculate rc for the data
-    ntuple_data->Project("hcs_diffsign","nlh_pz/(lh_pz+nlh_pz)",diffsign_cut_data);
-    ntuple_data->Project("hcs_samesign","nlh_pz/(lh_pz+nlh_pz)",samesign_cut_data);
+    ntuple_data->Project("hcs_diffsign","nlh_z",diffsign_cut_data);
+    ntuple_data->Project("hcs_samesign","nlh_z",samesign_cut_data);
     hcs_sub->Add(hcs_samesign,hcs_diffsign,1,-1);
     hcs_sum->Add(hcs_samesign,hcs_diffsign,1, 1);
     rc->Divide(hcs_sub,hcs_sum,1,1);
@@ -58,10 +58,10 @@ int main()
     TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_z,z_limits);
 
     // Get the purities
-    ntuple_purity->Project("hrec_diffsign"   ,"nlh_pz/(lh_pz+nlh_pz)",diffsign_cut_data);
-    ntuple_purity->Project("hrecgen_diffsign","nlh_pz/(lh_pz+nlh_pz)","signal==1"&&diffsign_cut_data);
-    ntuple_purity->Project("hrec_samesign"   ,"nlh_pz/(lh_pz+nlh_pz)",samesign_cut_data);
-    ntuple_purity->Project("hrecgen_samesign","nlh_pz/(lh_pz+nlh_pz)","signal==1"&&samesign_cut_data);
+    ntuple_purity->Project("hrec_diffsign"   ,"nlh_z",diffsign_cut_data);
+    ntuple_purity->Project("hrecgen_diffsign","nlh_z","signal==1"&&diffsign_cut_data);
+    ntuple_purity->Project("hrec_samesign"   ,"nlh_z",samesign_cut_data);
+    ntuple_purity->Project("hrecgen_samesign","nlh_z","signal==1"&&samesign_cut_data);
     hpurity_diffsign->Divide(hrecgen_diffsign,hrec_diffsign,1,1,"B");
     hpurity_samesign->Divide(hrecgen_samesign,hrec_samesign,1,1,"B");
     
@@ -70,8 +70,8 @@ int main()
     TH1F* hcs_diffsign_p = new TH1F("hcs_diffsign_p","",Nbin_z,z_limits);
     hcs_samesign_p->Sumw2();
     hcs_diffsign_p->Sumw2();
-    ntuple_data->Project("hcs_diffsign_p","nlh_pz/(lh_pz+nlh_pz)",diffsign_cut_data);
-    ntuple_data->Project("hcs_samesign_p","nlh_pz/(lh_pz+nlh_pz)",samesign_cut_data);
+    ntuple_data->Project("hcs_diffsign_p","nlh_z",diffsign_cut_data);
+    ntuple_data->Project("hcs_samesign_p","nlh_z",samesign_cut_data);
     
     hcs_diffsign_p->Multiply(hpurity_diffsign);
     hcs_samesign_p->Multiply(hpurity_samesign);

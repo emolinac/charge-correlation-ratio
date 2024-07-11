@@ -33,8 +33,8 @@ int main()
     hcs_diffsign->Sumw2();
 
     // Calculate rc for the data
-    ntuple_data->Project("hcs_diffsign","nlh_pz/(lh_pz+nlh_pz)",diffsign_cut_data);
-    ntuple_data->Project("hcs_samesign","nlh_pz/(lh_pz+nlh_pz)",samesign_cut_data);
+    ntuple_data->Project("hcs_diffsign","nlh_z",diffsign_cut_data);
+    ntuple_data->Project("hcs_samesign","nlh_z",samesign_cut_data);
     hcs_sub->Add(hcs_samesign,hcs_diffsign,1,-1);
     hcs_sum->Add(hcs_samesign,hcs_diffsign,1, 1);
     rc->Divide(hcs_sub,hcs_sum,1,1);
@@ -58,10 +58,10 @@ int main()
     TH1F* hdecays_samesign = new TH1F("hdecays_samesign","",Nbin_z,z_limits);
 
     // Get the string breaking fraction
-    ntuple_decays->Project("hall_diffsign"   ,"nlh_pz/(lh_pz+nlh_pz)",jet_cuts+trackmc_cuts+"eq_charge==0");
-    ntuple_decays->Project("hstrbrk_diffsign","nlh_pz/(lh_pz+nlh_pz)",jet_cuts+trackmc_cuts+"eq_charge==0&&lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");
-    ntuple_decays->Project("hall_samesign"   ,"nlh_pz/(lh_pz+nlh_pz)",jet_cuts+trackmc_cuts+"eq_charge==1");
-    ntuple_decays->Project("hstrbrk_samesign","nlh_pz/(lh_pz+nlh_pz)",jet_cuts+trackmc_cuts+"eq_charge==1&&lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");
+    ntuple_decays->Project("hall_diffsign"   ,"nlh_z",jet_cuts+trackmc_cuts+"eq_charge==0");
+    ntuple_decays->Project("hstrbrk_diffsign","nlh_z",jet_cuts+trackmc_cuts+"eq_charge==0&&lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");
+    ntuple_decays->Project("hall_samesign"   ,"nlh_z",jet_cuts+trackmc_cuts+"eq_charge==1");
+    ntuple_decays->Project("hstrbrk_samesign","nlh_z",jet_cuts+trackmc_cuts+"eq_charge==1&&lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");
     hdecays_diffsign->Divide(hstrbrk_diffsign,hall_diffsign,1,1,"B");
     hdecays_samesign->Divide(hstrbrk_samesign,hall_samesign,1,1,"B");
     
@@ -70,8 +70,8 @@ int main()
     TH1F* hcs_diffsign_d = new TH1F("hcs_diffsign_d","",Nbin_z,z_limits);
     hcs_samesign_d->Sumw2();
     hcs_diffsign_d->Sumw2();
-    ntuple_data->Project("hcs_diffsign_d","nlh_pz/(lh_pz+nlh_pz)",diffsign_cut_data);
-    ntuple_data->Project("hcs_samesign_d","nlh_pz/(lh_pz+nlh_pz)",samesign_cut_data);
+    ntuple_data->Project("hcs_diffsign_d","nlh_z",diffsign_cut_data);
+    ntuple_data->Project("hcs_samesign_d","nlh_z",samesign_cut_data);
     
     hcs_diffsign_d->Multiply(hdecays_diffsign);
     hcs_samesign_d->Multiply(hdecays_samesign);

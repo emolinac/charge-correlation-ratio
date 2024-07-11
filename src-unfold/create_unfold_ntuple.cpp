@@ -1,5 +1,6 @@
 #include <iostream>
 #include "analysis-constants.h"
+#include "kinematical-functions.h"
 #include "names.h"
 #include "utils.h"
 #include "TLorentzVector.h"
@@ -67,6 +68,12 @@ int main()
         float h2_charge = mcrecotree->Jet_Dtr_ThreeCharge[h2_location];
         float eq_charge = (h1_charge*h2_charge<0) ? 0 : 1;
 
+        // Get the momentum of the hadrons
+        TVector3 h1_momentum(mcrecotree->Jet_Dtr_PX[h1_location], mcrecotree->Jet_Dtr_PY[h1_location], mcrecotree->Jet_Dtr_PZ[h1_location]);
+        TVector3 h2_momentum(mcrecotree->Jet_Dtr_PX[h2_location], mcrecotree->Jet_Dtr_PY[h2_location], mcrecotree->Jet_Dtr_PZ[h2_location]);
+        TVector3 h1true_momentum(mcrecotree->Jet_Dtr_TRUE_PX[h1_location], mcrecotree->Jet_Dtr_TRUE_PY[h1_location], mcrecotree->Jet_Dtr_TRUE_PZ[h1_location]);
+        TVector3 h2true_momentum(mcrecotree->Jet_Dtr_TRUE_PX[h2_location], mcrecotree->Jet_Dtr_TRUE_PY[h2_location], mcrecotree->Jet_Dtr_TRUE_PZ[h2_location]);
+
         // Define array carrying the variables
         float vars[Nvars_unfold];
         vars[0] = eq_charge;
@@ -80,22 +87,10 @@ int main()
         vars[8] = mcrecotree->Jet_Dtr_P[h2_location]/1000.;
         vars[9] = mcrecotree->Jet_Dtr_PT[h1_location]/1000.;
         vars[10] = mcrecotree->Jet_Dtr_PT[h2_location]/1000.;
-        double dh_z_mcreco = mcrecotree->Jet_Dtr_PZ[h2_location]/(mcrecotree->Jet_Dtr_PZ[h1_location]+mcrecotree->Jet_Dtr_PZ[h2_location]);
-        double dh_z_mc     = mcrecotree->Jet_Dtr_TRUE_PZ[h2_location]/(mcrecotree->Jet_Dtr_TRUE_PZ[h1_location]+mcrecotree->Jet_Dtr_TRUE_PZ[h2_location]);
-        vars[11] = dh_z_mcreco;
-        vars[12] = dh_z_mc;
-        double h1minh2_px = mcrecotree->Jet_Dtr_PX[h1_location] - mcrecotree->Jet_Dtr_PX[h2_location];
-        double h1minh2_py = mcrecotree->Jet_Dtr_PY[h1_location] - mcrecotree->Jet_Dtr_PY[h2_location];
-        double h1minh2_pz = mcrecotree->Jet_Dtr_PZ[h1_location] - mcrecotree->Jet_Dtr_PZ[h2_location];
-        double h1minh2_pe = mcrecotree->Jet_Dtr_E[h1_location]  - mcrecotree->Jet_Dtr_E[h2_location];
-        TLorentzVector dihadronreco_relative_4vector(h1minh2_px/1000., h1minh2_py/1000., h1minh2_pz/1000., h1minh2_pe/1000.);
-        double h1minh2_px_mc = mcrecotree->Jet_Dtr_TRUE_PX[h1_location] - mcrecotree->Jet_Dtr_TRUE_PX[h2_location];
-        double h1minh2_py_mc = mcrecotree->Jet_Dtr_TRUE_PY[h1_location] - mcrecotree->Jet_Dtr_TRUE_PY[h2_location];
-        double h1minh2_pz_mc = mcrecotree->Jet_Dtr_TRUE_PZ[h1_location] - mcrecotree->Jet_Dtr_TRUE_PZ[h2_location];
-        double h1minh2_pe_mc = mcrecotree->Jet_Dtr_TRUE_E[h1_location]  - mcrecotree->Jet_Dtr_TRUE_E[h2_location];
-        TLorentzVector dihadronmc_relative_4vector(h1minh2_px_mc/1000., h1minh2_py_mc/1000., h1minh2_pz_mc/1000., h1minh2_pe_mc/1000.);
-        vars[13] = dihadronreco_relative_4vector.Pt();
-        vars[14] = dihadronmc_relative_4vector.Pt();
+        vars[11] = calculate_z_nlh(&h1_momentum, &h2_momentum);
+        vars[12] = calculate_z_nlh(&h1true_momentum, &h2true_momentum);
+        vars[13] = calculate_kt(&h1_momentum, &h2_momentum);
+        vars[14] = calculate_kt(&h1true_momentum, &h2true_momentum);
         vars[15] = mcrecotree->Jet_Dtr_PZ[h1_location]/1000.;
         vars[16] = mcrecotree->Jet_Dtr_PZ[h2_location]/1000.;
         vars[17] = mcrecotree->Jet_PT/1000.;

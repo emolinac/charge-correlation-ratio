@@ -47,8 +47,8 @@ int main()
         hcs_diffsign[i]->Sumw2();
 
         // Calculate rc for the data
-        ntuple[i]->Project(Form("hcs_diffsign_%i",i),"nlh_pz/(lh_pz+nlh_pz)",diffsign_cuts[i]);
-        ntuple[i]->Project(Form("hcs_samesign_%i",i),"nlh_pz/(lh_pz+nlh_pz)",samesign_cuts[i]);
+        ntuple[i]->Project(Form("hcs_diffsign_%i",i),"nlh_z",diffsign_cuts[i]);
+        ntuple[i]->Project(Form("hcs_samesign_%i",i),"nlh_z",samesign_cuts[i]);
         hcs_sub[i]->Add(hcs_samesign[i],hcs_diffsign[i],1,-1);
         hcs_sum[i]->Add(hcs_samesign[i],hcs_diffsign[i],1, 1);
         rc[i]->Divide(hcs_sub[i],hcs_sum[i],1,1);

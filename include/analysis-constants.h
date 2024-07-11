@@ -23,17 +23,17 @@ const int Nbin_jet_pt = 3; // usual binning in jet pt
 const double z_min  = 0;
 const double z_max  = 0.5;
 const double kt_min = 0.;  
-const double kt_max = 4.; 
+const double kt_max = 2.; 
 const double jet_pt_min = 20; 
 const double jet_pt_max = 100;
 
 const double jet_pt_limits[] = {jet_pt_min,30.,50.,jet_pt_max};
-const double z_limits[] = {z_min, 0.26625, 0.34875, 0.40875, 0.45875, z_max};
-const double kt_limits[] = {kt_min, 0.25, 0.41, 0.59, 0.91, kt_max};
+const double z_limits[] = {z_min, 0.25875, 0.34375, 0.40875, 0.45875, z_max };
+const double kt_limits[] = {kt_min, 0.265, 0.415, 0.585, 0.885, kt_max};
 
 // Define analysis cuts
 // Jet cuts
-TCut jet_eta_cut = "jet_eta>2&&jet_eta<4.5";
+TCut jet_eta_cut = "jet_eta>2.5&&jet_eta<4.";
 TCut jet_pt_cut  = Form("jet_pt>%f",jet_pt_min);
 TCut jet_cuts    = jet_eta_cut+jet_pt_cut;
 

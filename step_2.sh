@@ -5,7 +5,7 @@ make clean
 make
 
 # Create necessary ntuples
-cd ./bin 
+cd ./bin
 ./create_ntuples
 ./create_purity_ntuple
 ./create_decays_ntuple

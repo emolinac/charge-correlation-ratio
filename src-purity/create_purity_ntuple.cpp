@@ -1,5 +1,6 @@
 #include <iostream>
 #include "analysis-constants.h"
+#include "kinematical-functions.h"
 #include "names.h"
 #include "utils.h"
 #include "TLorentzVector.h"
@@ -76,17 +77,22 @@ int main()
             if(mcrecotree->Jet_mcjet_dtrE[jet_entry]==matched_h1_energy||mcrecotree->Jet_mcjet_dtrE[jet_entry]==matched_h2_energy) match_counter++;
         }
         if(match_counter==2)std::cout<<"There are two particle with energies "<<matched_h1_energy<<" and "<<matched_h2_energy<<std::endl; 
-        
+
         // Get the signal
         int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\
                       (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h1_location]&&\
                        mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])&&\
+                       h1_location==matched_h1_location&&h2_location==matched_h2_location&&\
                        match_counter==2) ? 1 : 0 ;
 
         // Get the charges!
         float h1_charge = mcrecotree->Jet_Dtr_ThreeCharge[h1_location];
         float h2_charge = mcrecotree->Jet_Dtr_ThreeCharge[h2_location];
         float eq_charge = (h1_charge*h2_charge<0) ? 0 : 1;
+
+        // Get the momentum of the hadrons
+        TVector3 h1_momentum(mcrecotree->Jet_Dtr_PX[h1_location], mcrecotree->Jet_Dtr_PY[h1_location], mcrecotree->Jet_Dtr_PZ[h1_location]);
+        TVector3 h2_momentum(mcrecotree->Jet_Dtr_PX[h2_location], mcrecotree->Jet_Dtr_PY[h2_location], mcrecotree->Jet_Dtr_PZ[h2_location]);
 
         // Define array carrying the variables
         float vars[Nvars_purity];
@@ -102,11 +108,9 @@ int main()
         vars[9] = mcrecotree->Jet_Dtr_P[h2_location]/1000.;
         vars[10] = mcrecotree->Jet_Dtr_PT[h1_location]/1000.;
         vars[11] = mcrecotree->Jet_Dtr_PT[h2_location]/1000.;
-        vars[12] = mcrecotree->Jet_Dtr_Z[h1_location];
-        vars[13] = mcrecotree->Jet_Dtr_Z[h2_location];
-        TVector3 h1_momentum(mcrecotree->Jet_Dtr_PX[h1_location], mcrecotree->Jet_Dtr_PY[h1_location], mcrecotree->Jet_Dtr_PZ[h1_location]);
-        TVector3 h2_momentum(mcrecotree->Jet_Dtr_PX[h2_location], mcrecotree->Jet_Dtr_PY[h2_location], mcrecotree->Jet_Dtr_PZ[h2_location]);
-        vars[14] = h2_momentum.Mag()*sin(h1_momentum.Angle(h2_momentum))/1000.;
+        vars[12] = calculate_z_lh(&h1_momentum, &h2_momentum);
+        vars[13] = calculate_z_nlh(&h1_momentum, &h2_momentum);
+        vars[14] = calculate_kt(&h1_momentum, &h2_momentum);
         vars[15] = mcrecotree->Jet_Dtr_PZ[h1_location]/1000.;
         vars[16] = mcrecotree->Jet_Dtr_PZ[h2_location]/1000.;
         vars[17] = mcrecotree->Jet_PT/1000.;

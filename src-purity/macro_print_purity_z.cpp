@@ -19,10 +19,10 @@ void macro_print_purity_z()
     TH1F* hrec_samesign    = new TH1F("hrec_samesign"   ,"",Nbin_z,z_limits);
     TH1F* hpurity_samesign = new TH1F("hpurity_samesign","",Nbin_z,z_limits);
     
-    ntuple->Project("hrec_diffsign"   ,"nlh_pz/(lh_pz+nlh_pz)","eq_charge==0"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
-    ntuple->Project("hrecgen_diffsign","nlh_pz/(lh_pz+nlh_pz)","eq_charge==0&&signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
-    ntuple->Project("hrec_samesign"   ,"nlh_pz/(lh_pz+nlh_pz)","eq_charge==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
-    ntuple->Project("hrecgen_samesign","nlh_pz/(lh_pz+nlh_pz)","eq_charge==1&&signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrec_diffsign"   ,"nlh_z","eq_charge==0"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrecgen_diffsign","nlh_z","eq_charge==0&&signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrec_samesign"   ,"nlh_z","eq_charge==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
+    ntuple->Project("hrecgen_samesign","nlh_z","eq_charge==1&&signal==1"&&topological_cuts&&jet_cuts&&track_cuts&&Zboson_cuts);
 
     hpurity_diffsign->Divide(hrecgen_diffsign,hrec_diffsign,1,1,"B");
     hpurity_samesign->Divide(hrecgen_samesign,hrec_samesign,1,1,"B");

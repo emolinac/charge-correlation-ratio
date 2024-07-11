@@ -1,5 +1,6 @@
 #include <iostream>
 #include "analysis-constants.h"
+#include "kinematical-functions.h"
 #include "names.h"
 #include "utils.h"
 #include "TLorentzVector.h"
@@ -51,6 +52,10 @@ int main()
         float h2_charge = mcrecotree->Jet_mcjet_dtrThreeCharge[h2_location];
         float eq_charge = (h1_charge*h2_charge<0) ? 0 : 1;
 
+        // Get the momentum of the hadrons
+        TVector3 h1_momentum(mcrecotree->Jet_mcjet_dtrPX[h1_location], mcrecotree->Jet_mcjet_dtrPY[h1_location], mcrecotree->Jet_mcjet_dtrPZ[h1_location]);
+        TVector3 h2_momentum(mcrecotree->Jet_mcjet_dtrPX[h2_location], mcrecotree->Jet_mcjet_dtrPY[h2_location], mcrecotree->Jet_mcjet_dtrPZ[h2_location]);
+
         // Define array carrying the variables
         float vars[Nvars_decays];
         vars[0]  = eq_charge;
@@ -64,11 +69,9 @@ int main()
         vars[8]  = mcrecotree->Jet_mcjet_dtrP[h2_location]/1000.;
         vars[9]  = mcrecotree->Jet_mcjet_dtrPT[h1_location]/1000.;
         vars[10] = mcrecotree->Jet_mcjet_dtrPT[h2_location]/1000.;
-        vars[11] = mcrecotree->Jet_mcjet_dtrZ[h1_location];
-        vars[12] = mcrecotree->Jet_mcjet_dtrZ[h2_location];
-        TVector3 h1_momentum(mcrecotree->Jet_mcjet_dtrPX[h1_location], mcrecotree->Jet_mcjet_dtrPY[h1_location], mcrecotree->Jet_mcjet_dtrPZ[h1_location]);
-        TVector3 h2_momentum(mcrecotree->Jet_mcjet_dtrPX[h2_location], mcrecotree->Jet_mcjet_dtrPY[h2_location], mcrecotree->Jet_mcjet_dtrPZ[h2_location]);
-        vars[13] = h2_momentum.Mag()*sin(h1_momentum.Angle(h2_momentum))/1000.;
+        vars[11] = calculate_z_lh(&h1_momentum, &h2_momentum);
+        vars[12] = calculate_z_nlh(&h1_momentum, &h2_momentum);
+        vars[13] = calculate_kt(&h1_momentum, &h2_momentum);
         vars[14] = mcrecotree->Jet_mcjet_dtrPZ[h1_location]/1000.;
         vars[15] = mcrecotree->Jet_mcjet_dtrPZ[h2_location]/1000.;
         vars[16] = mcrecotree->Jet_mcjet_PT/1000.;

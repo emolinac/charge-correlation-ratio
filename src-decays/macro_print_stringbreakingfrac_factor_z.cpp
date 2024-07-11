@@ -24,10 +24,10 @@ void macro_print_stringbreakingfrac_factor_z()
     h_eqcharge_all->Sumw2();
     h_neqcharge_all->Sumw2();
     
-    ntuple->Project("h_eqcharge_all" ,"nlh_pz/(lh_pz+nlh_pz)","eq_charge==1");    
-    ntuple->Project("h_neqcharge_all","nlh_pz/(lh_pz+nlh_pz)","eq_charge==0");    
-    ntuple->Project("h_eqcharge"     ,"nlh_pz/(lh_pz+nlh_pz)","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10&&eq_charge==1");    
-    ntuple->Project("h_neqcharge"    ,"nlh_pz/(lh_pz+nlh_pz)","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10&&eq_charge==0");    
+    ntuple->Project("h_eqcharge_all" ,"nlh_z","eq_charge==1");    
+    ntuple->Project("h_neqcharge_all","nlh_z","eq_charge==0");    
+    ntuple->Project("h_eqcharge"     ,"nlh_z","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10&&eq_charge==1");    
+    ntuple->Project("h_neqcharge"    ,"nlh_z","lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10&&eq_charge==0");    
     
     // Calculate ratios
     h_eqcharge_ratio->Divide(h_eqcharge,h_eqcharge_all,1,1,"B");
