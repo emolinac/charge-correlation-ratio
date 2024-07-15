@@ -60,38 +60,44 @@ int main()
         float vars[Nvars_datadecays];
 
         // Check existence of combination with a meson mass
-        int comb1_exist = 0;
+        double comb1_exist = 0;
+        double Ncomb1 = 0;
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
             if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location) continue;
+
+            Ncomb1++;
 
             TLorentzVector h1comb_momentum(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
                                            datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry],
                                            datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]);
 
-            if(h1comb_momentum.M()/1000.>0.730&&h1comb_momentum.M()/1000.<0.810&&
-               datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]&&
-               (datatree->Jet_Dtr_ID[jet_entry]==211||datatree->Jet_Dtr_ID[jet_entry]==-211||datatree->Jet_Dtr_ID[jet_entry]==111)) {comb1_exist++; break;}
+            if(h1comb_momentum.M()/1000.>0.710&&h1comb_momentum.M()/1000.<0.830&&
+               datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]/*&&
+               (datatree->Jet_Dtr_ID[jet_entry]==211||datatree->Jet_Dtr_ID[jet_entry]==-211||datatree->Jet_Dtr_ID[jet_entry]==111)*/) comb1_exist++;
         }
 
-        int comb2_exist = 0;
+        double comb2_exist = 0;
+        double Ncomb2 = 0;
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
             if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location) continue;
+
+            Ncomb2++;
 
             TLorentzVector h2comb_momentum(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
                                            datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry],
                                            datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]);
 
-            if(h2comb_momentum.M()/1000.>0.730&&h2comb_momentum.M()/1000.<0.810&&
-               datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]&&
-               (datatree->Jet_Dtr_ID[jet_entry]==211||datatree->Jet_Dtr_ID[jet_entry]==-211||datatree->Jet_Dtr_ID[jet_entry]==111)) {comb2_exist++; break;}
+            if(h2comb_momentum.M()/1000.>0.710&&h2comb_momentum.M()/1000.<0.830&&
+               datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]/*&&
+               (datatree->Jet_Dtr_ID[jet_entry]==211||datatree->Jet_Dtr_ID[jet_entry]==-211||datatree->Jet_Dtr_ID[jet_entry]==111)*/) comb2_exist++;
         }
 
         vars[0]  = eq_charge;
-        vars[1]  = comb1_exist+comb2_exist;
+        vars[1]  = (1. - comb1_exist/Ncomb1)*(1. - comb2_exist/Ncomb2);
         vars[2]  = datatree->Jet_Dtr_ID[h1_location];
         vars[3]  = datatree->Jet_Dtr_ID[h2_location];
         vars[4]  = datatree->Jet_Dtr_TrackChi2[h1_location];
@@ -118,7 +124,6 @@ int main()
         TLorentzVector Jet_4vector(Jet_px, Jet_py, Jet_pz, Jet_pe);
         vars[20] = Jet_4vector.Eta();
         vars[21] = Jet_4vector.Phi();
-        // add mum_phi:mum_pt:mum_eta:mum_probchi2:mup_phi:mup_pt:mup_eta:mup_probchi2
         double Z0_px = datatree->Z0_PX/1000.;
         double Z0_py = datatree->Z0_PY/1000.;
         double Z0_pz = datatree->Z0_PZ/1000.;

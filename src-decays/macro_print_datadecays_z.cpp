@@ -23,11 +23,12 @@ void macro_print_datadecays_z()
     h_neqcharge->Sumw2();
     h_eqcharge_all->Sumw2();
     h_neqcharge_all->Sumw2();
-    
+
+    // Fill the histograms 
     ntuple->Project("h_eqcharge_all" ,"nlh_z",samesign_cut_data);    
-    ntuple->Project("h_neqcharge_all","nlh_z",diffsign_cut_data);    
-    ntuple->Project("h_eqcharge"     ,"nlh_z",samesign_cut_data+"combs==0");    
-    ntuple->Project("h_neqcharge"    ,"nlh_z",diffsign_cut_data+"combs==0");    
+    ntuple->Project("h_neqcharge_all","nlh_z",diffsign_cut_data);
+    ntuple->Project("h_eqcharge"     ,"nlh_z",samesign_cut_data_decay);    
+    ntuple->Project("h_neqcharge"    ,"nlh_z",diffsign_cut_data_decay);
     
     // Calculate ratios
     h_eqcharge_ratio->Divide(h_eqcharge,h_eqcharge_all,1,1,"B");
@@ -43,7 +44,7 @@ void macro_print_datadecays_z()
     
     hs->Draw("NOSTACK");
 
-    hs->SetTitle(";z;\% String Dihadrons");
+    hs->SetTitle(";z;Fraction String Dihadrons");
 
     TLegend* l = new TLegend();
     l->AddEntry(h_neqcharge_ratio,"Different sign hadrons","lp");

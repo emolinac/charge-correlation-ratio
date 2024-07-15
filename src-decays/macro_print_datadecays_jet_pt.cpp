@@ -26,8 +26,8 @@ void macro_print_datadecays_jet_pt()
     
     ntuple->Project("h_eqcharge_all" ,"jet_pt",samesign_cut_data);    
     ntuple->Project("h_neqcharge_all","jet_pt",diffsign_cut_data);    
-    ntuple->Project("h_eqcharge"     ,"jet_pt",samesign_cut_data+"combs==0");    
-    ntuple->Project("h_neqcharge"    ,"jet_pt",diffsign_cut_data+"combs==0");    
+    ntuple->Project("h_eqcharge"     ,"jet_pt",samesign_cut_data_decay);    
+    ntuple->Project("h_neqcharge"    ,"jet_pt",diffsign_cut_data_decay);    
     
     // Calculate ratios
     h_eqcharge_ratio->Divide(h_eqcharge,h_eqcharge_all,1,1,"B");
@@ -43,7 +43,7 @@ void macro_print_datadecays_jet_pt()
     
     hs->Draw("NOSTACK");
 
-    hs->SetTitle(";jet pt(GeV);\% String Dihadrons");
+    hs->SetTitle(";jet pt(GeV);Fraction String Dihadrons");
 
     TLegend* l = new TLegend();
     l->AddEntry(h_neqcharge_ratio,"Different sign hadrons","lp");

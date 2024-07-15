@@ -26,9 +26,9 @@ void macro_print_datadecays_kt()
     
     ntuple->Project("h_eqcharge_all" ,"dh_kt",samesign_cut_data);    
     ntuple->Project("h_neqcharge_all","dh_kt",diffsign_cut_data);    
-    ntuple->Project("h_eqcharge"     ,"dh_kt",samesign_cut_data+"combs==0");    
-    ntuple->Project("h_neqcharge"    ,"dh_kt",diffsign_cut_data+"combs==0");    
-    
+    ntuple->Project("h_eqcharge"     ,"dh_kt",samesign_cut_data_decay);    
+    ntuple->Project("h_neqcharge"    ,"dh_kt",diffsign_cut_data_decay);  
+
     // Calculate ratios
     h_eqcharge_ratio->Divide(h_eqcharge,h_eqcharge_all,1,1,"B");
     h_neqcharge_ratio->Divide(h_neqcharge,h_neqcharge_all,1,1,"B");
@@ -43,7 +43,7 @@ void macro_print_datadecays_kt()
     
     hs->Draw("NOSTACK");
 
-    hs->SetTitle(";kt;\% String Dihadrons");
+    hs->SetTitle(";kt;Fraction String Dihadrons");
 
     TLegend* l = new TLegend();
     l->AddEntry(h_neqcharge_ratio,"Different sign hadrons","lp");
