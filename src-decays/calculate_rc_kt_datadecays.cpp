@@ -11,7 +11,7 @@
 int main()
 {
     // Open the output files
-    TFile* fout = new TFile((output_folder+namef_rc_z_data_dd).c_str(),"RECREATE");
+    TFile* fout = new TFile((output_folder+namef_rc_kt_data_dd).c_str(),"RECREATE");
     gROOT->cd();
 
     // Open the file with the ntuples
@@ -23,18 +23,18 @@ int main()
     TNtuple* ntuple_datadecays = (TNtuple*) fdatadecays->Get((name_ntuple_datadecays).c_str());
     
     // Create the data histograms
-    TH1F* hcs_samesign = new TH1F("hcs_samesign","",Nbin_z,z_limits);
-    TH1F* hcs_diffsign = new TH1F("hcs_diffsign","",Nbin_z,z_limits);
-    TH1F* hcs_sum      = new TH1F("hcs_sum"     ,"",Nbin_z,z_limits);
-    TH1F* hcs_sub      = new TH1F("hcs_sub"     ,"",Nbin_z,z_limits);
-    TH1F* rc           = new TH1F("rc"          ,"",Nbin_z,z_limits);
+    TH1F* hcs_samesign = new TH1F("hcs_samesign","",Nbin_kt,kt_limits);
+    TH1F* hcs_diffsign = new TH1F("hcs_diffsign","",Nbin_kt,kt_limits);
+    TH1F* hcs_sum      = new TH1F("hcs_sum"     ,"",Nbin_kt,kt_limits);
+    TH1F* hcs_sub      = new TH1F("hcs_sub"     ,"",Nbin_kt,kt_limits);
+    TH1F* rc           = new TH1F("rc"          ,"",Nbin_kt,kt_limits);
 
     hcs_samesign->Sumw2();
     hcs_diffsign->Sumw2();
 
     // Calculate rc for the data
-    ntuple_data->Project("hcs_diffsign","nlh_z",diffsign_cut_data);
-    ntuple_data->Project("hcs_samesign","nlh_z",samesign_cut_data);
+    ntuple_data->Project("hcs_diffsign","dh_kt",diffsign_cut_data);
+    ntuple_data->Project("hcs_samesign","dh_kt",samesign_cut_data);
     hcs_sub->Add(hcs_samesign,hcs_diffsign,1,-1);
     hcs_sum->Add(hcs_samesign,hcs_diffsign,1, 1);
     rc->Divide(hcs_sub,hcs_sum,1,1);
@@ -46,32 +46,32 @@ int main()
     fout->cd();
     hcs_sub->Write();
     hcs_sum->Write();
-    rc->Write("rc_z");
+    rc->Write("rc_kt");
     gROOT->cd();
 
     // Create datadecays plots
-    TH1F* hddecays_diffsign    = new TH1F("hddecays_diffsign"   ,"",Nbin_z,z_limits);
-    TH1F* hall_diffsign        = new TH1F("hall_diffsign"       ,"",Nbin_z,z_limits);
-    TH1F* hdatadecays_diffsign = new TH1F("hdatadecays_diffsign","",Nbin_z,z_limits);
-    TH1F* hddecays_samesign    = new TH1F("hddecays_samesign"   ,"",Nbin_z,z_limits);
-    TH1F* hall_samesign        = new TH1F("hall_samesign"       ,"",Nbin_z,z_limits);
-    TH1F* hdatadecays_samesign = new TH1F("hdatadecays_samesign","",Nbin_z,z_limits);
+    TH1F* hddecays_diffsign    = new TH1F("hddecays_diffsign"   ,"",Nbin_kt,kt_limits);
+    TH1F* hall_diffsign        = new TH1F("hall_diffsign"       ,"",Nbin_kt,kt_limits);
+    TH1F* hdatadecays_diffsign = new TH1F("hdatadecays_diffsign","",Nbin_kt,kt_limits);
+    TH1F* hddecays_samesign    = new TH1F("hddecays_samesign"   ,"",Nbin_kt,kt_limits);
+    TH1F* hall_samesign        = new TH1F("hall_samesign"       ,"",Nbin_kt,kt_limits);
+    TH1F* hdatadecays_samesign = new TH1F("hdatadecays_samesign","",Nbin_kt,kt_limits);
 
     // Get the string breaking fraction
-    ntuple_datadecays->Project("hall_diffsign"   ,"nlh_z",diffsign_cut_data);
-    ntuple_datadecays->Project("hddecays_diffsign","nlh_z",diffsign_cut_data_decay);
-    ntuple_datadecays->Project("hall_samesign"   ,"nlh_z",samesign_cut_data);
-    ntuple_datadecays->Project("hddecays_samesign","nlh_z",samesign_cut_data_decay);
+    ntuple_datadecays->Project("hall_diffsign"    ,"dh_kt",diffsign_cut_data);
+    ntuple_datadecays->Project("hddecays_diffsign","dh_kt",diffsign_cut_data_decay);
+    ntuple_datadecays->Project("hall_samesign"    ,"dh_kt",samesign_cut_data);
+    ntuple_datadecays->Project("hddecays_samesign","dh_kt",samesign_cut_data_decay);
     hdatadecays_diffsign->Divide(hddecays_diffsign,hall_diffsign,1,1,"B");
     hdatadecays_samesign->Divide(hddecays_samesign,hall_samesign,1,1,"B");
     
     // Apply string breaking fraction
-    TH1F* hcs_samesign_d = new TH1F("hcs_samesign_d","",Nbin_z,z_limits);
-    TH1F* hcs_diffsign_d = new TH1F("hcs_diffsign_d","",Nbin_z,z_limits);
+    TH1F* hcs_samesign_d = new TH1F("hcs_samesign_d","",Nbin_kt,kt_limits);
+    TH1F* hcs_diffsign_d = new TH1F("hcs_diffsign_d","",Nbin_kt,kt_limits);
     hcs_samesign_d->Sumw2();
     hcs_diffsign_d->Sumw2();
-    ntuple_data->Project("hcs_diffsign_d","nlh_z",diffsign_cut_data);
-    ntuple_data->Project("hcs_samesign_d","nlh_z",samesign_cut_data);
+    ntuple_data->Project("hcs_diffsign_d","dh_kt",diffsign_cut_data);
+    ntuple_data->Project("hcs_samesign_d","dh_kt",samesign_cut_data);
     
     hcs_diffsign_d->Multiply(hdatadecays_diffsign);
     hcs_samesign_d->Multiply(hdatadecays_samesign);
@@ -90,7 +90,7 @@ int main()
 
     // Write datadecays corrected rc
     fout->cd();
-    rc->Write("rc_z_datadecays");
+    rc->Write("rc_kt_datadecays");
     gROOT->cd();
 
     // Close the file

@@ -19,10 +19,19 @@ all: ${BIN}/create_ntuples \
 	 ${BIN}/calculate_cuts_impact ${BIN}/calculate_rc_z ${BIN}/calculate_rc_kt ${BIN}/calculate_rc_jet_pt \
 	 ${BIN}/create_purity_ntuple ${BIN}/calculate_rc_jet_pt_purity ${BIN}/calculate_rc_z_purity ${BIN}/calculate_rc_kt_purity \
 	 ${BIN}/create_decays_ntuple ${BIN}/create_resolution_ntuple ${BIN}/create_unfold_ntuple ${BIN}/create_muon_ntuple ${BIN}/create_invmass_ntuple \
-	 ${BIN}/create_invmasstrio_ntuple ${BIN}/create_datadecays_ntuple
+	 ${BIN}/create_invmasstrio_ntuple ${BIN}/create_datadecays_ntuple ${BIN}/calculate_rc_z_datadecays ${BIN}/calculate_rc_kt_datadecays ${BIN}/calculate_rc_jet_pt_datadecays
 
 ${BIN}/calculate_cuts_impact: ${SRC}/calculate_cuts_impact.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC}/calculate_cuts_impact.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_cuts_impact
+
+${BIN}/calculate_rc_z_datadecays: ${SRC_D}/calculate_rc_z_datadecays.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC_D}/calculate_rc_z_datadecays.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_z_datadecays
+
+${BIN}/calculate_rc_kt_datadecays: ${SRC_D}/calculate_rc_kt_datadecays.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC_D}/calculate_rc_kt_datadecays.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_kt_datadecays
+
+${BIN}/calculate_rc_jet_pt_datadecays: ${SRC_D}/calculate_rc_jet_pt_datadecays.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC_D}/calculate_rc_jet_pt_datadecays.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/calculate_rc_jet_pt_datadecays
 
 ${BIN}/create_invmass_ntuple: ${SRC_D}/create_invmass_ntuple.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC_D}/create_invmass_ntuple.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/create_invmass_ntuple

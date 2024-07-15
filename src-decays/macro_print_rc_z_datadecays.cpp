@@ -3,13 +3,13 @@
 #include "../include/utils.h"
 #include "../include/utils-visual.h"
 
-void macro_print_rc_z_stringbreakingfrac()
+void macro_print_rc_z_datadecays()
 {
-    TFile* fin = new TFile((output_folder+namef_rc_z_data_d).c_str());
+    TFile* fin = new TFile((output_folder+namef_rc_z_data_dd).c_str());
 
     // Get the histograms to create one in top of each other
     TH1F* h_rc_z_data        = (TH1F*) fin->Get("rc_z");
-    TH1F* h_rc_z_data_decays = (TH1F*) fin->Get("rc_z_decays");
+    TH1F* h_rc_z_data_decays = (TH1F*) fin->Get("rc_z_datadecays");
 
     // Customize plots
     set_histogram_style(h_rc_z_data       , kCyan  , std_line_width, std_marker_style, std_marker_size);
@@ -29,7 +29,7 @@ void macro_print_rc_z_stringbreakingfrac()
     //Set TLegend
     TLegend* legend = new TLegend(0.7,0.75,0.9,0.9);
     legend->AddEntry(h_rc_z_data,"data");
-    legend->AddEntry(h_rc_z_data_decays,"data with stringbreakingfrac");
+    legend->AddEntry(h_rc_z_data_decays,"data from str. break");
 
     legend->Draw();
 }

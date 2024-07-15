@@ -21,10 +21,15 @@ int main()
     
     // Declare the TTrees to be used to build the ntuples
     TZJetsData* datatree = new TZJetsData();
+
+    // Declare 4 momenta of particle combinations
+    TLorentzVector h1comb_momentum;
+    TLorentzVector h2comb_momentum;  
     
-    // Fill the mcreco TNtuple
+    // Fill the TNtuple
     for(int evt = 0 ; evt < datatree->fChain->GetEntries() ; evt++)
     {
+        std::cout<<100.*evt/datatree->fChain->GetEntries()<<"\% done"<<std::endl;
         // Access entry of tree
         datatree->GetEntry(evt);
 
@@ -56,48 +61,87 @@ int main()
         TVector3 h1_momentum(datatree->Jet_Dtr_PX[h1_location], datatree->Jet_Dtr_PY[h1_location], datatree->Jet_Dtr_PZ[h1_location]);
         TVector3 h2_momentum(datatree->Jet_Dtr_PX[h2_location], datatree->Jet_Dtr_PY[h2_location], datatree->Jet_Dtr_PZ[h2_location]);
 
+        // Check number of two particles combination that have an invariant mass similar to decaying meson
+        double comb2parts_exist_1 = 0;
+        double comb2parts_exist_2 = 0;
+        double comb3parts_exist_1 = 0;
+        double comb3parts_exist_2 = 0;
+        double Ncomb2parts_1 = 0;
+        double Ncomb2parts_2 = 0;
+        double Ncomb3parts_1 = 0;
+        double Ncomb3parts_2 = 0;
+        
+        for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
+        {
+            // Skip particle if it is empty or leading hadron
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location) continue;
+            Ncomb2parts_1++;
+            h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
+                                       datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
+                                       datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry],
+                                       datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]);
+
+            if((h1comb_momentum.M()/1000.>0.775*0.9&&h1comb_momentum.M()/1000.<0.775*1.1|| // rho
+                h1comb_momentum.M()/1000.>0.500*0.9&&h1comb_momentum.M()/1000.<0.500*1.1)&&  // kaon
+                datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb2parts_exist_1++;
+
+            for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < datatree->Jet_NDtr ; jet_entry_2++)
+            {
+                // Skip particle if it is empty or leading hadron or self
+                if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_2==h1_location||jet_entry_2==jet_entry) continue;
+                Ncomb3parts_1++;
+                
+                h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2],
+                                           datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry] + datatree->Jet_Dtr_PY[jet_entry_2],
+                                           datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry] + datatree->Jet_Dtr_PZ[jet_entry_2],
+                                           datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]  + datatree->Jet_Dtr_E[jet_entry_2]);
+
+                if((h1comb_momentum.M()/1000.>0.547*0.9&&h1comb_momentum.M()/1000.<0.574*1.1||// eta
+                    h1comb_momentum.M()/1000.>0.782*0.9&&h1comb_momentum.M()/1000.<0.782*1.1||// omega
+                    h1comb_momentum.M()/1000.>0.957*0.9&&h1comb_momentum.M()/1000.<0.957*1.1)&&// eta prime
+                    datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb3parts_exist_1++;
+            }
+        }
+
+        for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
+        {
+            // Skip particle if it is empty or if it is the leading or the subleading hadron
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location) continue;
+
+            Ncomb2parts_2++;
+            h2comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
+                                       datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
+                                       datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry],
+                                       datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]);
+
+            if((h2comb_momentum.M()/1000.>0.775*0.9&&h2comb_momentum.M()/1000.<0.775*1.1|| // rho
+                h2comb_momentum.M()/1000.>0.500*0.9&&h2comb_momentum.M()/1000.<0.500*1.1)&&  // kaon
+                datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb2parts_exist_2++;
+
+            for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < datatree->Jet_NDtr ; jet_entry_2++)
+            {
+                // Skip particle if it is empty or subleading hadron or self
+                if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
+                Ncomb3parts_2++;
+                
+                h2comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2],
+                                           datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry] + datatree->Jet_Dtr_PY[jet_entry_2],
+                                           datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry] + datatree->Jet_Dtr_PZ[jet_entry_2],
+                                           datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]  + datatree->Jet_Dtr_E[jet_entry_2]);
+
+                if((h2comb_momentum.M()/1000.>0.547*0.9&&h2comb_momentum.M()/1000.<0.574*1.1||// eta
+                    h2comb_momentum.M()/1000.>0.782*0.9&&h2comb_momentum.M()/1000.<0.782*1.1||// omega
+                    h2comb_momentum.M()/1000.>0.957*0.9&&h2comb_momentum.M()/1000.<0.957*1.1)&&// eta prime
+                    datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb3parts_exist_2++;
+
+            }
+        }
+
         // Define array carrying the variables
         float vars[Nvars_datadecays];
 
-        // Check existence of combination with a meson mass
-        double comb1_exist = 0;
-        double Ncomb1 = 0;
-        for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
-        {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location) continue;
-
-            Ncomb1++;
-
-            TLorentzVector h1comb_momentum(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
-                                           datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
-                                           datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry],
-                                           datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]);
-
-            if(h1comb_momentum.M()/1000.>0.710&&h1comb_momentum.M()/1000.<0.830&&
-               datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]/*&&
-               (datatree->Jet_Dtr_ID[jet_entry]==211||datatree->Jet_Dtr_ID[jet_entry]==-211||datatree->Jet_Dtr_ID[jet_entry]==111)*/) comb1_exist++;
-        }
-
-        double comb2_exist = 0;
-        double Ncomb2 = 0;
-        for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
-        {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location) continue;
-
-            Ncomb2++;
-
-            TLorentzVector h2comb_momentum(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
-                                           datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
-                                           datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry],
-                                           datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]);
-
-            if(h2comb_momentum.M()/1000.>0.710&&h2comb_momentum.M()/1000.<0.830&&
-               datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]/*&&
-               (datatree->Jet_Dtr_ID[jet_entry]==211||datatree->Jet_Dtr_ID[jet_entry]==-211||datatree->Jet_Dtr_ID[jet_entry]==111)*/) comb2_exist++;
-        }
-
         vars[0]  = eq_charge;
-        vars[1]  = (1. - comb1_exist/Ncomb1)*(1. - comb2_exist/Ncomb2);
+        vars[1]  = (1. - (comb2parts_exist_1/Ncomb2parts_1 + comb3parts_exist_1/Ncomb3parts_1))*(1. - (comb2parts_exist_2/Ncomb2parts_2 + comb3parts_exist_2/Ncomb3parts_2));
         vars[2]  = datatree->Jet_Dtr_ID[h1_location];
         vars[3]  = datatree->Jet_Dtr_ID[h2_location];
         vars[4]  = datatree->Jet_Dtr_TrackChi2[h1_location];
