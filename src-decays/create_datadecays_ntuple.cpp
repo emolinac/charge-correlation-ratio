@@ -1,5 +1,6 @@
 #include <iostream>
 #include "analysis-constants.h"
+#include "decay-functions.h"
 #include "kinematical-functions.h"
 #include "names.h"
 #include "utils.h"
@@ -66,82 +67,110 @@ int main()
         double comb2parts_exist_2 = 0;
         double comb3parts_exist_1 = 0;
         double comb3parts_exist_2 = 0;
-        double Ncomb2parts_1 = 0;
-        double Ncomb2parts_2 = 0;
-        double Ncomb3parts_1 = 0;
-        double Ncomb3parts_2 = 0;
+        double comb4parts_exist_1 = 0;
+        double comb4parts_exist_2 = 0;
         
+        // Check combinatios for leading hadron
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
             // Skip particle if it is empty or leading hadron
             if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location) continue;
-            Ncomb2parts_1++;
+
             h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                        datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
                                        datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry],
                                        datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]);
 
-            if((h1comb_momentum.M()/1000.>0.775*0.9&&h1comb_momentum.M()/1000.<0.775*1.1|| // rho
-                h1comb_momentum.M()/1000.>0.500*0.9&&h1comb_momentum.M()/1000.<0.500*1.1)&&  // kaon
-                datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb2parts_exist_1++;
-
+            if(check_rho_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],h1comb_momentum.M()/1000.)||
+               check_kaon0s_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],h1comb_momentum.M()/1000.))
+               comb2parts_exist_1++;
+            
             for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < datatree->Jet_NDtr ; jet_entry_2++)
             {
                 // Skip particle if it is empty or leading hadron or self
                 if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_2==h1_location||jet_entry_2==jet_entry) continue;
-                Ncomb3parts_1++;
                 
                 h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2],
                                            datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry] + datatree->Jet_Dtr_PY[jet_entry_2],
                                            datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry] + datatree->Jet_Dtr_PZ[jet_entry_2],
                                            datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]  + datatree->Jet_Dtr_E[jet_entry_2]);
 
-                if((h1comb_momentum.M()/1000.>0.547*0.9&&h1comb_momentum.M()/1000.<0.574*1.1||// eta
-                    h1comb_momentum.M()/1000.>0.782*0.9&&h1comb_momentum.M()/1000.<0.782*1.1||// omega
-                    h1comb_momentum.M()/1000.>0.957*0.9&&h1comb_momentum.M()/1000.<0.957*1.1)&&// eta prime
-                    datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb3parts_exist_1++;
+                if(check_rhopm_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],h1comb_momentum.M()/1000.)||
+                   check_kaonpm_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],h1comb_momentum.M()/1000.))
+                   comb3parts_exist_1++;
+                
+                for(int jet_entry_3 = jet_entry_2+1 ; jet_entry_3 < datatree->Jet_NDtr ; jet_entry_3++)
+                {
+                    if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_3==h1_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
+
+                    h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2] + datatree->Jet_Dtr_PX[jet_entry_3],
+                                               datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry] + datatree->Jet_Dtr_PY[jet_entry_2] + datatree->Jet_Dtr_PY[jet_entry_3],
+                                               datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry] + datatree->Jet_Dtr_PZ[jet_entry_2] + datatree->Jet_Dtr_PZ[jet_entry_3],
+                                               datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]  + datatree->Jet_Dtr_E[jet_entry_2]  + datatree->Jet_Dtr_E[jet_entry_3] );
+
+                    if(check_kaon0s_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],datatree->Jet_Dtr_ID[jet_entry_3],h1comb_momentum.M()/1000.)||
+                       check_eta_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],datatree->Jet_Dtr_ID[jet_entry_3],h1comb_momentum.M()/1000.)||
+                       check_omega_decay(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],datatree->Jet_Dtr_ID[jet_entry_3],h1comb_momentum.M()/1000.))
+                       comb4parts_exist_1++;                
+                }
             }
         }
 
+        // Check combinatios for subleading hadron
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            // Skip particle if it is empty or if it is the leading or the subleading hadron
+            // Skip particle if it is empty or leading hadron
             if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location) continue;
 
-            Ncomb2parts_2++;
-            h2comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
+            h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                        datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
                                        datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry],
                                        datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]);
 
-            if((h2comb_momentum.M()/1000.>0.775*0.9&&h2comb_momentum.M()/1000.<0.775*1.1|| // rho
-                h2comb_momentum.M()/1000.>0.500*0.9&&h2comb_momentum.M()/1000.<0.500*1.1)&&  // kaon
-                datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb2parts_exist_2++;
-
+            if(check_rho_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],h1comb_momentum.M()/1000.)||
+               check_kaon0s_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],h1comb_momentum.M()/1000.))
+               comb2parts_exist_2++;
+            
             for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < datatree->Jet_NDtr ; jet_entry_2++)
             {
-                // Skip particle if it is empty or subleading hadron or self
-                if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
-                Ncomb3parts_2++;
+                // Skip particle if it is empty or leading hadron or self
+                if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_2==h1_location||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
                 
-                h2comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2],
+                h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2],
                                            datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry] + datatree->Jet_Dtr_PY[jet_entry_2],
                                            datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry] + datatree->Jet_Dtr_PZ[jet_entry_2],
                                            datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]  + datatree->Jet_Dtr_E[jet_entry_2]);
 
-                if((h2comb_momentum.M()/1000.>0.547*0.9&&h2comb_momentum.M()/1000.<0.574*1.1||// eta
-                    h2comb_momentum.M()/1000.>0.782*0.9&&h2comb_momentum.M()/1000.<0.782*1.1||// omega
-                    h2comb_momentum.M()/1000.>0.957*0.9&&h2comb_momentum.M()/1000.<0.957*1.1)&&// eta prime
-                    datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]) comb3parts_exist_2++;
+                if(check_rhopm_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],h1comb_momentum.M()/1000.)||
+                   check_kaonpm_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],h1comb_momentum.M()/1000.))
+                   comb3parts_exist_2++;
+                
+                for(int jet_entry_3 = jet_entry_2+1 ; jet_entry_3 < datatree->Jet_NDtr ; jet_entry_3++)
+                {
+                    if(datatree->Jet_Dtr_PX[jet_entry_2]==-999||jet_entry_3==h1_location||jet_entry_3==h2_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
 
+                    h1comb_momentum.SetPxPyPzE(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry] + datatree->Jet_Dtr_PX[jet_entry_2] + datatree->Jet_Dtr_PX[jet_entry_3],
+                                               datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry] + datatree->Jet_Dtr_PY[jet_entry_2] + datatree->Jet_Dtr_PY[jet_entry_3],
+                                               datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry] + datatree->Jet_Dtr_PZ[jet_entry_2] + datatree->Jet_Dtr_PZ[jet_entry_3],
+                                               datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]  + datatree->Jet_Dtr_E[jet_entry_2]  + datatree->Jet_Dtr_E[jet_entry_3] );
+
+                    if(check_kaon0s_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],datatree->Jet_Dtr_ID[jet_entry_3],h1comb_momentum.M()/1000.)||
+                       check_eta_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],datatree->Jet_Dtr_ID[jet_entry_3],h1comb_momentum.M()/1000.)||
+                       check_omega_decay(datatree->Jet_Dtr_ID[h2_location],datatree->Jet_Dtr_ID[jet_entry],datatree->Jet_Dtr_ID[jet_entry_2],datatree->Jet_Dtr_ID[jet_entry_3],h1comb_momentum.M()/1000.))
+                       comb4parts_exist_2++;                
+                }
             }
         }
+
 
         // Define array carrying the variables
         float vars[Nvars_datadecays];
 
+        int signal = (comb2parts_exist_1>0||comb2parts_exist_2>0||comb3parts_exist_1>0||comb3parts_exist_2>0||comb4parts_exist_1>0||comb4parts_exist_2>0) ? 0 : 1;  
+        std::cout<<"Signal = "<<signal<<std::endl;
+
         vars[0]  = eq_charge;
-        vars[1]  = (1. - (comb2parts_exist_1/Ncomb2parts_1 + comb3parts_exist_1/Ncomb3parts_1))*(1. - (comb2parts_exist_2/Ncomb2parts_2 + comb3parts_exist_2/Ncomb3parts_2));
+        vars[1]  = signal;
         vars[2]  = datatree->Jet_Dtr_ID[h1_location];
         vars[3]  = datatree->Jet_Dtr_ID[h2_location];
         vars[4]  = datatree->Jet_Dtr_TrackChi2[h1_location];

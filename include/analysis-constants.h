@@ -5,12 +5,25 @@
 #include "TString.h"
 
 // PID 
-const int p_id    = 2212;
-const int pbar_id = -p_id;
-const int pip_id  = 211;
-const int pim_id  = -pip_id;
-const int kp_id   = 321;
-const int km_id   = -kp_id;
+const int p_id     = 2212;
+const int pbar_id  = -p_id;
+const int pip_id   = 211;
+const int pim_id   = -pip_id;
+const int kp_id    = 321;
+const int km_id    = -kp_id;
+const int gamma_id = 22;
+
+// Masses (GeV)
+const double rho_mass      = 0.77526;  // PDG 2023
+const double omega_mass    = 0.78266; // PDG 2023
+const double eta_mass      = 0.547862; // PDG 2023
+const double etaprime_mass = 0.95778;  // PDG 2023
+const double kaonp_mass    = 0.493677; // PDG 2023
+const double kaonm_mass    = 0.493677; // PDG 2023
+const double kaon_mass     = 0.497611; // PDG 2023
+const double pi_mass       = 0.134977;
+const double mass_res      = 0.008; // Mass resolution parameter (see src-resolution)
+
 
 // Selected hadrons to perform analysis
 const int pid_ha = pip_id;

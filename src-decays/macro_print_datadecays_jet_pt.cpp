@@ -43,7 +43,7 @@ void macro_print_datadecays_jet_pt()
     
     hs->Draw("NOSTACK");
 
-    hs->SetTitle(";jet pt(GeV);Fraction String Dihadrons");
+    hs->SetTitle(";Jet pt(GeV);Fraction String Dihadrons");
 
     TLegend* l = new TLegend();
     l->AddEntry(h_neqcharge_ratio,"Different sign hadrons","lp");

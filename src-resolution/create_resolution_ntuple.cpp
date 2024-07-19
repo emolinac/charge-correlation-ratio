@@ -60,8 +60,8 @@ int main()
         // Get the signal
         int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\
                       (mcrecotree->Jet_Dtr_ID[h1_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h1_location]&&\
-                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])/*&&\
-                      (h1_location==matched_h1_location&&h2_location==matched_h2_location)*/) ? 1 : 0 ;
+                       mcrecotree->Jet_Dtr_ID[h2_location]==mcrecotree->Jet_Dtr_TRUE_ID[matched_h2_location])&&\
+                      (h1_location==matched_h1_location&&h2_location==matched_h2_location)) ? 1 : 0 ;
         
         // If there is no matching dihadron skip
         if(signal==0) continue;
@@ -77,25 +77,42 @@ int main()
         TVector3 h1true_momentum(mcrecotree->Jet_Dtr_TRUE_PX[h1_location], mcrecotree->Jet_Dtr_TRUE_PY[h1_location], mcrecotree->Jet_Dtr_TRUE_PZ[h1_location]);
         TVector3 h2true_momentum(mcrecotree->Jet_Dtr_TRUE_PX[h2_location], mcrecotree->Jet_Dtr_TRUE_PY[h2_location], mcrecotree->Jet_Dtr_TRUE_PZ[h2_location]);
 
+        // Set 4 momentum (I know, this is bad practice)
+        TLorentzVector h1_4momentum(mcrecotree->Jet_Dtr_PX[h1_location], mcrecotree->Jet_Dtr_PY[h1_location], mcrecotree->Jet_Dtr_PZ[h1_location], mcrecotree->Jet_Dtr_E[h1_location]);
+        TLorentzVector h2_4momentum(mcrecotree->Jet_Dtr_PX[h2_location], mcrecotree->Jet_Dtr_PY[h2_location], mcrecotree->Jet_Dtr_PZ[h2_location], mcrecotree->Jet_Dtr_E[h2_location]);
+        TLorentzVector h1true_4momentum(mcrecotree->Jet_Dtr_TRUE_PX[h1_location], mcrecotree->Jet_Dtr_TRUE_PY[h1_location], mcrecotree->Jet_Dtr_TRUE_PZ[h1_location], mcrecotree->Jet_Dtr_TRUE_E[h1_location]);
+        TLorentzVector h2true_4momentum(mcrecotree->Jet_Dtr_TRUE_PX[h2_location], mcrecotree->Jet_Dtr_TRUE_PY[h2_location], mcrecotree->Jet_Dtr_TRUE_PZ[h2_location], mcrecotree->Jet_Dtr_TRUE_E[h2_location]);
+
+        TLorentzVector dh_4momentum(mcrecotree->Jet_Dtr_PX[h1_location] + mcrecotree->Jet_Dtr_PX[h2_location],
+                                    mcrecotree->Jet_Dtr_PY[h1_location] + mcrecotree->Jet_Dtr_PY[h2_location],
+                                    mcrecotree->Jet_Dtr_PZ[h1_location] + mcrecotree->Jet_Dtr_PZ[h2_location],
+                                    mcrecotree->Jet_Dtr_E[h1_location]  + mcrecotree->Jet_Dtr_E[h2_location]);
+
+        TLorentzVector dhtrue_4momentum(mcrecotree->Jet_Dtr_TRUE_PX[h1_location] + mcrecotree->Jet_Dtr_TRUE_PX[h2_location],
+                                        mcrecotree->Jet_Dtr_TRUE_PY[h1_location] + mcrecotree->Jet_Dtr_TRUE_PY[h2_location],
+                                        mcrecotree->Jet_Dtr_TRUE_PZ[h1_location] + mcrecotree->Jet_Dtr_TRUE_PZ[h2_location],
+                                        mcrecotree->Jet_Dtr_TRUE_E[h1_location]  + mcrecotree->Jet_Dtr_TRUE_E[h2_location]);
+        
+        
         // Define array carrying the variables
         float vars[Nvars_resolution];
-        vars[0] = eq_charge;
-        vars[1] = mcrecotree->Jet_Dtr_TrackChi2[h1_location];
-        vars[2] = mcrecotree->Jet_Dtr_TrackChi2[h2_location];
-        vars[3] = mcrecotree->Jet_Dtr_TrackNDF[h1_location];
-        vars[4] = mcrecotree->Jet_Dtr_TrackNDF[h2_location];
-        vars[5] = mcrecotree->Jet_Dtr_ProbNNghost[h1_location];
-        vars[6] = mcrecotree->Jet_Dtr_ProbNNghost[h2_location];
-        vars[7] = mcrecotree->Jet_Dtr_P[h1_location]/1000.;
-        vars[8] = mcrecotree->Jet_Dtr_P[h2_location]/1000.;
-        vars[9] = mcrecotree->Jet_Dtr_PT[h1_location]/1000.;
-        vars[10] = mcrecotree->Jet_Dtr_PT[h2_location]/1000.;
-        vars[11] = calculate_z_nlh(&h1_momentum, &h2_momentum);
-        vars[12] = calculate_z_nlh(&h1true_momentum, &h2true_momentum);
-        vars[13] = calculate_kt(&h1_momentum, &h2_momentum);
-        vars[14] = calculate_kt(&h1true_momentum, &h2true_momentum);
-        vars[15] = mcrecotree->Jet_Dtr_PZ[h1_location]/1000.;
-        vars[16] = mcrecotree->Jet_Dtr_PZ[h2_location]/1000.;
+        vars[0]  = eq_charge;
+        vars[1]  = mcrecotree->Jet_Dtr_TrackChi2[h1_location];
+        vars[2]  = mcrecotree->Jet_Dtr_TrackChi2[h2_location];
+        vars[3]  = mcrecotree->Jet_Dtr_TrackNDF[h1_location];
+        vars[4]  = mcrecotree->Jet_Dtr_TrackNDF[h2_location];
+        vars[5]  = mcrecotree->Jet_Dtr_ProbNNghost[h1_location];
+        vars[6]  = mcrecotree->Jet_Dtr_ProbNNghost[h2_location];
+        vars[7]  = calculate_z_nlh(&h1_momentum, &h2_momentum);
+        vars[8]  = calculate_z_nlh(&h1true_momentum, &h2true_momentum);
+        vars[9]  = calculate_kt(&h1_momentum, &h2_momentum);
+        vars[10] = calculate_kt(&h1true_momentum, &h2true_momentum);
+        vars[11] = dh_4momentum.M()/1000.;
+        vars[12] = dhtrue_4momentum.M()/1000.;
+        vars[13] = h1_4momentum.M()/1000.;
+        vars[14] = h1true_4momentum.M()/1000.;
+        vars[15] = h2_4momentum.M()/1000.;
+        vars[16] = h2true_4momentum.M()/1000.;
         vars[17] = mcrecotree->Jet_PT/1000.;
         vars[18] = mcrecotree->Jet_mcjet_PT/1000.;
         vars[19] = mcrecotree->Jet_Eta;
@@ -140,6 +157,12 @@ int main()
         vars[37] = mup_e;
         vars[38] = mcrecotree->mup_M/1000.;
         vars[39] = mcrecotree->mup_TRACK_PCHI2;
+
+        // lh and nlh momenta
+        vars[40] = mcrecotree->Jet_Dtr_P[h1_location]/1000.;
+        vars[41] = mcrecotree->Jet_Dtr_P[h2_location]/1000.;
+        vars[42] = mcrecotree->Jet_Dtr_PT[h1_location]/1000.;
+        vars[43] = mcrecotree->Jet_Dtr_PT[h2_location]/1000.;
         
         // Fill the TNtuple
         ntuple_resolution->Fill(vars);

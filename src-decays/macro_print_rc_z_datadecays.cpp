@@ -29,7 +29,7 @@ void macro_print_rc_z_datadecays()
     //Set TLegend
     TLegend* legend = new TLegend(0.7,0.75,0.9,0.9);
     legend->AddEntry(h_rc_z_data,"data");
-    legend->AddEntry(h_rc_z_data_decays,"data from str. break");
+    legend->AddEntry(h_rc_z_data_decays,"data without decays");
 
     legend->Draw();
 }
