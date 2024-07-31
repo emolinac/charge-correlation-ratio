@@ -27,7 +27,7 @@ const double mass_res      = 0.008; // Mass resolution parameter (see src-resolu
 
 // Selected hadrons to perform analysis
 const int pid_ha = pip_id;
-const int pid_hb = pim_id;
+const int pid_hb = kp_id;
 
 // Define binning
 const int Nbin_z      = 4;//NOMINAL : 5;
