@@ -36,15 +36,15 @@ void macro_print_rc_kt_decaystringandalg()
     // Get the string breaking fraction
     TCut lh_motherid_cut  = "(lh_motherid!=113&&lh_motherid!=213&&lh_motherid!=-213&&lh_motherid!=221&&lh_motherid!=310&&lh_motherid!=321&&lh_motherid!=-321&&lh_motherid!=223)";
     TCut nlh_motherid_cut = "(nlh_motherid!=113&&nlh_motherid!=213&&nlh_motherid!=-213&&nlh_motherid!=221&&nlh_motherid!=310&&nlh_motherid!=321&&nlh_motherid!=-321&&nlh_motherid!=223)";
-    TCut nlh_z_cut        = "nlh_z<0.5&&nlh_z>0.25875";
+    TCut nlh_z_cut        = "nlh_z<0.5&&nlh_z>0.295225";//"nlh_z<0.5&&nlh_z>0.25875";
     TCut local_jet_pt_cut = "jet_pt>20&&jet_pt<100";
 
-    ntuple_decay->Project("hdecay_diffsign"    ,"dh_kt",local_jet_pt_cut+nlh_z_cut+jet_cuts+trackmc_cuts+"eq_charge==0&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)");
-    ntuple_decay->Project("hstrbrk_diffsign"   ,"dh_kt",local_jet_pt_cut+nlh_z_cut+jet_cuts+trackmc_cuts+"eq_charge==0"+lh_motherid_cut+nlh_motherid_cut);
-    ntuple_decay->Project("hstrbrkalg_diffsign","dh_kt",local_jet_pt_cut+nlh_z_cut+jet_cuts+trackmc_cuts+"eq_charge==0&&prob==1");
-    ntuple_decay->Project("hdecay_samesign"    ,"dh_kt",local_jet_pt_cut+nlh_z_cut+jet_cuts+trackmc_cuts+"eq_charge==1&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)");
-    ntuple_decay->Project("hstrbrk_samesign"   ,"dh_kt",local_jet_pt_cut+nlh_z_cut+jet_cuts+trackmc_cuts+"eq_charge==1"+lh_motherid_cut+nlh_motherid_cut);
-    ntuple_decay->Project("hstrbrkalg_samesign","dh_kt",local_jet_pt_cut+nlh_z_cut+jet_cuts+trackmc_cuts+"eq_charge==1&&prob==1");
+    ntuple_decay->Project("hdecay_diffsign"    ,"dh_kt",local_jet_pt_cut/*+nlh_z_cut*/+jet_cuts+trackmc_cuts+"eq_charge==0&&(lh_motherid>22||lh_motherid<-10)||(nlh_motherid>22||nlh_motherid<-10)");
+    ntuple_decay->Project("hstrbrk_diffsign"   ,"dh_kt",local_jet_pt_cut/*+nlh_z_cut*/+jet_cuts+trackmc_cuts+"eq_charge==0"+lh_motherid_cut+nlh_motherid_cut);
+    ntuple_decay->Project("hstrbrkalg_diffsign","dh_kt",local_jet_pt_cut/*+nlh_z_cut*/+jet_cuts+trackmc_cuts+"eq_charge==0&&prob==1");
+    ntuple_decay->Project("hdecay_samesign"    ,"dh_kt",local_jet_pt_cut/*+nlh_z_cut*/+jet_cuts+trackmc_cuts+"eq_charge==1&&(lh_motherid>22||lh_motherid<-10)||(nlh_motherid>22||nlh_motherid<-10)");
+    ntuple_decay->Project("hstrbrk_samesign"   ,"dh_kt",local_jet_pt_cut/*+nlh_z_cut*/+jet_cuts+trackmc_cuts+"eq_charge==1"+lh_motherid_cut+nlh_motherid_cut);
+    ntuple_decay->Project("hstrbrkalg_samesign","dh_kt",local_jet_pt_cut/*+nlh_z_cut*/+jet_cuts+trackmc_cuts+"eq_charge==1&&prob==1");
 
     hstrbrk_sub->Add(hstrbrk_samesign, hstrbrk_diffsign,1,-1);
     hstrbrk_sum->Add(hstrbrk_diffsign, hstrbrk_samesign,1,1);

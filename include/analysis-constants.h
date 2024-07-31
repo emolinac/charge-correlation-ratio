@@ -30,20 +30,26 @@ const int pid_ha = pip_id;
 const int pid_hb = pim_id;
 
 // Define binning
-const int Nbin_z      = 5;
-const int Nbin_kt     = 5;
+const int Nbin_z      = 4;//NOMINAL : 5;
+const int Nbin_kt     = 4;//NOMINAL : 5;
 const int Nbin_jet_pt = 3; // usual binning in jet pt
 
 const double z_min  = 0;
 const double z_max  = 0.5;
-const double kt_min = 0.;  
+const double kt_min = 0.25;  
 const double kt_max = 2.; 
 const double jet_pt_min = 20; 
 const double jet_pt_max = 100;
 
-const double jet_pt_limits[] = {jet_pt_min,30.,50.,jet_pt_max};
-const double z_limits[] = {z_min, 0.25875, 0.34375, 0.40875, 0.45875, z_max };
-const double kt_limits[] = {kt_min, 0.265, 0.415, 0.585, 0.885, kt_max};
+// Data binning
+//const double jet_pt_limits[] = {jet_pt_min, 26.98, 38.772, jet_pt_max};//{jet_pt_min,30.,50.,jet_pt_max};
+//const double z_limits[] = {z_min, 0.288675, 0.379775, 0.448175, z_max };//{z_min, 0.262175, 0.346575, 0.409325, 0.458625, z_max };
+//const double kt_limits[] = {kt_min, 0.407587, 0.589063, 0.883413, kt_max};//{kt_min, 0.376962, 0.509613, 0.682688, 0.970562, kt_max};
+
+// MC binning
+const double jet_pt_limits[] = {jet_pt_min, 26.98, 38.772, jet_pt_max};
+const double z_limits[] = {z_min, 0.295225, 0.386075, 0.449775, z_max };
+const double kt_limits[] = {kt_min, 0.420538, 0.597813, 0.848237, kt_max};
 
 // Define analysis cuts
 // Jet cuts

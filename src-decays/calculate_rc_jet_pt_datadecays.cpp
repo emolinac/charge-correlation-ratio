@@ -57,11 +57,15 @@ int main()
     TH1F* hall_samesign        = new TH1F("hall_samesign"       ,"",Nbin_jet_pt,jet_pt_limits);
     TH1F* hdatadecays_samesign = new TH1F("hdatadecays_samesign","",Nbin_jet_pt,jet_pt_limits);
 
+    // Set the cut
+    TCut dh_kt_cut = "dh_kt>0.265&&dh_kt<0.885";
+    TCut nlh_z_cut = "nlh_z<0.5&&nlh_z>0.25875";
+
     // Get the string breaking fraction
-    ntuple_datadecays->Project("hall_diffsign"    ,"jet_pt",diffsign_cut_data);
-    ntuple_datadecays->Project("hddecays_diffsign","jet_pt",diffsign_cut_data_decay);
-    ntuple_datadecays->Project("hall_samesign"    ,"jet_pt",samesign_cut_data);
-    ntuple_datadecays->Project("hddecays_samesign","jet_pt",samesign_cut_data_decay);
+    ntuple_datadecays->Project("hall_diffsign"    ,"jet_pt",dh_kt_cut+nlh_z_cut+diffsign_cut_data);
+    ntuple_datadecays->Project("hddecays_diffsign","jet_pt",dh_kt_cut+nlh_z_cut+diffsign_cut_data_decay);
+    ntuple_datadecays->Project("hall_samesign"    ,"jet_pt",dh_kt_cut+nlh_z_cut+samesign_cut_data);
+    ntuple_datadecays->Project("hddecays_samesign","jet_pt",dh_kt_cut+nlh_z_cut+samesign_cut_data_decay);
     hdatadecays_diffsign->Divide(hddecays_diffsign,hall_diffsign,1,1,"B");
     hdatadecays_samesign->Divide(hddecays_samesign,hall_samesign,1,1,"B");
     
