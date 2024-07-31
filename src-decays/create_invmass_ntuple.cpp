@@ -63,7 +63,7 @@ int main()
         int comb1_exist = 0;
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location) continue;
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location) continue;
 
             TLorentzVector h1comb_momentum(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
@@ -76,7 +76,7 @@ int main()
         int comb2_exist = 0;
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location) continue;
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location||jet_entry==h2_location) continue;
 
             TLorentzVector h2comb_momentum(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
@@ -89,7 +89,7 @@ int main()
         // Pick the leading hadron and check all possible combinations with other hadrons
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location/*||comb1_exist==1*/) continue;
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location/*||comb1_exist==1*/) continue;
 
             TLorentzVector h1comb_momentum(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
@@ -169,7 +169,7 @@ int main()
         // Pick the subleading hadron and check all possible combinations except for the with the leading hadron which is already accounted
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location/*||comb2_exist==1*/) continue;
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location||jet_entry==h2_location/*||comb2_exist==1*/) continue;
 
             TLorentzVector h2comb_momentum(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
