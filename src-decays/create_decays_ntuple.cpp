@@ -177,8 +177,9 @@ int main()
         vars[1]  = signal;
         vars[2]  = mcrecotree->Jet_mcjet_dtrID[h1_location];
         vars[3]  = mcrecotree->Jet_mcjet_dtrID[h2_location];
-        vars[4]  = mcrecotree->Jet_mcjet_MotherID[h1_location];
-        vars[5]  = mcrecotree->Jet_mcjet_MotherID[h2_location];
+        // Fix for the -99 id
+        vars[4]  = (mcrecotree->Jet_mcjet_MotherID[h1_location]==-99)? 0 : mcrecotree->Jet_mcjet_MotherID[h1_location];
+        vars[5]  = (mcrecotree->Jet_mcjet_MotherID[h2_location]==-99)? 0 : mcrecotree->Jet_mcjet_MotherID[h2_location];
         vars[6]  = mcrecotree->Jet_mcjet_TopMotherID[h1_location];
         vars[7]  = mcrecotree->Jet_mcjet_TopMotherID[h2_location];
         vars[8]  = mcrecotree->Jet_mcjet_dtrP[h1_location]/1000.;

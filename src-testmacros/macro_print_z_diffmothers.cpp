@@ -35,10 +35,10 @@ void macro_print_z_diffmothers()
     TCut nlh_z_cut        = "nlh_z<0.5&&nlh_z>0.295225";//"nlh_z<0.5&&nlh_z>0.25875";
     TCut local_jet_pt_cut = "jet_pt>20&&jet_pt<100";
 
-    ntuple_decay->Project("hdecay_diffsign"    ,"nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==0&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)");
+    ntuple_decay->Project("hdecay_diffsign"    ,"nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==0&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)&&(lh_motherid!=-99&&nlh_motherid!=99)");
     ntuple_decay->Project("hstrbrk_diffsign"   ,"nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==0"+lh_motherid_cut+nlh_motherid_cut);
     ntuple_decay->Project("hstrbrkalg_diffsign","nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==0&&prob==1");
-    ntuple_decay->Project("hdecay_samesign"    ,"nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==1&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)");
+    ntuple_decay->Project("hdecay_samesign"    ,"nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==1&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)&&(lh_motherid!=-99&&nlh_motherid!=99)");
     ntuple_decay->Project("hstrbrk_samesign"   ,"nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==1"+lh_motherid_cut+nlh_motherid_cut);
     ntuple_decay->Project("hstrbrkalg_samesign","nlh_z",local_jet_pt_cut+jet_cuts+trackmc_cuts+"eq_charge==1&&prob==1");
 

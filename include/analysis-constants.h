@@ -47,9 +47,9 @@ const double jet_pt_max = 100;
 //const double kt_limits[] = {kt_min, 0.407587, 0.589063, 0.883413, kt_max};//{kt_min, 0.376962, 0.509613, 0.682688, 0.970562, kt_max};
 
 // MC binning
-const double jet_pt_limits[] = {jet_pt_min, 26.98, 38.772, jet_pt_max};
-const double z_limits[] = {z_min, 0.295225, 0.386075, 0.449775, z_max };
-const double kt_limits[] = {kt_min, 0.420538, 0.597813, 0.848237, kt_max};
+const double jet_pt_limits[] = {jet_pt_min, 28.508, 46.116, jet_pt_max};
+const double z_limits[] = {z_min, 0.296525, 0.384725, 0.449275, z_max };
+const double kt_limits[] = {kt_min, 0.425088, 0.597287, 0.848588, kt_max};
 
 // Define analysis cuts
 // Jet cuts
