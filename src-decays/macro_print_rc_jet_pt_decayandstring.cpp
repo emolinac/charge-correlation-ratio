@@ -28,9 +28,9 @@ void macro_print_rc_jet_pt_decayandstring()
     TH1F* hrc_decay  = new TH1F("hrc_decay" ,"",Nbin_jet_pt,jet_pt_limits);
 
     // Get the string breaking fraction
-    ntuple_decay->Project("hdecay_diffsign" ,"jet_pt",jet_cuts+trackmc_cuts+"eq_charge==0&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)&&(lh_motherid!=-99&&nlh_motherid!=99)");
+    ntuple_decay->Project("hdecay_diffsign" ,"jet_pt",jet_cuts+trackmc_cuts+"eq_charge==0&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)");
     ntuple_decay->Project("hstrbrk_diffsign","jet_pt",jet_cuts+trackmc_cuts+"eq_charge==0&&lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");
-    ntuple_decay->Project("hdecay_samesign" ,"jet_pt",jet_cuts+trackmc_cuts+"eq_charge==1&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)&&(lh_motherid!=-99&&nlh_motherid!=99)");
+    ntuple_decay->Project("hdecay_samesign" ,"jet_pt",jet_cuts+trackmc_cuts+"eq_charge==1&&(lh_motherid>22||lh_motherid<-10)&&(nlh_motherid>22||nlh_motherid<-10)");
     ntuple_decay->Project("hstrbrk_samesign","jet_pt",jet_cuts+trackmc_cuts+"eq_charge==1&&lh_motherid<22&&lh_motherid>-10&&nlh_motherid<22&&nlh_motherid>-10");
     
     hstrbrk_sub->Add(hstrbrk_samesign, hstrbrk_diffsign,1,-1);
