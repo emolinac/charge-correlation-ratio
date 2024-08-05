@@ -27,8 +27,11 @@ const double mass_res      = 0.008; // Mass resolution parameter (see src-resolu
 
 
 // Selected hadrons to perform analysis
+// const int pid_ha = pip_id;
+// const int pid_hb = kp_id;
+
 const int pid_ha = pip_id;
-const int pid_hb = kp_id;
+const int pid_hb = -pip_id;
 
 // Define binning
 const int Nbin_z      = 4;//NOMINAL : 5;
@@ -43,9 +46,9 @@ const double jet_pt_min = 20;
 const double jet_pt_max = 100;
 
 // Binning
-const double jet_pt_limits[] = {jet_pt_min, 25.644, 35.532, jet_pt_max};
-const double z_limits[] = {z_min, 0.309525, 0.398425, 0.454925, z_max };
-const double kt_limits[] = {kt_min, 0.462888, 0.674113, 1.01256, kt_max};
+const double jet_pt_limits[] = {jet_pt_min, 25.996, 36.82, jet_pt_max};
+const double z_limits[] = {z_min, 0.311375, 0.397725, 0.455025, z_max };
+const double kt_limits[] = {kt_min, 0.441188, 0.641212, 0.956562, kt_max};
 
 // Define analysis cuts
 // Jet cuts
