@@ -83,7 +83,7 @@ int main()
             // Look at the energy of the particles
             if(mcrecotree->Jet_mcjet_dtrE[jet_entry]==matched_h1_energy||mcrecotree->Jet_mcjet_dtrE[jet_entry]==matched_h2_energy) match_counter++;
         }
-        if(match_counter==2)std::cout<<"There are two particle with energies "<<matched_h1_energy<<" and "<<matched_h2_energy<<std::endl; 
+        //if(match_counter==2)std::cout<<"There are two particle with energies "<<matched_h1_energy<<" and "<<matched_h2_energy<<std::endl; 
 
         // Get the signal
         int signal = ((matched_h1_location!=-999&&matched_h2_location!=-999)&&\

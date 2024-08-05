@@ -78,7 +78,7 @@ int main()
         
         // Check combinations for leading hadron
         int do_bgtreatment_h1 = 0;
-        if(abs(mcrecotree->Jet_mcjet_dtrID[h1_location])==pip_id){std::cout<<abs(mcrecotree->Jet_mcjet_dtrID[h1_location])<<" do bg treatment!"<<std::endl; do_bgtreatment_h1++;}
+        //if(abs(mcrecotree->Jet_mcjet_dtrID[h1_location])==pip_id){std::cout<<abs(mcrecotree->Jet_mcjet_dtrID[h1_location])<<" do bg treatment!"<<std::endl; do_bgtreatment_h1++;}
         for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry++)
         {
             if(do_bgtreatment_h1!=0) continue;
