@@ -6,7 +6,7 @@ make
 
 # Create necessary ntuples
 cd ./bin
-./create_ntuples
+#./create_ntuples
 ./create_purity_ntuple
 ./create_decays_ntuple
 ./create_invmass_ntuple
