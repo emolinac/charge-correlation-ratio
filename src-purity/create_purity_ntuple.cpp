@@ -53,6 +53,13 @@ int main()
         loc_nlh_mcreco(mcrecotree, pid_ha, pid_hb, h1_location, h1_energy, h2_location, h2_energy); //OK
         if(h2_location == -999) continue;
 
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(mcrecotree->Jet_Dtr_ID[h1_location],mcrecotree->Jet_Dtr_ID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<mcrecotree->Jet_Dtr_ID[h1_location]<<","<<mcrecotree->Jet_Dtr_ID[h2_location]<<std::endl;
+            continue;
+        }
+
 //        // Check if there is a truth level dihadron in a matched jet
 //        loc_lh_mcmatchedjet(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy);
 //        loc_nlh_mcmatchedjet(mcrecotree, pid_ha, pid_hb, matched_h1_location, matched_h1_energy, matched_h2_location, matched_h2_energy);

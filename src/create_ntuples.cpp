@@ -33,8 +33,8 @@ int main()
     // Fill the mc TNtuple
     // OK I have to be very carfeul here about the relationship between the TRUE quantities and the ones that are in the mcjet branches.
     // they might no be the same.
-    std::cout<<"# Entries for MC = "<<mctree->fChain->GetEntries()<<std::endl;
-    
+    double total = 0;
+    double cases = 0;
     for(int evt = 0 ; evt < mctree->fChain->GetEntries() ; evt++)
     {
         // Access entry of tree
@@ -59,11 +59,21 @@ int main()
         // Check of next to leading hadron
         if(h2_location == -999) continue;
 
+        total++;
+
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(mctree->MCJet_Dtr_ID[h1_location],mctree->MCJet_Dtr_ID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<mctree->MCJet_Dtr_ID[h1_location]<<","<<mctree->MCJet_Dtr_ID[h2_location]<<std::endl;
+            continue;
+        }
+        cases++;
+
         // Fill histogram accordingly
         float h1_charge = mctree->MCJet_Dtr_ThreeCharge[h1_location];
         float h2_charge = mctree->MCJet_Dtr_ThreeCharge[h2_location];
         float eq_charge = (h1_charge*h2_charge<0) ? 0 : 1;
-        
+
         // Safety print
         if(mctree->MCJet_Dtr_Z[h2_location]>0.5)
         {
@@ -128,10 +138,12 @@ int main()
         // Fill the TNtuple
         ntuple_mc->Fill(vars);
     }
-
-    std::cout<<"MC TNtuple done!"<<std::endl; //OK
+    std::cout<<"MC percentage of diff species "<<cases*100./total<<std::endl;
+    std::cout<<"MC TNtuple done!"<<std::endl;
 
     // Fill the mcreco TNtuple
+    total = 0;
+    cases = 0;
     for(int evt = 0 ; evt < mcrecotree->fChain->GetEntries() ; evt++)
     {
         // Access entry of tree
@@ -155,6 +167,17 @@ int main()
 
         // Check of next to leading hadron
         if(h2_location == -999) continue;
+
+        total++;
+
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(mcrecotree->Jet_Dtr_ID[h1_location],mcrecotree->Jet_Dtr_ID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<mcrecotree->Jet_Dtr_ID[h1_location]<<","<<mcrecotree->Jet_Dtr_ID[h2_location]<<std::endl;
+            continue;
+        }
+
+        cases++;
 
         // Get the charges!
         float h1_charge = mcrecotree->Jet_Dtr_ThreeCharge[h1_location];
@@ -233,6 +256,11 @@ int main()
         ntuple_mcreco->Fill(vars);
     }
 
+    std::cout<<"MCReco percentage of diff species "<<cases*100./total<<std::endl;
+
+    total = 0;
+    cases = 0;
+
     std::cout<<"MCreco TNtuple done!"<<std::endl; //OK
 
     // Fille the data TNtuple
@@ -259,7 +287,18 @@ int main()
 
         // Check of next to leading hadron
         if(h2_location == -999) continue;
-                
+
+        total++;
+
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<datatree->Jet_Dtr_ID[h1_location]<<","<<datatree->Jet_Dtr_ID[h2_location]<<std::endl;
+            continue;
+        }
+
+        cases++;
+
         // Get the charges
         float h1_charge = datatree->Jet_Dtr_ThreeCharge[h1_location];
         float h2_charge = datatree->Jet_Dtr_ThreeCharge[h2_location];
@@ -349,7 +388,9 @@ int main()
         ntuple_data->Fill(vars);
     }
 
+    std::cout<<"Data percentage of diff species "<<cases*100./total<<std::endl;
     std::cout<<"Data TNtuple done!"<<std::endl;
+    
 
     // Write the TNtuple in the output file
     fout->cd();

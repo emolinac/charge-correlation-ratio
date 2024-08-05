@@ -58,7 +58,7 @@ void macro_print_rc_kt_decayandstring()
     
 
     TLegend* l = new TLegend();
-    l->AddEntry(hrc_strbrk,"From str brk","lp");
+    l->AddEntry(hrc_strbrk,"From q/g mothers","lp");
     l->AddEntry(hrc_decay,"From decay","lp");
     l->Draw("SAME");
 }

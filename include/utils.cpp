@@ -33,5 +33,6 @@ void loc_nlh_data(TZJetsData* tree, int pid_ha, int pid_hb, int lh_loc, double l
 void set_uncertainties(TH1F* hcs_samesign, TH1F* hcs_diffsign, TH1F* hrc);
 void set_uncertainties_purity(TH1F* hdata, TH1F* hpurity, TH1F* hdatapurity);
 
-
+// Functions to check nature of dihadrons
+int validate_dihadron(int lh_id, int nlh_id)
 #endif

@@ -22,6 +22,7 @@ const double kaonp_mass    = 0.493677; // PDG 2023
 const double kaonm_mass    = 0.493677; // PDG 2023
 const double kaon_mass     = 0.497611; // PDG 2023
 const double pi_mass       = 0.134977;
+const double phi_mass      = 1.019455;
 const double mass_res      = 0.008; // Mass resolution parameter (see src-resolution)
 
 
@@ -47,9 +48,9 @@ const double jet_pt_max = 100;
 //const double kt_limits[] = {kt_min, 0.407587, 0.589063, 0.883413, kt_max};//{kt_min, 0.376962, 0.509613, 0.682688, 0.970562, kt_max};
 
 // MC binning
-const double jet_pt_limits[] = {jet_pt_min, 26.98, 38.772, jet_pt_max};
-const double z_limits[] = {z_min, 0.295225, 0.386075, 0.449775, z_max };
-const double kt_limits[] = {kt_min, 0.420538, 0.597813, 0.848237, kt_max};
+const double jet_pt_limits[] = {jet_pt_min, 28.196, 44.38, jet_pt_max};
+const double z_limits[] = {z_min, 0.308775, 0.394575, 0.454025, z_max };
+const double kt_limits[] = {kt_min, 0.427887, 0.601313, 0.878162, kt_max};
 
 // Define analysis cuts
 // Jet cuts

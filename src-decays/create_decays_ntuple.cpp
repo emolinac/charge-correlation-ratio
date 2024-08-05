@@ -30,7 +30,6 @@ int main()
     // Fill the mcreco TNtuple
     for(int evt = 0 ; evt < mcrecotree->fChain->GetEntries() ; evt++)
     {
-        std::cout<<"Working in jet "<<evt<<std::endl;
         // Access entry of tree
         mcrecotree->GetEntry(evt);
 
@@ -53,6 +52,13 @@ int main()
         // Check of next to leading hadron
         if(h2_location == -999) continue;
 
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(mcrecotree->Jet_mcjet_dtrID[h1_location],mcrecotree->Jet_mcjet_dtrID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<mcrecotree->Jet_mcjet_dtrID[h1_location]<<","<<mcrecotree->Jet_mcjet_dtrID[h2_location]<<std::endl;
+            continue;
+        }
+
         // Get the charges!
         float h1_charge = mcrecotree->Jet_mcjet_dtrThreeCharge[h1_location];
         float h2_charge = mcrecotree->Jet_mcjet_dtrThreeCharge[h2_location];
@@ -70,11 +76,15 @@ int main()
         double comb4parts_exist_1 = 0;
         double comb4parts_exist_2 = 0;
         
-        // Check combinatios for leading hadron
+        // Check combinations for leading hadron
+        int do_bgtreatment_h1 = 0;
+        if(abs(mcrecotree->Jet_mcjet_dtrID[h1_location])==pip_id){std::cout<<abs(mcrecotree->Jet_mcjet_dtrID[h1_location])<<" do bg treatment!"<<std::endl; do_bgtreatment_h1++;}
         for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry++)
         {
+            if(do_bgtreatment_h1!=0) continue;
+
             // Skip particle if it is empty or leading hadron
-            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||jet_entry==h1_location) continue;
+            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry]==0||jet_entry==h1_location) continue;
 
             h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h1_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry], 
                                        mcrecotree->Jet_mcjet_dtrPY[h1_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry], 
@@ -88,7 +98,7 @@ int main()
             for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_2++)
             {
                 // Skip particle if it is empty or leading hadron or self
-                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||jet_entry_2==h1_location||jet_entry_2==jet_entry) continue;
+                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==0||jet_entry_2==h1_location||jet_entry_2==jet_entry) continue;
                 
                 h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h1_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2],
                                            mcrecotree->Jet_mcjet_dtrPY[h1_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2],
@@ -101,7 +111,7 @@ int main()
                 
                 for(int jet_entry_3 = jet_entry_2+1 ; jet_entry_3 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_3++)
                 {
-                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||jet_entry_3==h1_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
+                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_3]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==0||jet_entry_3==h1_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
 
                     h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h1_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_3],
                                                mcrecotree->Jet_mcjet_dtrPY[h1_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_3],
@@ -117,10 +127,15 @@ int main()
         }
 
         // Check combinatios for subleading hadron
+        int do_bgtreatment_h2 = 0;
+        if(abs(mcrecotree->Jet_mcjet_dtrID[h2_location])==pip_id) do_bgtreatment_h2++;
+        
         for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry++)
         {
+            if(do_bgtreatment_h2!=0) continue;
+
             // Skip particle if it is empty or leading hadron
-            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||jet_entry==h1_location||jet_entry==h2_location) continue;
+            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry]==0||jet_entry==h1_location||jet_entry==h2_location) continue;
 
             h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h2_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry], 
                                        mcrecotree->Jet_mcjet_dtrPY[h2_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry], 
@@ -134,7 +149,7 @@ int main()
             for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_2++)
             {
                 // Skip particle if it is empty or leading hadron or self
-                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||jet_entry_2==h1_location||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
+                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==0||jet_entry_2==h1_location||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
                 
                 h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h2_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2],
                                            mcrecotree->Jet_mcjet_dtrPY[h2_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2],
@@ -147,7 +162,7 @@ int main()
                 
                 for(int jet_entry_3 = jet_entry_2+1 ; jet_entry_3 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_3++)
                 {
-                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||jet_entry_3==h1_location||jet_entry_3==h2_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
+                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_3]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==0||jet_entry_3==h1_location||jet_entry_3==h2_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
 
                     h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h2_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_3],
                                                mcrecotree->Jet_mcjet_dtrPY[h2_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_3],
@@ -162,23 +177,16 @@ int main()
             }
         }
 
-        /*
-        std::cout<<"comb2parts_1="<<comb2parts_exist_1<<" ,comb2parts_2="<<comb2parts_exist_2<<std::endl;
-        std::cout<<"comb3parts_1="<<comb3parts_exist_1<<" ,comb3parts_2="<<comb3parts_exist_2<<std::endl;
-        std::cout<<"comb4parts_1="<<comb4parts_exist_1<<" ,comb4parts_2="<<comb4parts_exist_2<<std::endl;
-        */
-
         int signal = (comb2parts_exist_1>0||comb2parts_exist_2>0||comb3parts_exist_1>0||comb3parts_exist_2>0||comb4parts_exist_1>0||comb4parts_exist_2>0) ? 0 : 1;  
-        std::cout<<"Signal = "<<signal<<std::endl;
-
+        
         // Define array carrying the variables
         float vars[Nvars_decays];
         vars[0]  = eq_charge;
         vars[1]  = signal;
         vars[2]  = mcrecotree->Jet_mcjet_dtrID[h1_location];
         vars[3]  = mcrecotree->Jet_mcjet_dtrID[h2_location];
-        vars[4]  = mcrecotree->Jet_mcjet_MotherID[h1_location];
-        vars[5]  = mcrecotree->Jet_mcjet_MotherID[h2_location];
+        vars[4]  = (mcrecotree->Jet_mcjet_MotherID[h1_location]==-99)? 0 : mcrecotree->Jet_mcjet_MotherID[h1_location] ;
+        vars[5]  = (mcrecotree->Jet_mcjet_MotherID[h2_location]==-99)? 0 : mcrecotree->Jet_mcjet_MotherID[h2_location] ;
         vars[6]  = mcrecotree->Jet_mcjet_TopMotherID[h1_location];
         vars[7]  = mcrecotree->Jet_mcjet_TopMotherID[h2_location];
         vars[8]  = mcrecotree->Jet_mcjet_dtrP[h1_location]/1000.;
