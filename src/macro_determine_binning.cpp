@@ -5,12 +5,12 @@
 void macro_determine_binning()
 {
     // Open data file 
-    //TFile* f = new TFile((output_folder+namef_ntuple_dihadron).c_str());
-    TFile* f = new TFile((output_folder+namef_ntuple_decays).c_str());
+    TFile* f = new TFile((output_folder+namef_ntuple_dihadron).c_str());
+    //TFile* f = new TFile((output_folder+namef_ntuple_decays).c_str());
 
     // Get TNtuple from file
-    //TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_data.c_str());
-    TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_decays.c_str());
+    TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_data.c_str());
+    //TNtuple* ntuple = (TNtuple*) f->Get(name_ntuple_decays.c_str());
 
     // Declare the histos to use
     TH1F* h_z      = new TH1F("h_z"     ,"",10000,z_min     ,z_max     );

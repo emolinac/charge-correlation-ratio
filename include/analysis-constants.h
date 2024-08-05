@@ -42,14 +42,14 @@ const double jet_pt_min = 20;
 const double jet_pt_max = 100;
 
 // Data binning
-//const double jet_pt_limits[] = {jet_pt_min, 26.98, 38.772, jet_pt_max};//{jet_pt_min,30.,50.,jet_pt_max};
-//const double z_limits[] = {z_min, 0.288675, 0.379775, 0.448175, z_max };//{z_min, 0.262175, 0.346575, 0.409325, 0.458625, z_max };
-//const double kt_limits[] = {kt_min, 0.407587, 0.589063, 0.883413, kt_max};//{kt_min, 0.376962, 0.509613, 0.682688, 0.970562, kt_max};
+const double jet_pt_limits[] = {jet_pt_min, 25.996, 36.82, jet_pt_max};
+const double z_limits[] = {z_min, 0.311375, 0.397725, 0.455025, z_max };
+const double kt_limits[] = {kt_min, 0.441188, 0.641212, 0.956562, kt_max};
 
 // MC binning
-const double jet_pt_limits[] = {jet_pt_min, 28.508, 46.116, jet_pt_max};
-const double z_limits[] = {z_min, 0.296525, 0.384725, 0.449275, z_max };
-const double kt_limits[] = {kt_min, 0.425088, 0.597287, 0.848588, kt_max};
+//const double jet_pt_limits[] = {jet_pt_min, 28.508, 46.116, jet_pt_max};
+//const double z_limits[] = {z_min, 0.296525, 0.384725, 0.449275, z_max };
+//const double kt_limits[] = {kt_min, 0.425088, 0.597287, 0.848588, kt_max};
 
 // Define analysis cuts
 // Jet cuts
