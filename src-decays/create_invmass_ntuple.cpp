@@ -47,6 +47,13 @@ int main()
         // Check of next to leading hadron
         if(h2_location == -999) continue;
 
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<datatree->Jet_Dtr_ID[h1_location]<<","<<datatree->Jet_Dtr_ID[h2_location]<<std::endl;
+            continue;
+        }
+
         // Get the charges!
         float h1_charge = datatree->Jet_Dtr_ThreeCharge[h1_location];
         float h2_charge = datatree->Jet_Dtr_ThreeCharge[h2_location];
@@ -59,37 +66,14 @@ int main()
         // Define array carrying the variables
         float vars[Nvars_invmass];
 
-        // Check existence of combination with a meson mass
-        int comb1_exist = 0;
-        for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
-        {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location) continue;
-
-            TLorentzVector h1comb_momentum(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
-                                           datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
-                                           datatree->Jet_Dtr_PZ[h1_location] + datatree->Jet_Dtr_PZ[jet_entry],
-                                           datatree->Jet_Dtr_E[h1_location]  + datatree->Jet_Dtr_E[jet_entry]);
-
-            if(h1comb_momentum.M()/1000.>0.730&&h1comb_momentum.M()/1000.<0.810&&datatree->Jet_Dtr_ID[h1_location]!=datatree->Jet_Dtr_ID[jet_entry]) {comb1_exist++; break;}
-        }
-
-        int comb2_exist = 0;
-        for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
-        {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location||jet_entry==h2_location) continue;
-
-            TLorentzVector h2comb_momentum(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
-                                           datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
-                                           datatree->Jet_Dtr_PZ[h2_location] + datatree->Jet_Dtr_PZ[jet_entry],
-                                           datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]);
-
-            if(h2comb_momentum.M()/1000.>0.730&&h2comb_momentum.M()/1000.<0.810&&datatree->Jet_Dtr_ID[h2_location]!=datatree->Jet_Dtr_ID[jet_entry]) {comb2_exist++; break;}
-        }
-
         // Pick the leading hadron and check all possible combinations with other hadrons
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location/*||comb1_exist==1*/) continue;
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||
+               datatree->Jet_Dtr_ID[jet_entry]==22||datatree->Jet_Dtr_ID[jet_entry]==-22||  //exclude photons
+               (datatree->Jet_Dtr_ID[jet_entry]>10&&datatree->Jet_Dtr_ID[jet_entry]<19)||   //exclude leptons
+               (datatree->Jet_Dtr_ID[jet_entry]<-10&&datatree->Jet_Dtr_ID[jet_entry]>-19)|| //exclude antileptons
+               jet_entry==h1_location/*||comb1_exist==1*/) continue;
 
             TLorentzVector h1comb_momentum(datatree->Jet_Dtr_PX[h1_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h1_location] + datatree->Jet_Dtr_PY[jet_entry], 
@@ -169,7 +153,11 @@ int main()
         // Pick the subleading hadron and check all possible combinations except for the with the leading hadron which is already accounted
         for(int jet_entry = 0 ; jet_entry < datatree->Jet_NDtr ; jet_entry++)
         {
-            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||jet_entry==h1_location||jet_entry==h2_location/*||comb2_exist==1*/) continue;
+            if(datatree->Jet_Dtr_PX[jet_entry]==-999||datatree->Jet_Dtr_ID[jet_entry]==0||
+               datatree->Jet_Dtr_ID[jet_entry]==22||datatree->Jet_Dtr_ID[jet_entry]==-22||  //exclude photons
+               (datatree->Jet_Dtr_ID[jet_entry]>10&&datatree->Jet_Dtr_ID[jet_entry]<19)||   //exclude leptons
+               (datatree->Jet_Dtr_ID[jet_entry]<-10&&datatree->Jet_Dtr_ID[jet_entry]>-19)|| //exclude antileptons
+               jet_entry==h1_location||jet_entry==h2_location/*||comb1_exist==1*/) continue;
 
             TLorentzVector h2comb_momentum(datatree->Jet_Dtr_PX[h2_location] + datatree->Jet_Dtr_PX[jet_entry], 
                                            datatree->Jet_Dtr_PY[h2_location] + datatree->Jet_Dtr_PY[jet_entry], 
@@ -177,8 +165,8 @@ int main()
                                            datatree->Jet_Dtr_E[h2_location]  + datatree->Jet_Dtr_E[jet_entry]);
             vars[0]  = eq_charge;
             vars[1]  = h2comb_momentum.M()/1000.;
-            vars[2]  = datatree->Jet_Dtr_ID[jet_entry];
-            vars[3]  = datatree->Jet_Dtr_ID[h2_location];
+            vars[2]  = datatree->Jet_Dtr_ID[h2_location];
+            vars[3]  = datatree->Jet_Dtr_ID[jet_entry];
             vars[4]  = datatree->Jet_Dtr_TrackChi2[h1_location];
             vars[5]  = datatree->Jet_Dtr_TrackChi2[h2_location];
             vars[6]  = datatree->Jet_Dtr_TrackNDF[h1_location];

@@ -53,6 +53,13 @@ int main()
         // Check of next to leading hadron
         if(h2_location == -999) continue;
 
+        // Check nature of the dihadron in the case where the two should be from different species
+        if(!validate_dihadron(datatree->Jet_Dtr_ID[h1_location],datatree->Jet_Dtr_ID[h2_location]))
+        {
+            //std::cout<<"Rejected pair of "<<datatree->Jet_Dtr_ID[h1_location]<<","<<datatree->Jet_Dtr_ID[h2_location]<<std::endl;
+            continue;
+        }
+
         // Get the charges!
         float h1_charge = datatree->Jet_Dtr_ThreeCharge[h1_location];
         float h2_charge = datatree->Jet_Dtr_ThreeCharge[h2_location];
