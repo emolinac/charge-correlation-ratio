@@ -73,8 +73,11 @@ int main()
         // Check combinatios for leading hadron
         for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry++)
         {
-            // Skip particle if it is empty or leading hadron
-            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry]==0||jet_entry==h1_location) continue;
+            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry]==0||
+               mcrecotree->Jet_mcjet_dtrID[jet_entry]==22||mcrecotree->Jet_mcjet_dtrID[jet_entry]==-22||  //exclude photons
+               (mcrecotree->Jet_mcjet_dtrID[jet_entry]>10&&mcrecotree->Jet_mcjet_dtrID[jet_entry]<19)||   //exclude leptons
+               (mcrecotree->Jet_mcjet_dtrID[jet_entry]<-10&&mcrecotree->Jet_mcjet_dtrID[jet_entry]>-19)|| //exclude antileptons
+               jet_entry==h1_location) continue;
 
             h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h1_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry], 
                                        mcrecotree->Jet_mcjet_dtrPY[h1_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry], 
@@ -87,8 +90,11 @@ int main()
             
             for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_2++)
             {
-                // Skip particle if it is empty or leading hadron or self
-                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==0||jet_entry_2==h1_location||jet_entry_2==jet_entry) continue;
+                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==0||
+                   mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==22||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==-22||  //exclude photons
+                   (mcrecotree->Jet_mcjet_dtrID[jet_entry_2]>10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_2]<19)||   //exclude leptons
+                   (mcrecotree->Jet_mcjet_dtrID[jet_entry_2]<-10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_2]>-19)|| //exclude antileptons
+                   jet_entry_2==h1_location||jet_entry_2==jet_entry) continue;
                 
                 h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h1_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2],
                                            mcrecotree->Jet_mcjet_dtrPY[h1_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2],
@@ -101,7 +107,11 @@ int main()
                 
                 for(int jet_entry_3 = jet_entry_2+1 ; jet_entry_3 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_3++)
                 {
-                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_3]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==0||jet_entry_3==h1_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
+                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_3]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==0||
+                       mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==22||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==-22||  //exclude photons
+                       (mcrecotree->Jet_mcjet_dtrID[jet_entry_3]>10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_3]<19)||   //exclude leptons
+                       (mcrecotree->Jet_mcjet_dtrID[jet_entry_3]<-10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_3]>-19)|| //exclude antileptons
+                       jet_entry_3==h1_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
 
                     h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h1_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_3],
                                                mcrecotree->Jet_mcjet_dtrPY[h1_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_3],
@@ -119,8 +129,11 @@ int main()
         // Check combinatios for subleading hadron
         for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry++)
         {
-            // Skip particle if it is empty or leading hadron
-            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry]==0||jet_entry==h1_location||jet_entry==h2_location) continue;
+            if(mcrecotree->Jet_mcjet_dtrPX[jet_entry]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry]==0||
+               mcrecotree->Jet_mcjet_dtrID[jet_entry]==22||mcrecotree->Jet_mcjet_dtrID[jet_entry]==-22||  //exclude photons
+               (mcrecotree->Jet_mcjet_dtrID[jet_entry]>10&&mcrecotree->Jet_mcjet_dtrID[jet_entry]<19)||   //exclude leptons
+               (mcrecotree->Jet_mcjet_dtrID[jet_entry]<-10&&mcrecotree->Jet_mcjet_dtrID[jet_entry]>-19)|| //exclude antileptons
+               jet_entry==h1_location||jet_entry==h2_location) continue;
 
             h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h2_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry], 
                                        mcrecotree->Jet_mcjet_dtrPY[h2_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry], 
@@ -133,8 +146,11 @@ int main()
             
             for(int jet_entry_2 = jet_entry+1 ; jet_entry_2 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_2++)
             {
-                // Skip particle if it is empty or leading hadron or self
-                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==0||jet_entry_2==h1_location||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
+                if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_2]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==0||
+                   mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==22||mcrecotree->Jet_mcjet_dtrID[jet_entry_2]==-22||  //exclude photons
+                   (mcrecotree->Jet_mcjet_dtrID[jet_entry_2]>10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_2]<19)||   //exclude leptons
+                   (mcrecotree->Jet_mcjet_dtrID[jet_entry_2]<-10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_2]>-19)|| //exclude antileptons
+                   jet_entry_2==h1_location||jet_entry_2==h2_location||jet_entry_2==jet_entry) continue;
                 
                 h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h2_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2],
                                            mcrecotree->Jet_mcjet_dtrPY[h2_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2],
@@ -147,7 +163,11 @@ int main()
                 
                 for(int jet_entry_3 = jet_entry_2+1 ; jet_entry_3 < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry_3++)
                 {
-                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_3]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==0||jet_entry_3==h1_location||jet_entry_3==h2_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
+                    if(mcrecotree->Jet_mcjet_dtrPX[jet_entry_3]==-999||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==0||
+                       mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==22||mcrecotree->Jet_mcjet_dtrID[jet_entry_3]==-22||  //exclude photons
+                       (mcrecotree->Jet_mcjet_dtrID[jet_entry_3]>10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_3]<19)||   //exclude leptons
+                       (mcrecotree->Jet_mcjet_dtrID[jet_entry_3]<-10&&mcrecotree->Jet_mcjet_dtrID[jet_entry_3]>-19)|| //exclude antileptons
+                       jet_entry_3==h1_location||jet_entry_3==h2_location||jet_entry_3==jet_entry||jet_entry_3==jet_entry_2) continue;
 
                     h1comb_momentum.SetPxPyPzE(mcrecotree->Jet_mcjet_dtrPX[h2_location] + mcrecotree->Jet_mcjet_dtrPX[jet_entry] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPX[jet_entry_3],
                                                mcrecotree->Jet_mcjet_dtrPY[h2_location] + mcrecotree->Jet_mcjet_dtrPY[jet_entry] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_2] + mcrecotree->Jet_mcjet_dtrPY[jet_entry_3],
