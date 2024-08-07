@@ -72,7 +72,7 @@ void macro_print_rc_kt_allmc()
     
     hs->Draw("NOSTACK");
 
-    hs->SetTitle(";Jet p_{t}(GeV);r_{c}");
+    hs->SetTitle(";k_{t}(GeV);r_{c}");
 
     hs->SetMaximum(-0.001);
     hs->SetMinimum(-0.900);
