@@ -31,7 +31,7 @@ int main()
     // Fill the TNtuple
     for(int evt = 0 ; evt < datatree->fChain->GetEntries() ; evt++)
     {
-        std::cout<<100.*evt/datatree->fChain->GetEntries()<<"\% done"<<std::endl;
+        //std::cout<<100.*evt/datatree->fChain->GetEntries()<<"\% done"<<std::endl;
         // Access entry of tree
         datatree->GetEntry(evt);
 
@@ -196,8 +196,7 @@ int main()
         float vars[Nvars_datadecays];
 
         int signal = (comb2parts_exist_1>0||comb2parts_exist_2>0||comb3parts_exist_1>0||comb3parts_exist_2>0||comb4parts_exist_1>0||comb4parts_exist_2>0) ? 0 : 1;  
-        std::cout<<"Signal = "<<signal<<std::endl;
-
+        
         vars[0]  = eq_charge;
         vars[1]  = signal;
         vars[2]  = datatree->Jet_Dtr_ID[h1_location];

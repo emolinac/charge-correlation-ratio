@@ -38,6 +38,8 @@ int main()
     double cases = 0;
     for(int evt = 0 ; evt < mctree->fChain->GetEntries() ; evt++)
     {
+        //std::cout<<100.*evt/mctree->fChain->GetEntries()<<"\% done"<<std::endl;
+        
         // Access entry of tree
         mctree->GetEntry(evt);
 
