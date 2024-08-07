@@ -2,6 +2,7 @@
 #include "../include/TZJets.h"
 #include "../include/TZJets.C"
 #include "../include/analysis-constants.h"
+#include "../include/directories.h"
 #include "../include/names.h"
 #include "../include/utils-visual.h"
 

@@ -1,7 +1,8 @@
 #include <iostream>
 #include "../include/analysis-constants.h"
+#include "../include/directories.h"
 #include "../include/names.h"
-#include "../include/utils.h"
+#include "../include/utils-algorithms.h"
 #include "../include/utils-visual.h"
 
 void macro_print_rc_z_allmc()

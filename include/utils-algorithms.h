@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef UTILS_ALGORITHMS_H
+#define UTILS_ALGORITHMS_H
 
 #include "TMCJets.h"
 #include "TZJets.h"
