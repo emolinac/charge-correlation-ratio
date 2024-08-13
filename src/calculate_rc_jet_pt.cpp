@@ -48,8 +48,10 @@ int main()
         hcs_diffsign[i]->Sumw2();
 
         // Calculate rc for the data
-        ntuple[i]->Project(Form("hcs_diffsign_%i",i),"jet_pt",diffsign_cuts[i]);
-        ntuple[i]->Project(Form("hcs_samesign_%i",i),"jet_pt",samesign_cuts[i]);
+        //ntuple[i]->Project(Form("hcs_diffsign_%i",i),"jet_pt",diffsign_cuts[i]);
+        //ntuple[i]->Project(Form("hcs_samesign_%i",i),"jet_pt",samesign_cuts[i]);
+        ntuple[i]->Project(Form("hcs_diffsign_%i",i),"jet_pt","eq_charge==0");
+        ntuple[i]->Project(Form("hcs_samesign_%i",i),"jet_pt","eq_charge==1");
         hcs_sub[i]->Add(hcs_samesign[i],hcs_diffsign[i],1,-1);
         hcs_sum[i]->Add(hcs_samesign[i],hcs_diffsign[i],1, 1);
         rc[i]->Divide(hcs_sub[i],hcs_sum[i],1,1);

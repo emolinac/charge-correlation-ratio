@@ -1,11 +1,11 @@
 #include <iostream>
-#include "../include/TZJets.h"
-#include "../include/TZJets.C"
+#include "../include/THFJets.h"
+#include "../include/THFJets.C"
 
-void plot_Z0PT_sim()
+void plot_DPT_sim()
 {
     // Declare the TTrees to be used to build the ntuples
-    TZJets* tree = new TZJets();
+    THFJets* tree = new THFJets();
     
     // Declare 2d histogram
     // x : jet phi
@@ -25,10 +25,10 @@ void plot_Z0PT_sim()
         // Access entry of tree
         tree->GetEntry(evt);
 
-        //if(tree->Z0_TRUEID!=23) continue;
+        //if(tree->D_TRUEID!=23) continue;
 
-        h->Fill(tree->Z0_PT);
-        htrue->Fill(tree->Z0_TRUEPT);
+        h->Fill(tree->D_PT);
+        htrue->Fill(tree->D_TRUEPT);
     }
 
     THStack* hs = new THStack("hs","");

@@ -3,13 +3,13 @@
 #include "../include/names.h"
 #include "../include/utils-algorithms.h"
 #include "../include/utils-visual.h"
-#include "../include/TZJets.h"
-#include "../include/TZJets.C"
+#include "../include/THFJets.h"
+#include "../include/THFJets.C"
 
 void macro_print_singlepart_energy_resolution()
 {
     // Declare the TTrees to get the matched daughters
-    TZJets* mcrecotree   = new TZJets();
+    THFJets* mcrecotree   = new THFJets();
 
     TH1F* h = new TH1F("h","",100,-20,20);
     

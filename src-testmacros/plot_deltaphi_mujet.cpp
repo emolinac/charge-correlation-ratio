@@ -1,11 +1,11 @@
 #include <iostream>
-#include "../include/TZJetsData.h"
-#include "../include/TZJetsData.C"
+#include "../include/THFJetsData.h"
+#include "../include/THFJetsData.C"
 
 void plot_deltaphi_mujet()
 {
     // Declare the TTrees to be used to build the ntuples
-    TZJetsData* datatree = new TZJetsData();
+    THFJetsData* datatree = new THFJetsData();
     
     // Declare 1d histo
     TH1F* h = new TH1F("","",150,-2*TMath::Pi(),2*TMath::Pi());
@@ -17,25 +17,25 @@ void plot_deltaphi_mujet()
         datatree->GetEntry(evt);
 
         // Get the mu phi
-        double mup_px = datatree->mup_PX;
-        double mup_py = datatree->mup_PY;
-        double mup_pz = datatree->mup_PZ;
-        TVector3 mupvector(mup_px,mup_py,mup_pz);
+        double Kp_px = datatree->Kp_PX;
+        double Kp_py = datatree->Kp_PY;
+        double Kp_pz = datatree->Kp_PZ;
+        TVector3 Kpvector(Kp_px,Kp_py,Kp_pz);
 
-        double mum_px = datatree->mum_PX;
-        double mum_py = datatree->mum_PY;
-        double mum_pz = datatree->mum_PZ;
-        TVector3 mumvector(mum_px,mum_py,mum_pz);
+        double Km_px = datatree->Km_PX;
+        double Km_py = datatree->Km_PY;
+        double Km_pz = datatree->Km_PZ;
+        TVector3 Kmvector(Km_px,Km_py,Km_pz);
 
 
-        double delta_phi_mup = mupvector.Phi() - datatree->Jet_Phi;
-        double delta_phi_mum = mumvector.Phi() - datatree->Jet_Phi;
+        double delta_phi_Kp = Kpvector.Phi() - datatree->Jet_Phi;
+        double delta_phi_Km = Kmvector.Phi() - datatree->Jet_Phi;
 
-        if(TMath::Abs(delta_phi_mup) < 0.4) continue;
-        if(TMath::Abs(delta_phi_mum) < 0.4) continue;
+        if(TMath::Abs(delta_phi_Kp) < 0.4) continue;
+        if(TMath::Abs(delta_phi_Km) < 0.4) continue;
 
-        h->Fill(delta_phi_mup);
-        h->Fill(delta_phi_mum);
+        h->Fill(delta_phi_Kp);
+        h->Fill(delta_phi_Km);
     }
 
     h->Draw();

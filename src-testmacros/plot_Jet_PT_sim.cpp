@@ -1,11 +1,11 @@
 #include <iostream>
-#include "../include/TZJets.h"
-#include "../include/TZJets.C"
+#include "../include/THFJets.h"
+#include "../include/THFJets.C"
 
 void plot_Jet_PT_sim()
 {
     // Declare the TTrees to be used to build the ntuples
-    TZJets* tree = new TZJets();
+    THFJets* tree = new THFJets();
     
     // Declare 2d histogram
     // x : jet phi

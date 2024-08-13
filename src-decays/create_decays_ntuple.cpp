@@ -9,8 +9,8 @@
 #include "TFile.h"
 #include "TNtuple.h"
 #include "TROOT.h"
-#include "TZJets.h"
-#include "TZJets.C"
+#include "THFJets.h"
+#include "THFJets.C"
 
 int main()
 {
@@ -22,7 +22,7 @@ int main()
     TNtuple* ntuple_decays = new TNtuple(name_ntuple_decays.c_str(),"",ntuple_decays_vars);
     
     // Declare the TTrees to be used to build the ntuples
-    TZJets* mcrecotree   = new TZJets();
+    THFJets* mcrecotree   = new THFJets();
     
     // Declare 4 momenta of particle combinations
     TLorentzVector h1comb_momentum;
@@ -31,12 +31,13 @@ int main()
     // Fill the mcreco TNtuple
     for(int evt = 0 ; evt < mcrecotree->fChain->GetEntries() ; evt++)
     {
+
         // Access entry of tree
         mcrecotree->GetEntry(evt);
 
         // Check if there is desired dihadron
         if(!dh_comp_exist_decays(mcrecotree, pid_ha, pid_hb)) continue; //OK
-
+        
         // Determine location leading hadron
         int h1_location  = 0;
         double h1_energy = 0;
@@ -53,10 +54,12 @@ int main()
         // Check of next to leading hadron
         if(h2_location == -999) continue;
 
+        std::cout<<"Found dihadron in jet "<<evt<<std::endl;
+
         // Check nature of the dihadron in the case where the two should be from different species
-        if(!validate_dihadron(mcrecotree->Jet_mcjet_dtrID[h1_location],mcrecotree->Jet_mcjet_dtrID[h2_location]))
+        if(!validate_dihadron_decays(mcrecotree->Jet_mcjet_dtrID[h1_location],mcrecotree->Jet_mcjet_dtrID[h2_location],pid_ha,pid_hb))
         {
-            //std::cout<<"Rejected pair of "<<mcrecotree->Jet_mcjet_dtrID[h1_location]<<","<<mcrecotree->Jet_mcjet_dtrID[h2_location]<<std::endl;
+            std::cout<<"Rejected pair of "<<mcrecotree->Jet_mcjet_dtrID[h1_location]<<","<<mcrecotree->Jet_mcjet_dtrID[h2_location]<<std::endl;
             continue;
         }
 
@@ -76,7 +79,7 @@ int main()
         double comb3parts_exist_2 = 0;
         double comb4parts_exist_1 = 0;
         double comb4parts_exist_2 = 0;
-        
+        /*
         // Check combinations for leading hadron
         for(int jet_entry = 0 ; jet_entry < mcrecotree->Jet_mcjet_nmcdtrs ; jet_entry++)
         {
@@ -188,7 +191,7 @@ int main()
                 }
             }
         }
-
+         */
         int signal = (comb2parts_exist_1>0||comb2parts_exist_2>0||comb3parts_exist_1>0||comb3parts_exist_2>0||comb4parts_exist_1>0||comb4parts_exist_2>0) ? 0 : 1;  
         
         // Define array carrying the variables

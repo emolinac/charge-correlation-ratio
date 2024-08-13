@@ -1,11 +1,11 @@
 #include <iostream>
-#include "../include/TZJets.h"
-#include "../include/TZJets.C"
+#include "../include/THFJets.h"
+#include "../include/THFJets.C"
 
 void plot_phi_ZjetSIM()
 {
     // Declare the TTrees to be used to build the ntuples
-    TZJets* tree = new TZJets();
+    THFJets* tree = new THFJets();
     
     // Declare 2d histogram
     // x : jet phi
@@ -19,10 +19,10 @@ void plot_phi_ZjetSIM()
         tree->GetEntry(evt);
 
         // Get the Z boson phi
-        double Z0_px = tree->Z0_PX;
-        double Z0_py = tree->Z0_PY;
-        double Z0_pz = tree->Z0_PZ;
-        TVector3 Zvector(Z0_px,Z0_py,Z0_pz);
+        double D_px = tree->D_PX;
+        double D_py = tree->D_PY;
+        double D_pz = tree->D_PZ;
+        TVector3 Zvector(D_px,D_py,D_pz);
 
         double delta_phi = Zvector.Phi() - tree->Jet_Phi;
 

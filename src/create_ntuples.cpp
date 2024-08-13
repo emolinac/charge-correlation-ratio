@@ -10,10 +10,10 @@
 #include "TROOT.h"
 #include "TMCJets.h"
 #include "TMCJets.C"
-#include "TZJets.h"
-#include "TZJets.C"
-#include "TZJetsData.h"
-#include "TZJetsData.C"
+#include "THFJets.h"
+#include "THFJets.C"
+#include "THFJetsData.h"
+#include "THFJetsData.C"
 
 int main()
 {
@@ -27,8 +27,8 @@ int main()
     TNtuple* ntuple_data   = new TNtuple(name_ntuple_data.c_str()  ,"",ntuple_data_vars  );
 
     // Declare the TTrees to be used to build the ntuples
-    TZJetsData* datatree = new TZJetsData();
-    TZJets* mcrecotree   = new TZJets();
+    THFJetsData* datatree = new THFJetsData();
+    THFJets* mcrecotree   = new THFJets();
     TMCJets* mctree      = new TMCJets();
 
     // Fill the mc TNtuple
@@ -105,38 +105,38 @@ int main()
         vars[13] = mctree->MCJet_ETA;
         vars[14] = mctree->MCJet_PHI;
 
-        double mum_px = mctree->MCJet_truth_mum_PX/1000.;
-        double mum_py = mctree->MCJet_truth_mum_PY/1000.;
-        double mum_pz = mctree->MCJet_truth_mum_PZ/1000.;
-        double mum_e  = mctree->MCJet_truth_mum_PE/1000.;
+        double Km_px = mctree->MCJet_truth_Km_PX/1000.;
+        double Km_py = mctree->MCJet_truth_Km_PY/1000.;
+        double Km_pz = mctree->MCJet_truth_Km_PZ/1000.;
+        double Km_e  = mctree->MCJet_truth_Km_PE/1000.;
         
-        double mup_px = mctree->MCJet_truth_mup_PX/1000.;
-        double mup_py = mctree->MCJet_truth_mup_PY/1000.;
-        double mup_pz = mctree->MCJet_truth_mup_PZ/1000.;
-        double mup_e  = mctree->MCJet_truth_mup_PE/1000.;
+        double Kp_px = mctree->MCJet_truth_Kp_PX/1000.;
+        double Kp_py = mctree->MCJet_truth_Kp_PY/1000.;
+        double Kp_pz = mctree->MCJet_truth_Kp_PZ/1000.;
+        double Kp_e  = mctree->MCJet_truth_Kp_PE/1000.;
         
         // Muon branches
-        TLorentzVector zbosonmc_4vector(mum_px+mup_px, mum_py+mup_py, mum_pz+mup_pz, mum_e+mup_e);
+        TLorentzVector zbosonmc_4vector(Km_px+Kp_px, Km_py+Kp_py, Km_pz+Kp_pz, Km_e+Kp_e);
         
         vars[15] = zbosonmc_4vector.Phi();
-        vars[16] = mctree->MCJet_truth_mum_PHI;
-        vars[17] = mctree->MCJet_truth_mum_PT/1000.;
-        vars[18] = mctree->MCJet_truth_mum_ETA;
-        vars[19] = mum_px;
-        vars[20] = mum_py;
-        vars[21] = mum_pz;
-        vars[22] = mum_e;
-        vars[23] = mctree->MCJet_truth_mum_M/1000.;
-        vars[24] = mctree->MCJet_truth_mup_PHI;
-        vars[25] = mctree->MCJet_truth_mup_PT/1000.;
-        vars[26] = mctree->MCJet_truth_mup_ETA;
-        vars[27] = mup_px;
-        vars[28] = mup_py;
-        vars[29] = mup_pz;
-        vars[30] = mup_e;
-        vars[31] = mctree->MCJet_truth_mup_M/1000.;
+        vars[16] = mctree->MCJet_truth_Km_PHI;
+        vars[17] = mctree->MCJet_truth_Km_PT/1000.;
+        vars[18] = mctree->MCJet_truth_Km_ETA;
+        vars[19] = Km_px;
+        vars[20] = Km_py;
+        vars[21] = Km_pz;
+        vars[22] = Km_e;
+        vars[23] = mctree->MCJet_truth_Km_M/1000.;
+        vars[24] = mctree->MCJet_truth_Kp_PHI;
+        vars[25] = mctree->MCJet_truth_Kp_PT/1000.;
+        vars[26] = mctree->MCJet_truth_Kp_ETA;
+        vars[27] = Kp_px;
+        vars[28] = Kp_py;
+        vars[29] = Kp_pz;
+        vars[30] = Kp_e;
+        vars[31] = mctree->MCJet_truth_Kp_M/1000.;
         
-        // :mum_pt:mum_eta
+        // :Km_pt:Km_eta
 
         // Fill the TNtuple
         ntuple_mc->Fill(vars);
@@ -212,48 +212,48 @@ int main()
         vars[16] = mcrecotree->Jet_Dtr_PZ[h1_location]/1000.;
         vars[17] = mcrecotree->Jet_Dtr_PZ[h2_location]/1000.;
         vars[18] = mcrecotree->Jet_PT/1000.;
-        vars[19] = mcrecotree->Jet_Eta;
-        vars[20] = mcrecotree->Jet_Phi;
+        vars[19] = 0;//mcrecotree->Jet_Eta;
+        vars[20] = 0;//mcrecotree->Jet_Phi;
 
         // Z branch
-        double Z0_px = mcrecotree->Z0_PX/1000.;
-        double Z0_py = mcrecotree->Z0_PY/1000.;
-        double Z0_pz = mcrecotree->Z0_PZ/1000.;
-        double Z0_e  = mcrecotree->Z0_PE/1000.;
-        TLorentzVector Z0reco_4vector(Z0_px, Z0_py, Z0_pz, Z0_e);
-        vars[21] = Z0reco_4vector.Phi();
+        double D_px = mcrecotree->Ds_PX/1000.;
+        double D_py = mcrecotree->Ds_PY/1000.;
+        double D_pz = mcrecotree->Ds_PZ/1000.;
+        double D_e  = mcrecotree->Ds_PE/1000.;
+        TLorentzVector Dreco_4vector(D_px, D_py, D_pz, D_e);
+        vars[21] = Dreco_4vector.Phi();
 
         // Muon branches
-        double mum_px = mcrecotree->mum_PX/1000.;
-        double mum_py = mcrecotree->mum_PY/1000.;
-        double mum_pz = mcrecotree->mum_PZ/1000.;
-        double mum_e  = mcrecotree->mum_PE/1000.;
+        double Km_px = mcrecotree->Km_PX/1000.;
+        double Km_py = mcrecotree->Km_PY/1000.;
+        double Km_pz = mcrecotree->Km_PZ/1000.;
+        double Km_e  = mcrecotree->Km_PE/1000.;
 
-        TLorentzVector mumreco_4vector(mum_px, mum_py, mum_pz, mum_e);
-        vars[22] = mumreco_4vector.Phi();
-        vars[23] = mumreco_4vector.Pt();
-        vars[24] = mumreco_4vector.Eta();
-        vars[25] = mum_px;
-        vars[26] = mum_py;
-        vars[27] = mum_pz;
-        vars[28] = mum_e;
-        vars[29] = mcrecotree->mum_M/1000.;
-        vars[30] = mcrecotree->mum_TRACK_PCHI2;
+        TLorentzVector Kmreco_4vector(Km_px, Km_py, Km_pz, Km_e);
+        vars[22] = Kmreco_4vector.Phi();
+        vars[23] = Kmreco_4vector.Pt();
+        vars[24] = Kmreco_4vector.Eta();
+        vars[25] = Km_px;
+        vars[26] = Km_py;
+        vars[27] = Km_pz;
+        vars[28] = Km_e;
+        vars[29] = mcrecotree->Km_M/1000.;
+        vars[30] = mcrecotree->Km_TRACK_PCHI2;
         
-        double mup_px = mcrecotree->mup_PX/1000.;
-        double mup_py = mcrecotree->mup_PY/1000.;
-        double mup_pz = mcrecotree->mup_PZ/1000.;
-        double mup_e  = mcrecotree->mup_PE/1000.;
-        TLorentzVector mupreco_4vector(mup_px, mup_py, mup_pz, mup_e);
-        vars[31] = mupreco_4vector.Phi();
-        vars[32] = mupreco_4vector.Pt();
-        vars[33] = mupreco_4vector.Eta();
-        vars[34] = mup_px;
-        vars[35] = mup_py;
-        vars[36] = mup_pz;
-        vars[37] = mup_e;
-        vars[38] = mcrecotree->mup_M/1000.;
-        vars[39] = mcrecotree->mup_TRACK_PCHI2;
+        double Kp_px = mcrecotree->Kp_PX/1000.;
+        double Kp_py = mcrecotree->Kp_PY/1000.;
+        double Kp_pz = mcrecotree->Kp_PZ/1000.;
+        double Kp_e  = mcrecotree->Kp_PE/1000.;
+        TLorentzVector Kpreco_4vector(Kp_px, Kp_py, Kp_pz, Kp_e);
+        vars[31] = Kpreco_4vector.Phi();
+        vars[32] = Kpreco_4vector.Pt();
+        vars[33] = Kpreco_4vector.Eta();
+        vars[34] = Kp_px;
+        vars[35] = Kp_py;
+        vars[36] = Kp_pz;
+        vars[37] = Kp_e;
+        vars[38] = mcrecotree->Kp_M/1000.;
+        vars[39] = mcrecotree->Kp_TRACK_PCHI2;
 
         // Fill the TNtuple
         ntuple_mcreco->Fill(vars);
@@ -349,43 +349,43 @@ int main()
         vars[20] = Jet_4vector.Eta();
         vars[21] = Jet_4vector.Phi();
 
-        // add mum_phi:mum_pt:mum_eta:mum_probchi2:mup_phi:mup_pt:mup_eta:mup_probchi2
-        double Z0_px = datatree->Z0_PX/1000.;
-        double Z0_py = datatree->Z0_PY/1000.;
-        double Z0_pz = datatree->Z0_PZ/1000.;
-        double Z0_e  = datatree->Z0_PE/1000.;
-        TLorentzVector Z0data_4vector(Z0_px, Z0_py, Z0_pz, Z0_e);
-        vars[22] = Z0data_4vector.Phi();
+        // add Km_phi:Km_pt:Km_eta:Km_probchi2:Kp_phi:Kp_pt:Kp_eta:Kp_probchi2
+        double D_px = datatree->D_PX/1000.;
+        double D_py = datatree->D_PY/1000.;
+        double D_pz = datatree->D_PZ/1000.;
+        double D_e  = datatree->D_PE/1000.;
+        TLorentzVector Ddata_4vector(D_px, D_py, D_pz, D_e);
+        vars[22] = Ddata_4vector.Phi();
 
-        double mum_px = datatree->mum_PX/1000.;
-        double mum_py = datatree->mum_PY/1000.;
-        double mum_pz = datatree->mum_PZ/1000.;
-        double mum_e  = datatree->mum_PE/1000.;
-        TLorentzVector mumdata_4vector(mum_px, mum_py, mum_pz, mum_e);
-        vars[23] = mumdata_4vector.Phi();
-        vars[24] = mumdata_4vector.Pt();
-        vars[25] = mumdata_4vector.Eta();
-        vars[26] = mum_px;
-        vars[27] = mum_py;
-        vars[28] = mum_pz;
-        vars[29] = mum_e;
-        vars[30] = mumdata_4vector.M();//datatree->mum_M;
-        vars[31] = datatree->mum_TRACK_PCHI2;
+        double Km_px = datatree->Km_PX/1000.;
+        double Km_py = datatree->Km_PY/1000.;
+        double Km_pz = datatree->Km_PZ/1000.;
+        double Km_e  = datatree->Km_PE/1000.;
+        TLorentzVector Kmdata_4vector(Km_px, Km_py, Km_pz, Km_e);
+        vars[23] = Kmdata_4vector.Phi();
+        vars[24] = Kmdata_4vector.Pt();
+        vars[25] = Kmdata_4vector.Eta();
+        vars[26] = Km_px;
+        vars[27] = Km_py;
+        vars[28] = Km_pz;
+        vars[29] = Km_e;
+        vars[30] = Kmdata_4vector.M();//datatree->Km_M;
+        vars[31] = datatree->Km_TRACK_PCHI2;
 
-        double mup_px = datatree->mup_PX/1000.;
-        double mup_py = datatree->mup_PY/1000.;
-        double mup_pz = datatree->mup_PZ/1000.;
-        double mup_e  = datatree->mup_PE/1000.;
-        TLorentzVector mupdata_4vector(mup_px, mup_py, mup_pz, mup_e);
-        vars[32] = mupdata_4vector.Phi();
-        vars[33] = mupdata_4vector.Pt();
-        vars[34] = mupdata_4vector.Eta();
-        vars[35] = mup_px;
-        vars[36] = mup_py;
-        vars[37] = mup_pz;
-        vars[38] = mup_e;
-        vars[39] = mupdata_4vector.M();//datatree->mup_M;
-        vars[40] = datatree->mup_TRACK_PCHI2;
+        double Kp_px = datatree->Kp_PX/1000.;
+        double Kp_py = datatree->Kp_PY/1000.;
+        double Kp_pz = datatree->Kp_PZ/1000.;
+        double Kp_e  = datatree->Kp_PE/1000.;
+        TLorentzVector Kpdata_4vector(Kp_px, Kp_py, Kp_pz, Kp_e);
+        vars[32] = Kpdata_4vector.Phi();
+        vars[33] = Kpdata_4vector.Pt();
+        vars[34] = Kpdata_4vector.Eta();
+        vars[35] = Kp_px;
+        vars[36] = Kp_py;
+        vars[37] = Kp_pz;
+        vars[38] = Kp_e;
+        vars[39] = Kpdata_4vector.M();//datatree->Kp_M;
+        vars[40] = datatree->Kp_TRACK_PCHI2;
 
         // Fill the TNtuple
         ntuple_data->Fill(vars);

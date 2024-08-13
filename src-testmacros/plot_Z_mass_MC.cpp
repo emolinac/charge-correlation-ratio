@@ -12,22 +12,22 @@ void plot_Z_mass_MC()
         tree->GetEntry(evt);
 
         // Calculate relevant stuff
-        double mum_mass   = tree->MCJet_truth_mum_M;
-        double mum_energy = tree->MCJet_truth_mum_PE;
-        double mum_px     = tree->MCJet_truth_mum_PX;
-        double mum_py     = tree->MCJet_truth_mum_PY;
-        double mum_pz     = tree->MCJet_truth_mum_PZ;
+        double Km_mass   = tree->MCJet_truth_Km_M;
+        double Km_energy = tree->MCJet_truth_Km_PE;
+        double Km_px     = tree->MCJet_truth_Km_PX;
+        double Km_py     = tree->MCJet_truth_Km_PY;
+        double Km_pz     = tree->MCJet_truth_Km_PZ;
         
-        double mup_mass   = tree->MCJet_truth_mup_M;
-        double mup_energy = tree->MCJet_truth_mup_PE;
-        double mup_px     = tree->MCJet_truth_mup_PX;
-        double mup_py     = tree->MCJet_truth_mup_PY;
-        double mup_pz     = tree->MCJet_truth_mup_PZ;
+        double Kp_mass   = tree->MCJet_truth_Kp_M;
+        double Kp_energy = tree->MCJet_truth_Kp_PE;
+        double Kp_px     = tree->MCJet_truth_Kp_PX;
+        double Kp_py     = tree->MCJet_truth_Kp_PY;
+        double Kp_pz     = tree->MCJet_truth_Kp_PZ;
 
-        if(mum_mass==-999||mum_energy==-999||mum_px==-999||mum_py==-999||mum_pz==-999) continue;
-        if(mup_mass==-999||mup_energy==-999||mup_px==-999||mup_py==-999||mup_pz==-999) continue;
+        if(Km_mass==-999||Km_energy==-999||Km_px==-999||Km_py==-999||Km_pz==-999) continue;
+        if(Kp_mass==-999||Kp_energy==-999||Kp_px==-999||Kp_py==-999||Kp_pz==-999) continue;
 
-        double Z_mass2 = pow(mum_mass,2)+pow(mup_mass,2) + 2*(mum_energy*mup_energy - mum_px*mup_px - mum_py*mup_py - mum_pz*mup_pz); 
+        double Z_mass2 = pow(Km_mass,2)+pow(Kp_mass,2) + 2*(Km_energy*Kp_energy - Km_px*Kp_px - Km_py*Kp_py - Km_pz*Kp_pz); 
 
         h->Fill(sqrt(Z_mass2));
     }

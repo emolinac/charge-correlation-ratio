@@ -2,8 +2,8 @@
 #define UTILS_ALGORITHMS_H
 
 #include "TMCJets.h"
-#include "TZJets.h"
-#include "TZJetsData.h"
+#include "THFJets.h"
+#include "THFJetsData.h"
 #include "TH1.h"
 #include <iostream>
 
@@ -37,7 +37,7 @@ int dh_comp_exist_mc(TMCJets* tree, int pid_ha, int pid_hb)
     return 1;
 }
 
-int dh_comp_exist_mcreco(TZJets* tree, int pid_ha, int pid_hb)
+int dh_comp_exist_mcreco(THFJets* tree, int pid_ha, int pid_hb)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_NDtr;
@@ -66,7 +66,7 @@ int dh_comp_exist_mcreco(TZJets* tree, int pid_ha, int pid_hb)
     return 1;
 }
 
-int dh_comp_exist_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb)
+int dh_comp_exist_mcrecotruth(THFJets* tree, int pid_ha, int pid_hb)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_NDtr;
@@ -95,7 +95,7 @@ int dh_comp_exist_mcrecotruth(TZJets* tree, int pid_ha, int pid_hb)
     return 1;
 }
 
-int dh_comp_exist_decays(TZJets* tree, int pid_ha, int pid_hb)
+int dh_comp_exist_decays(THFJets* tree, int pid_ha, int pid_hb)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_MatchedNDtr;
@@ -111,6 +111,16 @@ int dh_comp_exist_decays(TZJets* tree, int pid_ha, int pid_hb)
         {
             if(tree->Jet_mcjet_dtrID[part]==pid_ha||tree->Jet_mcjet_dtrID[part]==pid_hb) dihadron_components++;
         }
+        else if(pid_ha==dp_id||pid_ha==dm_id)
+        {
+            if(tree->Jet_mcjet_dtrID[part]==dsp_id||tree->Jet_mcjet_dtrID[part]==dsm_id) dihadron_componenta++;
+            if(tree->Jet_mcjet_dtrID[part]==pid_hb||tree->Jet_mcjet_dtrID[part]==-pid_hb) dihadron_componentb++;
+        }
+        else if(pid_hb==dp_id||pid_hb==dm_id)
+        {
+            if(tree->Jet_mcjet_dtrID[part]==pid_ha||tree->Jet_mcjet_dtrID[part]==-pid_ha) dihadron_componenta++;
+            if(tree->Jet_mcjet_dtrID[part]==dsp_id||tree->Jet_mcjet_dtrID[part]==dsm_id) dihadron_componentb++;
+        }
         else
         {
             if(tree->Jet_mcjet_dtrID[part]==pid_ha||tree->Jet_mcjet_dtrID[part]==-pid_ha) dihadron_componenta++;
@@ -124,7 +134,7 @@ int dh_comp_exist_decays(TZJets* tree, int pid_ha, int pid_hb)
     return 1;
 }
 
-int dh_comp_exist_data(TZJetsData* tree, int pid_ha, int pid_hb)
+int dh_comp_exist_data(THFJetsData* tree, int pid_ha, int pid_hb)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_NDtr;
@@ -208,7 +218,7 @@ void loc_nlh_mc(TMCJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_ene
     return;
 }
 
-void loc_lh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
+void loc_lh_mcreco(THFJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_NDtr;
@@ -231,7 +241,7 @@ void loc_lh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh
     return;
 }
 
-void loc_nlh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
+void loc_nlh_mcreco(THFJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
 {
     double delta = 100000000;
 
@@ -262,7 +272,7 @@ void loc_nlh_mcreco(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_
     return;
 }
 
-void loc_lh_mcmatcheddtr(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
+void loc_lh_mcmatcheddtr(THFJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_NDtr;
@@ -285,7 +295,7 @@ void loc_lh_mcmatcheddtr(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, doub
     return;
 }
 
-void loc_nlh_mcmatcheddtr(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
+void loc_nlh_mcmatcheddtr(THFJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
 {
     double delta = 100000000;
 
@@ -316,7 +326,7 @@ void loc_nlh_mcmatcheddtr(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, doub
     return;
 }
 
-void loc_lh_mcmatchedjet(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
+void loc_lh_mcmatchedjet(THFJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
 {
     // Check the daughters in the truth-level matched-jet
     // Get number of daughters in this jet
@@ -348,7 +358,7 @@ void loc_lh_mcmatchedjet(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, doub
     return;
 }
 
-void loc_nlh_mcmatchedjet(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
+void loc_nlh_mcmatchedjet(THFJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
 {
     double delta = 100000000;
 
@@ -379,7 +389,7 @@ void loc_nlh_mcmatchedjet(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, doub
     return;
 }
 
-void loc_lh_decays(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
+void loc_lh_decays(THFJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_MatchedNDtr;
@@ -393,8 +403,21 @@ void loc_lh_decays(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh
     
     // Check if leading hadron is a component of the desired dihadron
     // NOTE: This does not ensure that the two particles we are looking for will be as such
-    if(tree->Jet_mcjet_dtrID[lh_loc]==pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==pid_hb||tree->Jet_mcjet_dtrID[lh_loc]==-pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==-pid_hb) return;
-    
+    if(pid_ha==dp_id||pid_ha==dm_id)
+    {
+        if(tree->Jet_mcjet_dtrID[lh_loc]==dsp_id||tree->Jet_mcjet_dtrID[lh_loc]==dsm_id||
+           tree->Jet_mcjet_dtrID[lh_loc]==pid_hb||tree->Jet_mcjet_dtrID[lh_loc]==-pid_hb) return;    
+    }
+    if(pid_hb==dp_id||pid_hb==dm_id)
+    {
+        if(tree->Jet_mcjet_dtrID[lh_loc]==pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==-pid_ha||
+           tree->Jet_mcjet_dtrID[lh_loc]==dsp_id||tree->Jet_mcjet_dtrID[lh_loc]==dsm_id) return;    
+    }
+    else
+    {
+        if(tree->Jet_mcjet_dtrID[lh_loc]==pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==pid_hb||
+           tree->Jet_mcjet_dtrID[lh_loc]==-pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==-pid_hb) return;
+    }
     // If the leading hadron is not a component of the desired dihadron then we set everything to -999
     lh_loc    = -999;
     lh_energy = -999;
@@ -402,7 +425,7 @@ void loc_lh_decays(TZJets* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh
     return;
 }
 
-void loc_nlh_decays(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
+void loc_nlh_decays(THFJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
 {
     double delta = 100000000;
 
@@ -425,7 +448,21 @@ void loc_nlh_decays(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_
     }
 
     // Check veracity of next-to-leading hadron
-    if(tree->Jet_mcjet_dtrID[nlh_loc]==pid_ha||tree->Jet_mcjet_dtrID[nlh_loc]==pid_hb||tree->Jet_mcjet_dtrID[nlh_loc]==-pid_ha||tree->Jet_mcjet_dtrID[nlh_loc]==-pid_hb) return;
+    if(pid_ha==dp_id||pid_ha==dm_id)
+    {
+        if(tree->Jet_mcjet_dtrID[lh_loc]==dsp_id||tree->Jet_mcjet_dtrID[lh_loc]==dsm_id||
+           tree->Jet_mcjet_dtrID[lh_loc]==pid_hb||tree->Jet_mcjet_dtrID[lh_loc]==-pid_hb) return;    
+    }
+    if(pid_hb==dp_id||pid_hb==dm_id)
+    {
+        if(tree->Jet_mcjet_dtrID[lh_loc]==pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==-pid_ha||
+           tree->Jet_mcjet_dtrID[lh_loc]==dsp_id||tree->Jet_mcjet_dtrID[lh_loc]==dsm_id) return;    
+    }
+    else
+    {
+        if(tree->Jet_mcjet_dtrID[lh_loc]==pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==pid_hb||
+           tree->Jet_mcjet_dtrID[lh_loc]==-pid_ha||tree->Jet_mcjet_dtrID[lh_loc]==-pid_hb) return;
+    }
 
     nlh_loc    = -999;
     nlh_energy = -999;
@@ -433,7 +470,7 @@ void loc_nlh_decays(TZJets* tree, int pid_ha, int pid_hb, int lh_loc, double lh_
     return;
 }
 
-void loc_lh_data(TZJetsData* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
+void loc_lh_data(THFJetsData* tree, int pid_ha, int pid_hb, int &lh_loc, double &lh_energy)
 {
     // Get number of daughters in this jet
     const int ndtr = tree->Jet_NDtr;
@@ -456,7 +493,7 @@ void loc_lh_data(TZJetsData* tree, int pid_ha, int pid_hb, int &lh_loc, double &
     return;
 }
 
-void loc_nlh_data(TZJetsData* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
+void loc_nlh_data(THFJetsData* tree, int pid_ha, int pid_hb, int lh_loc, double lh_energy, int &nlh_loc, double &nlh_energy)
 {
     double delta = 100000000;
     // Get number of daughters in this jet
@@ -534,6 +571,53 @@ int validate_dihadron(int lh_id, int nlh_id)
 
         return 0;
     } 
+
+    // Case for different species
+    if(lh_id==pid_ha ||lh_id==-pid_ha)  ha_counter++;
+    if(lh_id==pid_hb ||lh_id==-pid_hb)  hb_counter++;
+    if(nlh_id==pid_ha||nlh_id==-pid_ha) ha_counter++;
+    if(nlh_id==pid_hb||nlh_id==-pid_hb) hb_counter++;
+    
+    if(ha_counter==1&&hb_counter==1) return 1;
+
+    return 0;
+}
+
+// Return 1 if dihadron is validated
+int validate_dihadron_decays(int lh_id, int nlh_id, int pid_ha, int pid_hb)
+{
+    int h_counter = 0; int ha_counter = 0; int hb_counter = 0;
+    
+    // Conditional for the case of equal species
+    if(pid_ha==-pid_hb)
+    {
+        if(abs(lh_id)==abs(pid_ha)) h_counter++;
+        if(abs(nlh_id)==abs(pid_ha)) h_counter++;
+        
+        if(h_counter==2) return 1;
+
+        return 0;
+    } 
+
+    // Case for d meson
+    if(pid_ha==dm_id||pid_ha==dp_id)
+    {
+        if(lh_id==dsp_id ||lh_id==dsm_id)   ha_counter++;
+        if(lh_id==pid_hb ||lh_id==-pid_hb)  hb_counter++;
+        if(nlh_id==dsp_id||nlh_id==dsm_id)  ha_counter++;
+        if(nlh_id==pid_hb||nlh_id==-pid_hb) hb_counter++;
+
+        if(ha_counter==1&&hb_counter==1) return 1;    
+    }
+    else if(pid_hb==dm_id||pid_hb==dp_id)
+    {
+        if(lh_id==pid_ha ||lh_id==-pid_ha)  ha_counter++;
+        if(lh_id==dsp_id ||lh_id==dsm_id)   hb_counter++;
+        if(nlh_id==pid_ha||nlh_id==-pid_ha) ha_counter++;
+        if(nlh_id==dsp_id||nlh_id==dsm_id)  hb_counter++;
+
+        if(ha_counter==1&&hb_counter==1) return 1;    
+    }
 
     // Case for different species
     if(lh_id==pid_ha ||lh_id==-pid_ha)  ha_counter++;

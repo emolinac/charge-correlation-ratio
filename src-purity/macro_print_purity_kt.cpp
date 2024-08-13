@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../include/TZJets.h"
-#include "../include/TZJets.C"
+#include "../include/THFJets.h"
+#include "../include/THFJets.C"
 #include "../include/analysis-constants.h"
 #include "../include/directories.h"
 #include "../include/names.h"

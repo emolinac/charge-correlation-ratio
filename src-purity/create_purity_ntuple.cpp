@@ -10,10 +10,10 @@
 #include "TROOT.h"
 #include "TMCJets.h"
 #include "TMCJets.C"
-#include "TZJets.h"
-#include "TZJets.C"
-#include "TZJetsData.h"
-#include "TZJetsData.C"
+#include "THFJets.h"
+#include "THFJets.C"
+#include "THFJetsData.h"
+#include "THFJetsData.C"
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     TNtuple* ntuple_purity = new TNtuple(name_ntuple_purity.c_str(),"",ntuple_purity_vars);
 
     // Declare the TTrees to be used to build the ntuples
-    TZJets* mcrecotree   = new TZJets();
+    THFJets* mcrecotree   = new THFJets();
     
     for(int evt = 0 ; evt < mcrecotree->fChain->GetEntries() ; evt++)
     {
@@ -122,48 +122,48 @@ int main()
         vars[15] = mcrecotree->Jet_Dtr_PZ[h1_location]/1000.;
         vars[16] = mcrecotree->Jet_Dtr_PZ[h2_location]/1000.;
         vars[17] = mcrecotree->Jet_PT/1000.;
-        vars[18] = mcrecotree->Jet_Eta;
-        vars[19] = mcrecotree->Jet_Phi;
+        vars[18] = 0;//mcrecotree->Jet_Eta;
+        vars[19] = 0;//mcrecotree->Jet_Phi;
 
         // Z branch
-        double Z0_px = mcrecotree->Z0_PX/1000.;
-        double Z0_py = mcrecotree->Z0_PY/1000.;
-        double Z0_pz = mcrecotree->Z0_PZ/1000.;
-        double Z0_e  = mcrecotree->Z0_PE/1000.;
-        TLorentzVector Z0reco_4vector(Z0_px, Z0_py, Z0_pz, Z0_e);
-        vars[20] = Z0reco_4vector.Phi();
+        double D_px = mcrecotree->Ds_PX/1000.;
+        double D_py = mcrecotree->Ds_PY/1000.;
+        double D_pz = mcrecotree->Ds_PZ/1000.;
+        double D_e  = mcrecotree->Ds_PE/1000.;
+        TLorentzVector Dreco_4vector(D_px, D_py, D_pz, D_e);
+        vars[20] = Dreco_4vector.Phi();
 
         // Muon branches
-        double mum_px = mcrecotree->mum_PX/1000.;
-        double mum_py = mcrecotree->mum_PY/1000.;
-        double mum_pz = mcrecotree->mum_PZ/1000.;
-        double mum_e  = mcrecotree->mum_PE/1000.;
+        double Km_px = mcrecotree->Km_PX/1000.;
+        double Km_py = mcrecotree->Km_PY/1000.;
+        double Km_pz = mcrecotree->Km_PZ/1000.;
+        double Km_e  = mcrecotree->Km_PE/1000.;
 
-        TLorentzVector mumreco_4vector(mum_px, mum_py, mum_pz, mum_e);
-        vars[21] = mumreco_4vector.Phi();
-        vars[22] = mumreco_4vector.Pt();
-        vars[23] = mumreco_4vector.Eta();
-        vars[24] = mum_px;
-        vars[25] = mum_py;
-        vars[26] = mum_pz;
-        vars[27] = mum_e;
-        vars[28] = mcrecotree->mum_M/1000.;
-        vars[29] = mcrecotree->mum_TRACK_PCHI2;
+        TLorentzVector Kmreco_4vector(Km_px, Km_py, Km_pz, Km_e);
+        vars[21] = Kmreco_4vector.Phi();
+        vars[22] = Kmreco_4vector.Pt();
+        vars[23] = Kmreco_4vector.Eta();
+        vars[24] = Km_px;
+        vars[25] = Km_py;
+        vars[26] = Km_pz;
+        vars[27] = Km_e;
+        vars[28] = mcrecotree->Km_M/1000.;
+        vars[29] = mcrecotree->Km_TRACK_PCHI2;
         
-        double mup_px = mcrecotree->mup_PX/1000.;
-        double mup_py = mcrecotree->mup_PY/1000.;
-        double mup_pz = mcrecotree->mup_PZ/1000.;
-        double mup_e  = mcrecotree->mup_PE/1000.;
-        TLorentzVector mupreco_4vector(mup_px, mup_py, mup_pz, mup_e);
-        vars[30] = mupreco_4vector.Phi();
-        vars[31] = mupreco_4vector.Pt();
-        vars[32] = mupreco_4vector.Eta();
-        vars[33] = mup_px;
-        vars[34] = mup_py;
-        vars[35] = mup_pz;
-        vars[36] = mup_e;
-        vars[37] = mcrecotree->mup_M/1000.;
-        vars[38] = mcrecotree->mup_TRACK_PCHI2;
+        double Kp_px = mcrecotree->Kp_PX/1000.;
+        double Kp_py = mcrecotree->Kp_PY/1000.;
+        double Kp_pz = mcrecotree->Kp_PZ/1000.;
+        double Kp_e  = mcrecotree->Kp_PE/1000.;
+        TLorentzVector Kpreco_4vector(Kp_px, Kp_py, Kp_pz, Kp_e);
+        vars[30] = Kpreco_4vector.Phi();
+        vars[31] = Kpreco_4vector.Pt();
+        vars[32] = Kpreco_4vector.Eta();
+        vars[33] = Kp_px;
+        vars[34] = Kp_py;
+        vars[35] = Kp_pz;
+        vars[36] = Kp_e;
+        vars[37] = mcrecotree->Kp_M/1000.;
+        vars[38] = mcrecotree->Kp_TRACK_PCHI2;
         
         // Fill the TNtuple
         ntuple_purity->Fill(vars);

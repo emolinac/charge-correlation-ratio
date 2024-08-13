@@ -4,13 +4,13 @@
 #include "../include/directories.h"
 #include "../include/names.h"
 #include "../include/utils-algorithms.h"
-#include "../include/TZJetsData.h"
-#include "../include/TZJetsData.C"
+#include "../include/THFJetsData.h"
+#include "../include/THFJetsData.C"
 
 void macro_print_avgept_hadronmultiplicities()
 {
     // Open data!
-    TZJetsData* datatree = new TZJetsData();
+    THFJetsData* datatree = new THFJetsData();
 
     // Declare arrays
     double pt_array[datatree->Jet_NDtr];
